@@ -1,0 +1,109 @@
+/* Minimal but COMPLETE Liberty for smoke-testing an open-source ASIC flow.
+ *
+ * Not a PDK and not a substitute for one -- its numbers are made up. It exists
+ * so that `yosys -> abc -> sta` can be exercised end to end with no licence,
+ * no download and no multi-gigabyte PDK, in an image build or a unit test.
+ *
+ * Three things here are load-bearing and were each found by running the flow
+ * and watching it fail:
+ *
+ *   delay_model : table_lookup;
+ *       Without it OpenSTA reads the library, links the design, finds the
+ *       clock and reports 2 registers -- and then says "No paths found",
+ *       because it built no timing arcs at all. A smoke test that only checks
+ *       the exit code passes happily against that.
+ *
+ *   BUF and INV must exist.
+ *       ABC cannot map onto a library with no buffer and no inverter; it fails
+ *       with "Can't open ABC output file", which reads as an I/O problem
+ *       rather than an unmappable library.
+ *
+ *   The DFF needs setup/hold constraints AND a CK->Q arc.
+ *       Without them there is no register-to-register path to report, so the
+ *       constrained flow silently degrades to the unconstrained one -- the
+ *       exact confusion the node's `constrained` flag exists to prevent.
+ */
+library(smoke) {
+  delay_model : table_lookup;
+  time_unit : "1ns";
+  voltage_unit : "1V";
+  current_unit : "1mA";
+  capacitive_load_unit (1,pf);
+  pulling_resistance_unit : "1kohm";
+  default_cell_leakage_power : 0;
+  default_fanout_load : 1;
+  default_output_pin_cap : 0;
+  default_inout_pin_cap : 1;
+  default_input_pin_cap : 1;
+  default_max_transition : 1;
+  cell(BUF) {
+    area : 1;
+    pin(A) { direction : input; capacitance : 1; }
+    pin(Y) { direction : output; function : "A";
+      timing() { related_pin : "A";
+        cell_rise(scalar) { values("0.05"); }
+        cell_fall(scalar) { values("0.05"); }
+        rise_transition(scalar) { values("0.05"); }
+        fall_transition(scalar) { values("0.05"); } } }
+  }
+  cell(INV) {
+    area : 1;
+    pin(A) { direction : input; capacitance : 1; }
+    pin(Y) { direction : output; function : "A'";
+      timing() { related_pin : "A";
+        cell_rise(scalar) { values("0.04"); }
+        cell_fall(scalar) { values("0.04"); }
+        rise_transition(scalar) { values("0.04"); }
+        fall_transition(scalar) { values("0.04"); } } }
+  }
+  cell(NAND2) {
+    area : 2;
+    pin(A) { direction : input; capacitance : 1; }
+    pin(B) { direction : input; capacitance : 1; }
+    pin(Y) { direction : output; function : "(A*B)'";
+      timing() { related_pin : "A";
+        cell_rise(scalar) { values("0.08"); }
+        cell_fall(scalar) { values("0.08"); }
+        rise_transition(scalar) { values("0.08"); }
+        fall_transition(scalar) { values("0.08"); } }
+      timing() { related_pin : "B";
+        cell_rise(scalar) { values("0.08"); }
+        cell_fall(scalar) { values("0.08"); }
+        rise_transition(scalar) { values("0.08"); }
+        fall_transition(scalar) { values("0.08"); } } }
+  }
+  cell(NOR2) {
+    area : 2;
+    pin(A) { direction : input; capacitance : 1; }
+    pin(B) { direction : input; capacitance : 1; }
+    pin(Y) { direction : output; function : "(A+B)'";
+      timing() { related_pin : "A";
+        cell_rise(scalar) { values("0.09"); }
+        cell_fall(scalar) { values("0.09"); }
+        rise_transition(scalar) { values("0.09"); }
+        fall_transition(scalar) { values("0.09"); } }
+      timing() { related_pin : "B";
+        cell_rise(scalar) { values("0.09"); }
+        cell_fall(scalar) { values("0.09"); }
+        rise_transition(scalar) { values("0.09"); }
+        fall_transition(scalar) { values("0.09"); } } }
+  }
+  cell(DFF) {
+    area : 4;
+    ff(IQ,IQN) { clocked_on : "CK"; next_state : "D"; }
+    pin(CK) { direction : input; clock : true; capacitance : 1; }
+    pin(D) { direction : input; capacitance : 1;
+      timing() { related_pin : "CK"; timing_type : setup_rising;
+        rise_constraint(scalar) { values("0.02"); }
+        fall_constraint(scalar) { values("0.02"); } }
+      timing() { related_pin : "CK"; timing_type : hold_rising;
+        rise_constraint(scalar) { values("0.01"); }
+        fall_constraint(scalar) { values("0.01"); } } }
+    pin(Q) { direction : output; function : "IQ";
+      timing() { related_pin : "CK"; timing_type : rising_edge;
+        cell_rise(scalar) { values("0.12"); }
+        cell_fall(scalar) { values("0.12"); }
+        rise_transition(scalar) { values("0.06"); }
+        fall_transition(scalar) { values("0.06"); } } }
+  }
+}

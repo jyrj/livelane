@@ -1,0 +1,114 @@
+# Destination: .github/workflows/yosys-sta.yml
+#
+# CONTRIBUTING.md: "New dockerfiles in `dockerfiles` should have a
+# corresponding `.github/workflows` action." This is a near-verbatim copy of
+# the existing per-image workflows (chia.yml, verilator-run.yml, opencode.yml);
+# only three strings differ: the name, env.IMAGE, and package-name in cleanup.
+#
+# NOTE for the reviewer: this must ALSO be registered in release-images.yml with
+# `needs: chia`, because the image derives FROM ghcr.io/ucb-bar/chia and
+# release-images.yml's own header says a release has to rebuild every published
+# image or the version tags lie.
+name: Yosys+OpenSTA Image
+
+on:
+  workflow_dispatch:
+  # No push trigger: release-images.yml orders the builds, and a tag trigger
+  # here would race it (same reasoning as chia.yml).
+  workflow_call:
+
+env:
+  IMAGE: ghcr.io/ucb-bar/chia-yosys-sta
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      # This image compiles yosys (and its submodules) from source, which needs
+      # both disk and a clean builder cache on a GitHub-hosted runner.
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache || true
+          sudo rm -rf /usr/lib/jvm || true
+          sudo rm -rf /usr/share/swift || true
+          sudo rm -rf /usr/local/.ghcup || true
+          sudo rm -rf /usr/local/julia* || true
+          sudo rm -rf /usr/local/share/chromium || true
+          sudo rm -rf /opt/microsoft /opt/google || true
+          sudo rm -rf /opt/az || true
+          sudo rm -rf /usr/local/share/powershell || true
+          docker image prune -af || true
+          docker builder prune -af || true
+          df -h
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # On a tag push this adds the tag verbatim (v1.2.3), so every image
+      # carries the same version string as the released chialoops.
+      - name: Image tags
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE }}
+          tags: |
+            type=raw,value=latest
+            type=raw,value=build-${{ github.run_id }}
+            type=ref,event=tag
+
+      # The Dockerfile runs a real proof / a real synthesis-and-timing at build
+      # time, so a build that succeeds here is a worker that actually works.
+      # Do not add --target or skip that layer to save minutes: a worker that
+      # cannot run its tool fails closed and is indistinguishable from a
+      # correctly cautious one.
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          file: dockerfiles/YosysStaDockerfile
+          context: .
+          push: true
+          build-args: |
+            BASE_IMAGE=ghcr.io/ucb-bar/chia:${{ github.ref_type == 'tag' && github.ref_name || 'latest' }}
+            CHIA_REVISION=${{ github.sha }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=registry,ref=${{ env.IMAGE }}:buildcache
+          cache-to: type=registry,ref=${{ env.IMAGE }}:buildcache,mode=max
+
+      - name: Show runner resources
+        run: |
+          free -h
+          df -h
+          docker system df || true
+
+  cleanup-old-builds:
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    permissions:
+      packages: write
+
+    steps:
+      - name: Delete build images older than 7 days
+        uses: actions/delete-package-versions@v5
+        with:
+          package-name: chia-yosys-sta
+          package-type: container
+          min-versions-to-keep: 0
+          delete-only-pre-release-versions: false
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ignore-versions: "^(?!build-).*$"
+          min-days-old: 7

@@ -1,0 +1,38 @@
+Destination: .github/workflows/release-images.yml
+
+Both images are FROM ghcr.io/ucb-bar/chia, so they belong in the `needs: chia`
+block alongside opencode / claude-code, and NOT in the "install chia
+themselves" block at the bottom. release-images.yml's own header explains why
+the registration is effectively mandatory rather than optional:
+
+    Every published image ships the chia package, so a release has to rebuild
+    all of them or the version tags lie.
+
+Apply this hunk after the `claude-code:` entry.
+
+--- a/.github/workflows/release-images.yml
++++ b/.github/workflows/release-images.yml
+@@
+   claude-code:
+     needs: chia
+     uses: ./.github/workflows/claude-code.yml
+     secrets: inherit
+ 
++  # Open-source formal + synthesis workers. Both derive FROM the chia image,
++  # and both compile yosys from source, so they are the slowest members of the
++  # `needs: chia` group -- put them first in it if wall-clock matters.
++  eqy:
++    needs: chia
++    uses: ./.github/workflows/eqy.yml
++    secrets: inherit
++
++  yosys-sta:
++    needs: chia
++    uses: ./.github/workflows/yosys-sta.yml
++    secrets: inherit
++
+   # Also COPYs spike/DRAMSim out of chia-chisel-build, so it needs both.
+   verilator-run:
+     needs: [chia, chipyard]
+     uses: ./.github/workflows/verilator-run.yml
+     secrets: inherit

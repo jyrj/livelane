@@ -1,0 +1,14 @@
+/thirdparty/
+/tools/
+/var/
+
+abc.history
+*.eqy.log
+
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+.vscode/
+.idea/

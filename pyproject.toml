@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "chia-livelane"
+version = "0.1.0"
+description = "CHIA nodes for equivalence checking, open-source QoR, and controlled evaluator latency"
+readme = "README.md"
+requires-python = ">=3.10,<3.14"   # ray==2.54.0 (via chialoops) ships no cp314 wheels
+license = "BSD-3-Clause"
+authors = [{ name = "Jayaraj Jayakumar", email = "jj8@ucsc.edu" }]
+keywords = ["hardware", "rtl", "synthesis", "equivalence-checking", "chia", "eda"]
+
+dependencies = [
+    "chialoops==1.0.1",
+]
+
+[project.optional-dependencies]
+test = ["pytest==9.0.3", "pytest-timeout>=2.3"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+# The tests live beside the nodes. Live tests that need a real EDA tool skip
+# cleanly when it is absent, so collecting them by default costs nothing.
+testpaths = ["src/chia_livelane"]
+addopts = "-ra --strict-markers"
+markers = [
+    "slow: hits a real EDA tool",
+    "needs_yosys: requires yosys on PATH",
+]

@@ -1,0 +1,32 @@
+# Smoke configuration for the equivalence gate's image build.
+#
+# Mirrors what chia/formal/lec_gate.py generates: ONE read command per side
+# (read_slang elaborates each invocation independently, so a read-per-file
+# makes every module invisible to the others), then prep, then memory_map.
+#
+# The strategy ladder is the node's default, IN ITS ORDER. eqy stops at the
+# first strategy that decides a partition, and `sat` returns PASS on sequential
+# partitions that are NOT equivalent (measured: `y <= 4'b0` against `y <= a+b`,
+# see refuted_const.v), so `sat` must never lead. `sby` with an SMT engine leads
+# and decides; `sat` stays a cheap fallback for what sby leaves undecided and
+# for partitions with memory, which it skips.
+[gold]
+read_verilog -sv gold.v
+prep -top tiny
+memory_map
+
+[gate]
+read_verilog -sv gate.v
+prep -top tiny
+memory_map
+
+[collect *]
+
+[strategy smt]
+use sby
+engine smtbmc yices
+depth 10
+
+[strategy induct]
+use sat
+depth 10
