@@ -223,7 +223,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_counter",
-    "wall_s": 1.68,
+    "wall_s": 1.78,
     "instances": [
      {
       "instance": "ibex_counter$ibex_core.cs_registers_i.mcycle_counter_i",
@@ -417,7 +417,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_counter",
-    "wall_s": 1.63,
+    "wall_s": 1.47,
     "instances": [
      {
       "instance": "ibex_counter$ibex_core.cs_registers_i.mcycle_counter_i",
@@ -467,7 +467,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_fetch_fifo",
-    "wall_s": 1.05,
+    "wall_s": 1.25,
     "instances": [
      {
       "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
@@ -532,7 +532,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_fetch_fifo",
-    "wall_s": 1.24,
+    "wall_s": 1.18,
     "instances": [
      {
       "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
@@ -645,7 +645,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_fetch_fifo",
-    "wall_s": 1.25,
+    "wall_s": 1.18,
     "instances": [
      {
       "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
@@ -710,7 +710,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_fetch_fifo",
-    "wall_s": 1.24,
+    "wall_s": 1.15,
     "instances": [
      {
       "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
@@ -775,7 +775,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_fetch_fifo",
-    "wall_s": 1.26,
+    "wall_s": 1.19,
     "instances": [
      {
       "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
@@ -816,7 +816,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_counter",
-    "wall_s": 1.6,
+    "wall_s": 1.74,
     "instances": [
      {
       "instance": "ibex_counter$ibex_core.cs_registers_i.mcycle_counter_i",
@@ -890,7 +890,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_fetch_fifo",
-    "wall_s": 1.16,
+    "wall_s": 1.25,
     "instances": [
      {
       "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
@@ -931,7 +931,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_fetch_fifo",
-    "wall_s": 0.67,
+    "wall_s": 0.62,
     "instances": [
      {
       "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
@@ -996,7 +996,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_fetch_fifo",
-    "wall_s": 0.71,
+    "wall_s": 0.67,
     "instances": [
      {
       "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
@@ -1085,7 +1085,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_fetch_fifo",
-    "wall_s": 0.73,
+    "wall_s": 0.71,
     "instances": [
      {
       "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
@@ -1126,7 +1126,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_fetch_fifo",
-    "wall_s": 1.09,
+    "wall_s": 1.24,
     "instances": [
      {
       "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
@@ -1191,7 +1191,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_if_stage",
-    "wall_s": 1.37,
+    "wall_s": 1.81,
     "instances": [
      {
       "instance": "ibex_if_stage$ibex_core.if_stage_i",
@@ -1256,7 +1256,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_fetch_fifo",
-    "wall_s": 1.14,
+    "wall_s": 1.1,
     "instances": [
      {
       "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
@@ -1345,7 +1345,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_counter",
-    "wall_s": 1.58,
+    "wall_s": 1.68,
     "instances": [
      {
       "instance": "ibex_counter$ibex_core.cs_registers_i.mcycle_counter_i",
@@ -1395,7 +1395,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_counter",
-    "wall_s": 1.63,
+    "wall_s": 1.64,
     "instances": [
      {
       "instance": "ibex_counter$ibex_core.cs_registers_i.mcycle_counter_i",
@@ -1493,7 +1493,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_counter",
-    "wall_s": 1.07,
+    "wall_s": 1.21,
     "instances": [
      {
       "instance": "ibex_counter$ibex_core.cs_registers_i.mcycle_counter_i",
@@ -1543,7 +1543,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_counter",
-    "wall_s": 1.67,
+    "wall_s": 1.71,
     "instances": [
      {
       "instance": "ibex_counter$ibex_core.cs_registers_i.mcycle_counter_i",
@@ -1713,7 +1713,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_fetch_fifo",
-    "wall_s": 0.66,
+    "wall_s": 0.71,
     "instances": [
      {
       "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
@@ -1754,7 +1754,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_fetch_fifo",
-    "wall_s": 0.69,
+    "wall_s": 0.75,
     "instances": [
      {
       "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
@@ -1891,7 +1891,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_counter",
-    "wall_s": 1.14,
+    "wall_s": 1.19,
     "instances": [
      {
       "instance": "ibex_counter$ibex_core.cs_registers_i.mcycle_counter_i",
@@ -1941,7 +1941,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_fetch_fifo",
-    "wall_s": 0.65,
+    "wall_s": 0.74,
     "instances": [
      {
       "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
@@ -2006,7 +2006,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_fetch_fifo",
-    "wall_s": 0.64,
+    "wall_s": 0.63,
     "instances": [
      {
       "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
@@ -2047,7 +2047,7 @@
     "from_reset": "CONFIRMED",
     "any_state": "UNDECIDED",
     "scope": "ibex_if_stage",
-    "wall_s": 3.41,
+    "wall_s": 3.45,
     "instances": [
      {
       "instance": "ibex_if_stage$ibex_core.if_stage_i",
@@ -2088,7 +2088,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_counter",
-    "wall_s": 1.18,
+    "wall_s": 1.19,
     "instances": [
      {
       "instance": "ibex_counter$ibex_core.cs_registers_i.mcycle_counter_i",
@@ -2162,7 +2162,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_if_stage",
-    "wall_s": 1.18,
+    "wall_s": 1.2,
     "instances": [
      {
       "instance": "ibex_if_stage$ibex_core.if_stage_i",
@@ -2203,7 +2203,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_core",
-    "wall_s": 3.29,
+    "wall_s": 3.63,
     "package_changed": [
      "pc_sel_e"
     ],
@@ -2247,7 +2247,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_core",
-    "wall_s": 3.29,
+    "wall_s": 3.25,
     "package_changed": [
      "exc_pc_sel_e"
     ],
@@ -2291,7 +2291,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_core",
-    "wall_s": 3.51,
+    "wall_s": 3.52,
     "package_changed": [
      "pc_sel_e"
     ],
@@ -2335,7 +2335,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_core",
-    "wall_s": 3.42,
+    "wall_s": 3.58,
     "package_changed": [
      "pc_sel_e"
     ],
@@ -2379,7 +2379,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "REACHABLE-ONLY",
     "scope": "ibex_controller",
-    "wall_s": 2.58,
+    "wall_s": 2.56,
     "package_changed": [
      "ctrl_fsm_e"
     ],
@@ -2424,7 +2424,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_core",
-    "wall_s": 3.16,
+    "wall_s": 3.3,
     "package_changed": [
      "pc_sel_e"
     ],
@@ -2468,7 +2468,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_core",
-    "wall_s": 3.53,
+    "wall_s": 3.33,
     "package_changed": [
      "pc_sel_e"
     ],
@@ -2512,7 +2512,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_core",
-    "wall_s": 3.33,
+    "wall_s": 3.73,
     "package_changed": [
      "pc_sel_e"
     ],
@@ -2556,7 +2556,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_core",
-    "wall_s": 3.33,
+    "wall_s": 3.49,
     "package_changed": [
      "pc_sel_e"
     ],
@@ -2600,7 +2600,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_core",
-    "wall_s": 3.29,
+    "wall_s": 3.35,
     "package_changed": [
      "exc_pc_sel_e"
     ],
@@ -2644,7 +2644,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "REACHABLE-ONLY",
     "scope": "ibex_controller",
-    "wall_s": 2.36,
+    "wall_s": 2.24,
     "package_changed": [
      "ctrl_fsm_e"
     ],
@@ -2688,7 +2688,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_core",
-    "wall_s": 17.29,
+    "wall_s": 19.2,
     "package_changed": [
      "imm_b_sel_e"
     ],
@@ -2756,7 +2756,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_counter",
-    "wall_s": 1.18,
+    "wall_s": 1.24,
     "instances": [
      {
       "instance": "ibex_counter$ibex_core.cs_registers_i.mcycle_counter_i",
@@ -2830,7 +2830,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_load_store_unit",
-    "wall_s": 1.11,
+    "wall_s": 1.2,
     "instances": [
      {
       "instance": "ibex_load_store_unit$ibex_core.load_store_unit_i",
@@ -2871,7 +2871,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_fetch_fifo",
-    "wall_s": 0.68,
+    "wall_s": 0.73,
     "instances": [
      {
       "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
@@ -3008,7 +3008,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_if_stage",
-    "wall_s": 1.17,
+    "wall_s": 1.19,
     "instances": [
      {
       "instance": "ibex_if_stage$ibex_core.if_stage_i",
@@ -3049,7 +3049,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_csr",
-    "wall_s": 5.93,
+    "wall_s": 6.36,
     "instances": [
      {
       "instance": "ibex_csr$ibex_core.cs_registers_i.u_cpuctrlsts_part_csr",
@@ -3297,7 +3297,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_counter",
-    "wall_s": 1.14,
+    "wall_s": 1.16,
     "instances": [
      {
       "instance": "ibex_counter$ibex_core.cs_registers_i.mcycle_counter_i",
@@ -3419,7 +3419,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_counter",
-    "wall_s": 1.03,
+    "wall_s": 1.06,
     "instances": [
      {
       "instance": "ibex_counter$ibex_core.cs_registers_i.mcycle_counter_i",
@@ -3517,7 +3517,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "REACHABLE-ONLY",
     "scope": "ibex_fetch_fifo",
-    "wall_s": 1.6,
+    "wall_s": 1.63,
     "instances": [
      {
       "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
@@ -3558,7 +3558,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "REACHABLE-ONLY",
     "scope": "ibex_fetch_fifo",
-    "wall_s": 1.51,
+    "wall_s": 1.46,
     "instances": [
      {
       "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
@@ -3599,7 +3599,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_fetch_fifo",
-    "wall_s": 0.64,
+    "wall_s": 0.61,
     "instances": [
      {
       "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
@@ -3760,7 +3760,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_counter",
-    "wall_s": 1.01,
+    "wall_s": 1.12,
     "instances": [
      {
       "instance": "ibex_counter$ibex_core.cs_registers_i.mcycle_counter_i",

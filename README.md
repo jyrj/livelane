@@ -48,7 +48,7 @@ path of every iteration, on a whole RISC-V core, using only open-source tools:
   rejection of the equivalence check into a proof or a counterexample from
   reset, and reports the result to the agent. In the loop, 81 of 82 rejected
   edits were proven correct and the remaining one, a real bug, was refuted; all
-  69 accepted edits were re-proven from reset, whatever the power-up state.
+  78 accepted edits were re-proven from reset, whatever the power-up state.
 - **`DelayNode`**: makes evaluator latency an experimental variable, so any loop
   can measure how fast its evaluator needs to be.
 
@@ -138,8 +138,10 @@ correct; none of those rewrites was faster, so the median barely changes (6.5%
 vs 6.2%). With the final version (from reset, with package edits checked at the
 scope their changed types reach; 18 runs), **81 of 82 rejections were proven
 correct during the run, and the remaining one, a real bug, was refuted** with a
-counterexample from reset. **Every edit the loop accepted in any run (69 of 69)
-is re-proven from reset, whatever the power-up state, and 68 of them also from
+counterexample from reset. With `gemini-3.8-flash` and `gemini-2.5-pro` (3 runs
+each), the same check decided all 31 of their rejected edits: 29 proven correct
+and 2 real bugs refuted. **Every edit the loop accepted in any run (78 of 78)
+is re-proven from reset, whatever the power-up state, and 76 of them also from
 any shared initial state without reset.**
 
 Every run improved the core's critical path (4.8 to 11.2%), with every accepted

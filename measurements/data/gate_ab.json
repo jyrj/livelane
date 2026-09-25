@@ -184,5 +184,51 @@
   "accepted_reproven": 4,
   "accepted_any_state": 4,
   "cost_usd": 3.7
+ },
+ "3.8-flash / + scoped second stage": {
+  "runs": 3,
+  "iterations": 45,
+  "improvement_median": 7.017,
+  "improvement_mean": 7.323666666666667,
+  "improvement_all": [
+   7.017,
+   8.909,
+   6.045
+  ],
+  "accepted": 3,
+  "refused_by_partitioned_gate": 8,
+  "false_refusals": 8,
+  "real_bugs": 0,
+  "false_refusal_iteration_share": 0.17777777777777778,
+  "told_correct": 8,
+  "false_any_state": 7,
+  "undecided": 0,
+  "told_correct_reproven": 8,
+  "accepted_reproven": 3,
+  "accepted_any_state": 3,
+  "cost_usd": 5.32
+ },
+ "2.5-pro / + scoped second stage": {
+  "runs": 3,
+  "iterations": 45,
+  "improvement_median": 2.205,
+  "improvement_mean": 3.8449999999999998,
+  "improvement_all": [
+   2.205,
+   1.453,
+   7.877
+  ],
+  "accepted": 6,
+  "refused_by_partitioned_gate": 23,
+  "false_refusals": 21,
+  "real_bugs": 2,
+  "false_refusal_iteration_share": 0.4666666666666667,
+  "told_correct": 21,
+  "false_any_state": 19,
+  "undecided": 0,
+  "told_correct_reproven": 21,
+  "accepted_reproven": 6,
+  "accepted_any_state": 5,
+  "cost_usd": 7.98
  }
 }

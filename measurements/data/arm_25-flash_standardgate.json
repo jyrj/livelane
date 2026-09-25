@@ -111,7 +111,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_counter",
-    "wall_s": 1.25,
+    "wall_s": 1.19,
     "instances": [
      {
       "instance": "ibex_counter$ibex_core.cs_registers_i.mcycle_counter_i",
@@ -161,7 +161,7 @@
     "from_reset": "CONFIRMED",
     "any_state": "UNDECIDED",
     "scope": "ibex_load_store_unit",
-    "wall_s": 1.76,
+    "wall_s": 1.86,
     "instances": [
      {
       "instance": "ibex_load_store_unit$ibex_core.load_store_unit_i",
@@ -250,7 +250,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_load_store_unit",
-    "wall_s": 0.93,
+    "wall_s": 0.96,
     "instances": [
      {
       "instance": "ibex_load_store_unit$ibex_core.load_store_unit_i",
@@ -291,7 +291,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_counter",
-    "wall_s": 1.64,
+    "wall_s": 1.72,
     "instances": [
      {
       "instance": "ibex_counter$ibex_core.cs_registers_i.mcycle_counter_i",
@@ -341,7 +341,7 @@
     "from_reset": "CONFIRMED",
     "any_state": "UNDECIDED",
     "scope": "ibex_counter",
-    "wall_s": 1.9,
+    "wall_s": 1.91,
     "instances": [
      {
       "instance": "ibex_counter$ibex_core.cs_registers_i.mcycle_counter_i",
@@ -439,7 +439,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_counter",
-    "wall_s": 1.66,
+    "wall_s": 1.75,
     "instances": [
      {
       "instance": "ibex_counter$ibex_core.cs_registers_i.mcycle_counter_i",
@@ -561,7 +561,7 @@
     "from_reset": "PROVEN-SEQ",
     "any_state": "ANY-STATE",
     "scope": "ibex_counter",
-    "wall_s": 1.16,
+    "wall_s": 1.28,
     "instances": [
      {
       "instance": "ibex_counter$ibex_core.cs_registers_i.mcycle_counter_i",
@@ -779,7 +779,7 @@
     "from_reset": "CONFIRMED",
     "any_state": "UNDECIDED",
     "scope": "ibex_load_store_unit",
-    "wall_s": 1.99,
+    "wall_s": 2.02,
     "instances": [
      {
       "instance": "ibex_load_store_unit$ibex_core.load_store_unit_i",
@@ -820,7 +820,7 @@
     "from_reset": "CONFIRMED",
     "any_state": "UNDECIDED",
     "scope": "ibex_load_store_unit",
-    "wall_s": 1.99,
+    "wall_s": 2.07,
     "instances": [
      {
       "instance": "ibex_load_store_unit$ibex_core.load_store_unit_i",
