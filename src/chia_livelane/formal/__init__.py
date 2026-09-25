@@ -1,11 +1,15 @@
-"""Formal verification nodes: tools that prove things about a design.
+"""Formal verification nodes for CHIA.
 
-Today that is one node, an equivalence-check gate backed by YosysHQ ``eqy``,
-with an optional second backend for cross-checking.
+Staged as ``chia/formal/``: a new sibling of ``chia/vlsi`` for tools that prove
+things about a design rather than implement it.  Today that is one node, an
+equivalence-check gate backed by YosysHQ ``eqy``.
+
+The re-export below matches ``chia/vlsi/__init__.py``, which lifts its package's
+public names to the package root.
 """
 
 from chia_livelane.formal.lec_gate import (  # noqa: F401
     DEFAULT_STRATEGIES, ERROR, PROVEN, REFUTED, SKIPPED, TIMEOUT, UNDECIDED,
-    UNDEF_INIT_VALUES, VALID_VERDICTS, KeplerBackend, LecGateNode, LecResult,
-    auto_jobs, cross_check, lec_gate, parse_eqy_log, parse_kepler_log,
+    VALID_VERDICTS, LecGateNode, LecResult, cross_check, lec_gate,
+    parse_eqy_log,
 )

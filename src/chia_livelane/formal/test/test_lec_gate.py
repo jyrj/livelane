@@ -177,11 +177,19 @@ class TestConfigGeneration:
                         verbose=False)
         body = n.write_config(srcs[:1], srcs[1:2], "t",
                               tmp_path / "t.eqy").read_text()
-        # `smt` MUST come first: eqy stops at the first strategy that decides a
-        # partition, and `sat` returns PASS on sequential partitions that are
-        # not equivalent (see DEFAULT_STRATEGIES and smoke/refuted_const.v).
-        assert body.index("[strategy smt]") < body.index("[strategy induct]")
+        # `sat` leads, which is sound ONLY with initial values resolved on both
+        # sides: without `setundef -zero -init`, `sat` returns PASS on a
+        # sequential partition that is not equivalent (smoke/refuted_const.v).
+        # So the order and the setundef are pinned together, not separately.
+        assert body.index("[strategy simple]") < body.index("[strategy smt]")
         assert "use sat" in body and "use sby" in body
+        assert "setundef -zero -init" in body
+
+    def test_sat_first_without_undef_init_is_not_the_default(self, tmp_path, srcs):
+        """Opting out of undef_init must be a deliberate, visible choice."""
+        n = LecGateNode(workdir=tmp_path, strategies=DEFAULT_STRATEGIES,
+                        verbose=False)
+        assert n.undef_init == "zero"
 
     def test_single_strategy_fallback_carries_depth_and_engine(self, tmp_path, srcs):
         n = LecGateNode(workdir=tmp_path, depth=7, engine="smtbmc z3",
@@ -194,8 +202,8 @@ class TestConfigGeneration:
 class TestRelativePaths:
     def test_relative_workdir_is_absolutised(self, tmp_path, monkeypatch):
         # eqy runs with cwd=workdir, so a relative workdir made the generated
-        # config path relative to itself; eqy then exited 2 -- the same code it
-        # uses for a failed proof -- with an unparsable log, and the gate
+        # config path relative to itself; eqy then exited 2, the same code it
+        # uses for a failed proof, with an unparsable log, and the gate
         # returned ERROR. A misconfiguration wearing the costume of a cautious
         # gate is the exact failure this module exists to prevent.
         monkeypatch.chdir(tmp_path)
@@ -328,7 +336,7 @@ class TestUndefInit:
 
     def test_a_bad_value_fails_at_construction(self):
         # Not an hour later inside a solver, where a bad yosys command surfaces
-        # as rc=2 with an unparsable log -- an ERROR verdict indistinguishable
+        # as rc=2 with an unparsable log, an ERROR verdict indistinguishable
         # from a cautious gate.
         with pytest.raises(ValueError):
             LecGateNode(undef_init="anyseq")
@@ -345,8 +353,8 @@ class TestUndefInit:
 # --- jobs: partitions are independent, so prove them concurrently -------------
 # eqy writes one make target chain per partition and a single `all:` depending
 # on all of them (eqy.py:1138), then runs `make{kopt}{jopt} -f strategies.mk`
-# (eqy.py:1156). Without -j that is one proof at a time -- 590 of them on
-# picorv32 -- however many cores the worker holds.
+# (eqy.py:1156). Without -j that is one proof at a time, 590 of them on
+# picorv32, however many cores the worker holds.
 
 class TestJobs:
     def test_jobs_none_keeps_the_plain_command(self):

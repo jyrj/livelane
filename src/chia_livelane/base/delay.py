@@ -20,7 +20,7 @@ Semantics
 ``ADDITIVE`` (default): ``observed = real + seconds``.  ``DelayNode(0)`` is
 exactly the undelayed evaluator, so it doubles as the control arm at zero cost.
 
-``FLOOR``: ``observed = max(real, seconds)`` -- "an evaluator that always takes
+``FLOOR``: ``observed = max(real, seconds)``, "an evaluator that always takes
 at least this long".  Note it becomes a no-op whenever the real evaluation
 already exceeds ``seconds``, so on a slow design a small delay silently stops
 being a treatment.  ADDITIVE is the safer default for experiments.
@@ -35,7 +35,7 @@ Placement
 resource.  Both are deliberate: the node does nothing but block, so charging it
 a Ray CPU slot (the ``ray.remote`` default is ``num_cpus=1``) would make a
 long injected delay evict real work from the cluster.  Being resource-free also
-means it needs no image of its own -- it runs in whichever container the caller
+means it needs no image of its own, it runs in whichever container the caller
 is already using.  A caller that wants it pinned can still say
 ``delay_seconds.options(resources={"tok": 1})``.
 
@@ -124,7 +124,7 @@ class DelayNode:
         apply_on_failure (bool): Delay failed work too. Default True; turning it
             off biases an experiment toward whichever arm fails more often.
         virtual (bool): Account for the delay without spending wall-clock. For
-            cached/replayed runs only -- every record it produces is flagged
+            cached/replayed runs only, every record it produces is flagged
             ``virtual=True`` so analysis can drop it.
         verbose (bool): Print each injection as it starts.
     """
@@ -142,7 +142,7 @@ class DelayNode:
         if self.seconds < 0:
             raise ValueError(f"delay seconds must be >= 0, got {self.seconds}")
 
-    # -- introspection --------------------------------------------------------
+    #, introspection --------------------------------------------------------
     @property
     def is_identity(self) -> bool:
         """True when this node adds nothing at all (the control arm)."""
@@ -172,7 +172,7 @@ class DelayNode:
             return self.seconds
         return max(0.0, self.seconds - real_elapsed_s)
 
-    # -- control --------------------------------------------------------------
+    #, control --------------------------------------------------------------
     def cancel(self) -> None:
         """Cut a pending delay short. The resulting record is ``interrupted``."""
         self._cancel.set()
@@ -181,7 +181,7 @@ class DelayNode:
         """Clear a previous :meth:`cancel` so later injections sleep again."""
         self._cancel.clear()
 
-    # -- application ----------------------------------------------------------
+    #, application ----------------------------------------------------------
     def apply(self, real_elapsed_s: float, succeeded: bool = True) -> DelayRecord:
         """Sleep for this node's delay and record what happened.
 
@@ -212,7 +212,7 @@ class DelayNode:
     def around_call(self, fn: Callable[..., T], *args: Any,
                     succeeded: Callable[[T], bool] = lambda r: True,
                     **kwargs: Any) -> tuple[T, DelayRecord]:
-        """Run ``fn``, then inject the delay -- never before.
+        """Run ``fn``, then inject the delay, never before.
 
         Order is not cosmetic: the delay models a *slow evaluator*, so the caller
         must wait for the real work and then keep waiting. Injecting first would
@@ -242,7 +242,7 @@ class DelayNode:
             self.apply(time.monotonic() - t0, False)
             raise
 
-    # -- aggregate ------------------------------------------------------------
+    #, aggregate ------------------------------------------------------------
     @property
     def total_injected_s(self) -> float:
         """Sum of wall-clock actually slept across every injection so far."""
@@ -267,7 +267,7 @@ class DelayNode:
 
 # num_cpus=0 is load-bearing, not a micro-optimisation. ray.remote defaults to
 # num_cpus=1, so a 600 s injected delay would hold a CPU slot for ten minutes
-# and evict real work from the cluster -- which would make the injected latency
+# and evict real work from the cluster, which would make the injected latency
 # perturb throughput as well, confounding exactly the measurement this node
 # exists to make. The node only blocks; it must cost nothing schedulable.
 @ChiaFunction(num_cpus=0)
@@ -323,7 +323,7 @@ if __name__ == "__main__":
     assert time.monotonic() - t0 < 0.05, "DelayNode(0) is not an identity"
     print("    DelayNode(0) is an exact identity (the control arm)")
 
-    # FLOOR collapses once real work exceeds the floor -- the documented trap.
+    # FLOOR collapses once real work exceeds the floor, the documented trap.
     f = DelayNode(seconds=1.0, mode=DelayMode.FLOOR, verbose=False)
     assert abs(f.sleep_for(0.25) - 0.75) < 1e-9, f.sleep_for(0.25)
     assert f.sleep_for(2.0) == 0.0, "FLOOR must be a no-op past the floor"

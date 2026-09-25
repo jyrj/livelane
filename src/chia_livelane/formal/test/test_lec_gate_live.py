@@ -4,9 +4,8 @@ Named ``*_live`` to match ``chia/vlsi/tests/test_hammer_live.py`` and
 ``chia/simulators/tests/test_champsim_live.py``: these need a tool, and skip
 cleanly when it is absent instead of failing.
 
-The fixture in ``smoke/`` is the same one ``dockerfiles/EqyDockerfile`` runs at
-image-build time, so a green unit test and a green image build are making the
-same claim about the same files.
+The fixture in ``smoke/`` is a gold design, an equivalent edit and a broken
+edit; CI runs this file with the OSS CAD Suite on every push.
 """
 
 from __future__ import annotations
@@ -23,7 +22,7 @@ SMOKE = Path(__file__).parent / "smoke"
 
 pytestmark = pytest.mark.skipif(
     shutil.which("eqy") is None,
-    reason="eqy not on PATH; run inside ghcr.io/ucb-bar/chia-eqy")
+    reason="eqy not on PATH (install the OSS CAD Suite)")
 
 
 def _check(tmp_path, candidate, name):
@@ -56,7 +55,7 @@ class TestRealEqy:
         # `y <= 4'b0` against `y <= a + b` is not equivalent by any reading, but
         # eqy's `use sat` strategy reports "Induction step proven: SUCCESS!" on
         # it and eqy turns that into PASS. With `induct` listed first the gate
-        # returned verdict=proven / admits_edit=True -- a false accept, the one
+        # returned verdict=proven / admits_edit=True, a false accept, the one
         # outcome this module exists to make impossible.
         #
         # This asserts the OUTCOME (not admitted), so it keeps holding whatever

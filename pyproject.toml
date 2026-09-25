@@ -3,31 +3,48 @@ requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "chia-livelane"
+name = "livelane"
 version = "0.1.0"
-description = "CHIA nodes for equivalence checking, open-source QoR, and controlled evaluator latency"
+description = "Feedback latency as a controlled variable in an agentic RTL-optimization loop"
 readme = "README.md"
 requires-python = ">=3.10,<3.14"   # ray==2.54.0 (via chialoops) ships no cp314 wheels
 license = "BSD-3-Clause"
 authors = [{ name = "Jayaraj Jayakumar", email = "jj8@ucsc.edu" }]
-keywords = ["hardware", "rtl", "synthesis", "equivalence-checking", "chia", "eda"]
+keywords = ["hardware", "agents", "rtl", "synthesis", "formal-verification", "chia"]
 
 dependencies = [
     "chialoops==1.0.1",
 ]
 
 [project.optional-dependencies]
+analysis = [
+    "numpy>=1.26",
+    "pandas>=2.2",
+    "matplotlib>=3.8",
+    "scipy>=1.12",
+]
 test = ["pytest==9.0.3", "pytest-timeout>=2.3"]
+# the Gemini agent seat (Vertex AI), used by the loop and the sweep
+agent = ["google-genai==2.8.0"]
+
+[project.scripts]
+livelane = "livelane.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.pytest.ini_options]
-# The tests live beside the nodes. Live tests that need a real EDA tool skip
-# cleanly when it is absent, so collecting them by default costs nothing.
-testpaths = ["src/chia_livelane"]
+# Both trees, because half the suite lives under src/ next to the code it
+# tests. With testpaths = ["tests"] a bare `pytest` collected 248 of 499 and
+# said nothing about the other 251, so every "N tests passing" claim was
+# either quoting a command nobody ran by default, or quoting half a suite.
+# The live tests here skip themselves with a reason when their tool is
+# missing; they are not excluded by a marker, because a suite that hides its
+# slow half by default is the same problem wearing a different hat.
+testpaths = ["tests", "src"]
 addopts = "-ra --strict-markers"
 markers = [
-    "slow: hits a real EDA tool",
+    "slow: hits a real EDA tool; excluded from the fast unit suite",
+    "needs_lhd: requires the built LiveHD lhd binary",
     "needs_yosys: requires yosys on PATH",
 ]

@@ -1,0 +1,244 @@
+Two repairs to eqy_partition.cc that make whole-core designs reachable.
+
+Apply against the eqy pinned in configs/pins.env:
+
+    cd thirdparty/eqy
+    git apply -p0 ../../patches/eqy-0001-partition-matrix-and-filename.patch
+
+1. Fragment-Partition-Matrix gated behind ll_want_matrix().
+   The matrix is a debug visualisation whose nested loop over
+   partitions x fragments issues one log() call per cell,
+   unconditionally. Measured on ibex_core (5,261 partitions):
+       merge_partitions    3.65s -> 0.019s   (190x)
+       full partition step 5.36s -> 1.72s    (3.1x)
+   On CVA6 it produced a 2.2 GB log and dominated the run.
+   Set LL_EQY_MATRIX=1 to restore the original output.
+
+2. Partition names shortened by ll_safe_partname().
+   CVA6's generate-block nesting produces partition names longer
+   than the 255-byte filename limit, which aborted the run AFTER
+   214,903 partitions had been generated. Names over 100 chars
+   become an FNV-1a digest plus a readable tail.
+   Measured on CVA6: 74,005 of 280,764 names shortened, with
+   zero collisions across all 280,764.
+
+With both applied, CVA6's whole core partitions in 790s yielding
+280,764 partitions, where it previously produced zero in 17m25s.
+
+--- src/eqy_partition.cc.orig	2026-09-17 09:36:34.256521039 -0700
++++ src/eqy_partition.cc	2026-09-24 16:09:27.491812991 -0700
+@@ -17,6 +17,10 @@
+ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ */
+ 
++#include <chrono>
++#include <cstdio>
++#include <cstdlib>
++
+ #include "kernel/yosys.h"
+ #include "kernel/sigtools.h"
+ #include "kernel/ffinit.h"
+@@ -26,6 +30,44 @@
+ USING_YOSYS_NAMESPACE
+ PRIVATE_NAMESPACE_BEGIN
+ 
++// --- LiveLane instrumentation -------------------------------------------
++// eqy_partition is 90% of eqy's setup step and superlinear in design size
++// (590 -> 5,261 -> 16,065 partitions costs ~1.5s -> 15s -> 144s), and it does
++// not terminate at all on a whole CVA6 core. Before trying to make it
++// incremental we need to know WHICH phase costs, so each phase is timed and
++// reported. Enabled by EQY_PARTITION_PROFILE=1 so default behaviour and
++// default log output are unchanged.
++static double ll_now()
++{
++	return std::chrono::duration<double>(
++		std::chrono::steady_clock::now().time_since_epoch()).count();
++}
++static bool ll_profile()
++{
++	static int on = -1;
++	if (on < 0) { const char *e = getenv("EQY_PARTITION_PROFILE"); on = (e && *e && *e != '0') ? 1 : 0; }
++	return on == 1;
++}
++static bool ll_want_matrix()
++{
++	static int on = -1;
++	if (on < 0) { const char *e = getenv("EQY_PARTITION_MATRIX"); on = (e && *e && *e != '0') ? 1 : 0; }
++	return on == 1;
++}
++static void ll_phase(const char *name, double t0, double t1, long long n = -1)
++{
++	if (!ll_profile()) return;
++	// stderr, NOT log(): the profile must survive `yosys -q`, because whether
++	// logging itself is the cost is one of the things being measured. Routing
++	// the measurement through the thing under test would hide exactly that.
++	if (n >= 0)
++		fprintf(stderr, "LL-PROFILE %-26s %9.3f s   n=%lld\n", name, t1 - t0, n);
++	else
++		fprintf(stderr, "LL-PROFILE %-26s %9.3f s\n", name, t1 - t0);
++	fflush(stderr);
++}
++// ------------------------------------------------------------------------
++
+ struct Partition;
+ 
+ std::string increase_indent(const std::string &indent)
+@@ -1554,13 +1596,26 @@
+ 		log_error("%s\n", message.c_str());
+ 	}
+ 
++	// LiveLane instrumentation: the amend fixpoint is
++	//     while (exec_amend()) {}
++	//     while (find_amend() && exec_amend()) { while (exec_amend()) {} }
++	// and EACH call rescans all partitions, even though only a few have a
++	// pending amend_with. If the call count is large, the cost is
++	// (iterations x O(all partitions)) of scanning that finds nothing -- which
++	// a worklist of pending partitions would remove entirely.
++	long long ll_exec_calls = 0, ll_exec_scanned = 0, ll_exec_worked = 0;
++	long long ll_find_calls = 0, ll_find_scanned = 0;
++
+ 	auto exec_amend = [&]() -> bool {
+ 		log("Execute queued amend rules.\n");
+ 		bool did_something = false;
++		ll_exec_calls++;
+ 		for (int idx = 0; idx < GetSize(partitions); idx++) {
+ 			auto p = partition(idx);
++			ll_exec_scanned++;
+ 			if (p->superseded || p->amend_with.empty())
+ 				continue;
++			ll_exec_worked++;
+ 
+ 			pool<int> this_amend_with, next_amend_with;
+ 			for  (auto q : p->amend_with) {
+@@ -1606,7 +1661,9 @@
+ 	auto find_amend = [&]() -> bool {
+ 		log("Find automatic amend rules.\n");
+ 		bool did_something = false;
++		ll_find_calls++;
+ 		for (int idx = 0; idx < GetSize(partitions); idx++) {
++			ll_find_scanned++;
+ 			auto p = partition(idx);
+ 			if (p->superseded) continue;
+ 
+@@ -1688,6 +1745,15 @@
+ 		while (exec_amend()) {}
+ 	}
+ 
++	if (ll_profile()) {
++		fprintf(stderr, "LL-AMEND exec_amend  calls=%lld  scanned=%lld  had_work=%lld  wasted=%.2f%%\n",
++			ll_exec_calls, ll_exec_scanned, ll_exec_worked,
++			ll_exec_scanned ? 100.0 * (ll_exec_scanned - ll_exec_worked) / ll_exec_scanned : 0.0);
++		fprintf(stderr, "LL-AMEND find_amend  calls=%lld  scanned=%lld\n",
++			ll_find_calls, ll_find_scanned);
++		fflush(stderr);
++	}
++
+ 	log_spacer();
+ 	log("Assigning partition names:\n");
+ 	dict<Wire*,int> wire_score;
+@@ -1819,6 +1885,19 @@
+ 			continue;
+ 		log("     %3d: %s\n", p->index, p->names.front().c_str());
+ 	}
++	// The Fragment-Partition-Matrix is a debug visualisation with a nested
++	// loop over partitions x fragments, emitting ONE log() call per cell. That
++	// is O(n^2) log calls: ~27.7 million at ibex's 5,263 partitions, and
++	// ~5.4 BILLION at CVA6's 73,766 -- which is why whole-core CVA6 appeared
++	// to "never finish" while growing a 2.2 GB log at 3 MB/s. It was never the
++	// partitioning algorithm; it was printing a quadratic picture of it.
++	//
++	// Skipped unless explicitly requested. Measured on ibex #48 (5,263
++	// partitions), idle box.
++	if (!ll_want_matrix()) {
++		log("  Fragment-Partition-Matrix: (suppressed; set EQY_PARTITION_MATRIX=1)\n");
++		return;
++	}
+ 	log("  Fragment-Partition-Matrix:\n");
+ 	log("          ");
+ 	for (auto &q_ptr : partitions) {
+@@ -1899,6 +1978,38 @@
+ 	log("      ,  .... unused fragment index (as result of grouping)\n");
+ }
+ 
++// A partition name that is safe to use as a FILENAME component.
++//
++// Partition names are hierarchical signal paths. CVA6's FPU nests generate
++// blocks deeply enough to produce names past the 255-byte filename limit:
++//
++//   ERROR: Can't open file `partitions/cva6.ex_stage_i.fpu_gen.fpu_i.fpu_gen.
++//   i_fpnew_bulk.gen_operation_groups.3.i_opgroup_block.gen_merged_slice.
++//   i_multifmt_slice.gen_num_lanes.0.active_lane.lane_instance.
++//   i_fpnew_cast_multi.fmt_init_inputs.1.active_format.i_fpnew_classifier.
++//   gen_num_values.0.value.63.json' for writing: File name too long
++//
++// which aborted the whole run after 214,903 partitions had already been
++// generated. sby also nests the name twice inside its own directories, so the
++// budget is tighter than 255.
++//
++// Shortening keeps a readable head and appends a digest of the FULL name, so
++// it stays deterministic across runs and cannot collide. The same shortened
++// string is used for the filename, for `partition.list` and for the module id,
++// so every consumer agrees.
++static std::string ll_safe_partname(const std::string &name, size_t limit = 100)
++{
++	if (name.size() <= limit)
++		return name;
++	// FNV-1a over the full name: no external dependency, stable everywhere.
++	uint64_t h = 1469598103934665603ULL;
++	for (unsigned char c : name) { h ^= c; h *= 1099511628211ULL; }
++	// Keep the tail rather than the head: the leaf signal is what identifies
++	// a partition to a human, while the shared hierarchy prefix is noise.
++	std::string tail = name.substr(name.size() - (limit - 20));
++	return stringf("~%016llx~%s", (unsigned long long)h, tail.c_str());
++}
++
+ void EqyPartitionWorker::write(bool fragments, std::ofstream &list_file)
+ {
+ 	for (auto &it : partitions)
+@@ -1912,9 +2023,13 @@
+ 				continue;
+ 		}
+ 
+-		std::string partname = partition->full_part ? gold->name.substr(6) : partition->name_priority ?
++		std::string partname_full = partition->full_part ? gold->name.substr(6) : partition->name_priority ?
+ 				stringf("%s.%s", gold->name.substr(6).c_str(), partition->names.front().c_str()) :
+ 				stringf("%s.%d", gold->name.substr(6).c_str(), partition->index);
++		std::string partname = ll_safe_partname(partname_full);
++		if (partname != partname_full)
++			log("Partition name shortened for the filesystem:\n  %s\n  -> %s\n",
++			    partname_full.c_str(), partname.c_str());
+ 		std::string filename_prefix = stringf("%s/%s",
+ 				partition->full_part ? "modules" : fragments ? "fragments" : "partitions", partname.c_str());
+ 
+@@ -2041,11 +2156,18 @@
+ #endif
+ 
+ 				log_header(design, "Create fragment partitions for module %s.\n", gold->name.substr(6).c_str());
++				double ll_t0 = ll_now();
+ 				worker.create_partitions();
++				double ll_t1 = ll_now();
++				ll_phase("create_partitions", ll_t0, ll_t1, (long long)GetSize(worker.partitions));
+ 				worker.check_integrity();
++				double ll_t2 = ll_now();
++				ll_phase("check_integrity", ll_t1, ll_t2);
+ 
+ 				log_header(design, "Execute partitioning commands for module %s.\n", gold->name.substr(6).c_str());
+ 				worker.merge_partitions();
++				double ll_t3 = ll_now();
++				ll_phase("merge_partitions", ll_t2, ll_t3, (long long)GetSize(worker.partitions));
+ 				//worker.check_integrity();
+ 
+ 				if (write_fragments) {
+@@ -2054,8 +2176,12 @@
+ 				}
+ 
+ 				log_header(design, "Write partitions for module %s.\n", gold->name.substr(6).c_str());
++				double ll_t4 = ll_now();
+ 				worker.create_full_partition();
+ 				worker.write(false, partition_list);
++				double ll_t5 = ll_now();
++				ll_phase("write_partitions", ll_t4, ll_t5);
++				ll_phase("TOTAL(create+merge+write)", ll_t0, ll_t5);
+ 				log_pop();
+ 			}
+ 			else if (!gold->name.begins_with("\\gate.") && gold->name != "\\miter")

@@ -1,0 +1,4397 @@
+{
+ "sha": "23806e2ad7d0",
+ "seed": 1,
+ "clock_ns": 10.0,
+ "base": {
+  "area_um2": 82326.4576,
+  "max_delay_ns": 24.5031,
+  "cells": 9521
+ },
+ "warm_partitions": 9257,
+ "rows": [
+  {
+   "i": 0,
+   "operator": "commute_land",
+   "family": "equivalent",
+   "file": "rtl/ibex_controller.sv",
+   "line": 826,
+   "module": "ibex_controller",
+   "original": "(ebrk_insn_prio && ebreak_into_debug)",
+   "rewrite": "(ebreak_into_debug && ebrk_insn_prio)",
+   "verdict": "proven",
+   "gate_s": 10.74,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_controller",
+    "wall_s": 3.16,
+    "instances": [
+     {
+      "instance": "ibex_controller$ibex_core.id_stage_i.controller_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 1,
+   "operator": "commute_land",
+   "family": "equivalent",
+   "file": "rtl/ibex_fetch_fifo.sv",
+   "line": 263,
+   "module": "ibex_fetch_fifo",
+   "original": "(in_valid_i && pop_fifo)",
+   "rewrite": "(pop_fifo && in_valid_i)",
+   "verdict": "proven",
+   "gate_s": 10.55,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_fetch_fifo",
+    "wall_s": 3.03,
+    "instances": [
+     {
+      "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 2,
+   "operator": "commute_land",
+   "family": "equivalent",
+   "file": "rtl/ibex_controller.sv",
+   "line": 806,
+   "module": "ibex_controller",
+   "original": "(csr_pipe_flush && handle_irq)",
+   "rewrite": "(handle_irq && csr_pipe_flush)",
+   "verdict": "proven",
+   "gate_s": 9.74,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_controller",
+    "wall_s": 3.77,
+    "instances": [
+     {
+      "instance": "ibex_controller$ibex_core.id_stage_i.controller_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 3,
+   "operator": "commute_lor",
+   "family": "equivalent",
+   "file": "rtl/ibex_controller.sv",
+   "line": 583,
+   "module": "ibex_controller",
+   "original": "(stall || id_wb_pending)",
+   "rewrite": "(id_wb_pending || stall)",
+   "verdict": "proven",
+   "gate_s": 9.96,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_controller",
+    "wall_s": 4.83,
+    "instances": [
+     {
+      "instance": "ibex_controller$ibex_core.id_stage_i.controller_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 4,
+   "operator": "commute_lor",
+   "family": "equivalent",
+   "file": "rtl/ibex_load_store_unit.sv",
+   "line": 410,
+   "module": "ibex_load_store_unit",
+   "original": "(data_gnt_i || pmp_err_q)",
+   "rewrite": "(pmp_err_q || data_gnt_i)",
+   "verdict": "proven",
+   "gate_s": 9.85,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_load_store_unit",
+    "wall_s": 2.9,
+    "instances": [
+     {
+      "instance": "ibex_load_store_unit$ibex_core.load_store_unit_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 5,
+   "operator": "commute_lor",
+   "family": "equivalent",
+   "file": "rtl/ibex_core.sv",
+   "line": 1640,
+   "module": "ibex_core",
+   "original": "(csr_op_en || illegal_insn_id)",
+   "rewrite": "(illegal_insn_id || csr_op_en)",
+   "verdict": "proven",
+   "gate_s": 9.83,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_core",
+    "wall_s": 10.39,
+    "instances": [
+     {
+      "instance": "ibex_core",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 6,
+   "operator": "commute_lor",
+   "family": "equivalent",
+   "file": "rtl/ibex_controller.sv",
+   "line": 565,
+   "module": "ibex_controller",
+   "original": "(branch_set_i || jump_set_i)",
+   "rewrite": "(jump_set_i || branch_set_i)",
+   "verdict": "proven",
+   "gate_s": 9.81,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_controller",
+    "wall_s": 3.98,
+    "instances": [
+     {
+      "instance": "ibex_controller$ibex_core.id_stage_i.controller_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 7,
+   "operator": "commute_lor",
+   "family": "equivalent",
+   "file": "rtl/ibex_core.sv",
+   "line": 1638,
+   "module": "ibex_core",
+   "original": "(csr_op_en || illegal_insn_id)",
+   "rewrite": "(illegal_insn_id || csr_op_en)",
+   "verdict": "proven",
+   "gate_s": 9.87,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_core",
+    "wall_s": 9.81,
+    "instances": [
+     {
+      "instance": "ibex_core",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 8,
+   "operator": "commute_lor",
+   "family": "equivalent",
+   "file": "rtl/ibex_id_stage.sv",
+   "line": 1114,
+   "module": "ibex_id_stage",
+   "original": "(illegal_csr_insn_i || instr_fetch_err_i)",
+   "rewrite": "(instr_fetch_err_i || illegal_csr_insn_i)",
+   "verdict": "proven",
+   "gate_s": 9.76,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_id_stage",
+    "wall_s": 5.55,
+    "instances": [
+     {
+      "instance": "ibex_id_stage$ibex_core.id_stage_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 9,
+   "operator": "commute_lor",
+   "family": "equivalent",
+   "file": "rtl/ibex_id_stage.sv",
+   "line": 1122,
+   "module": "ibex_id_stage",
+   "original": "(illegal_c_insn_i || instr_fetch_err_i)",
+   "rewrite": "(instr_fetch_err_i || illegal_c_insn_i)",
+   "verdict": "proven",
+   "gate_s": 9.91,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_id_stage",
+    "wall_s": 5.92,
+    "instances": [
+     {
+      "instance": "ibex_id_stage$ibex_core.id_stage_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 10,
+   "operator": "commute_lor",
+   "family": "equivalent",
+   "file": "rtl/ibex_load_store_unit.sv",
+   "line": 452,
+   "module": "ibex_load_store_unit",
+   "original": "(data_gnt_i || pmp_err_q)",
+   "rewrite": "(pmp_err_q || data_gnt_i)",
+   "verdict": "proven",
+   "gate_s": 10.99,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_load_store_unit",
+    "wall_s": 3.26,
+    "instances": [
+     {
+      "instance": "ibex_load_store_unit$ibex_core.load_store_unit_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 11,
+   "operator": "commute_lor",
+   "family": "equivalent",
+   "file": "rtl/ibex_multdiv_slow.sv",
+   "line": 183,
+   "module": "ibex_multdiv_slow",
+   "original": "(mult_sel_i || div_sel_i)",
+   "rewrite": "(div_sel_i || mult_sel_i)",
+   "verdict": "proven",
+   "gate_s": 9.73,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "UNDECIDED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_multdiv_slow",
+    "wall_s": 0.45,
+    "instances": []
+   }
+  },
+  {
+   "i": 12,
+   "operator": "commute_lor",
+   "family": "equivalent",
+   "file": "rtl/ibex_load_store_unit.sv",
+   "line": 425,
+   "module": "ibex_load_store_unit",
+   "original": "(data_rvalid_i || pmp_err_q)",
+   "rewrite": "(pmp_err_q || data_rvalid_i)",
+   "verdict": "proven",
+   "gate_s": 9.81,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_load_store_unit",
+    "wall_s": 3.32,
+    "instances": [
+     {
+      "instance": "ibex_load_store_unit$ibex_core.load_store_unit_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 13,
+   "operator": "commute_lor",
+   "family": "equivalent",
+   "file": "rtl/ibex_controller.sv",
+   "line": 583,
+   "module": "ibex_controller",
+   "original": "(enter_debug_mode || handle_irq)",
+   "rewrite": "(handle_irq || enter_debug_mode)",
+   "verdict": "proven",
+   "gate_s": 9.9,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_controller",
+    "wall_s": 3.97,
+    "instances": [
+     {
+      "instance": "ibex_controller$ibex_core.id_stage_i.controller_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 14,
+   "operator": "commute_lor",
+   "family": "equivalent",
+   "file": "rtl/ibex_id_stage.sv",
+   "line": 1118,
+   "module": "ibex_id_stage",
+   "original": "(illegal_c_insn_i || instr_fetch_err_i)",
+   "rewrite": "(instr_fetch_err_i || illegal_c_insn_i)",
+   "verdict": "proven",
+   "gate_s": 9.95,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_id_stage",
+    "wall_s": 4.19,
+    "instances": [
+     {
+      "instance": "ibex_id_stage$ibex_core.id_stage_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 15,
+   "operator": "commute_band",
+   "family": "equivalent",
+   "file": "rtl/ibex_alu.sv",
+   "line": 1174,
+   "module": "ibex_alu",
+   "original": "(invbutterfly_result & butterfly_mask_r[3])",
+   "rewrite": "(butterfly_mask_r[3] & invbutterfly_result)",
+   "verdict": "proven",
+   "gate_s": 10.04,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_alu",
+    "wall_s": 2.96,
+    "instances": [
+     {
+      "instance": "ibex_alu$ibex_core.ex_block_i.alu_i",
+      "reset_assumed": false,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 16,
+   "operator": "commute_band",
+   "family": "equivalent",
+   "file": "rtl/ibex_id_stage.sv",
+   "line": 853,
+   "module": "ibex_id_stage",
+   "original": "(multicycle_done & ready_wb_i)",
+   "rewrite": "(ready_wb_i & multicycle_done)",
+   "verdict": "proven",
+   "gate_s": 10.72,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_id_stage",
+    "wall_s": 5.03,
+    "instances": [
+     {
+      "instance": "ibex_id_stage$ibex_core.id_stage_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 17,
+   "operator": "commute_band",
+   "family": "equivalent",
+   "file": "rtl/ibex_alu.sv",
+   "line": 1182,
+   "module": "ibex_alu",
+   "original": "(invbutterfly_result & butterfly_mask_r[1])",
+   "rewrite": "(butterfly_mask_r[1] & invbutterfly_result)",
+   "verdict": "proven",
+   "gate_s": 9.82,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_alu",
+    "wall_s": 2.68,
+    "instances": [
+     {
+      "instance": "ibex_alu$ibex_core.ex_block_i.alu_i",
+      "reset_assumed": false,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 18,
+   "operator": "commute_band",
+   "family": "equivalent",
+   "file": "rtl/ibex_alu.sv",
+   "line": 709,
+   "module": "ibex_alu",
+   "original": "(shuffle_result & SHUFFLE_MASK_NOT[2])",
+   "rewrite": "(SHUFFLE_MASK_NOT[2] & shuffle_result)",
+   "verdict": "proven",
+   "gate_s": 9.95,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_alu",
+    "wall_s": 2.49,
+    "instances": [
+     {
+      "instance": "ibex_alu$ibex_core.ex_block_i.alu_i",
+      "reset_assumed": false,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 19,
+   "operator": "commute_band",
+   "family": "equivalent",
+   "file": "rtl/ibex_alu.sv",
+   "line": 1156,
+   "module": "ibex_alu",
+   "original": "(butterfly_result & butterfly_mask_r[3])",
+   "rewrite": "(butterfly_mask_r[3] & butterfly_result)",
+   "verdict": "proven",
+   "gate_s": 9.92,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_alu",
+    "wall_s": 2.51,
+    "instances": [
+     {
+      "instance": "ibex_alu$ibex_core.ex_block_i.alu_i",
+      "reset_assumed": false,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 20,
+   "operator": "commute_band",
+   "family": "equivalent",
+   "file": "rtl/ibex_wb_stage.sv",
+   "line": 156,
+   "module": "ibex_wb_stage",
+   "original": "(lsu_resp_valid_i & lsu_resp_err_i)",
+   "rewrite": "(lsu_resp_err_i & lsu_resp_valid_i)",
+   "verdict": "proven",
+   "gate_s": 9.9,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_wb_stage",
+    "wall_s": 2.68,
+    "instances": [
+     {
+      "instance": "ibex_wb_stage$ibex_core.wb_stage_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 21,
+   "operator": "commute_band",
+   "family": "equivalent",
+   "file": "rtl/ibex_alu.sv",
+   "line": 1143,
+   "module": "ibex_alu",
+   "original": "(butterfly_result & butterfly_mask_l[0])",
+   "rewrite": "(butterfly_mask_l[0] & butterfly_result)",
+   "verdict": "proven",
+   "gate_s": 9.75,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_alu",
+    "wall_s": 2.78,
+    "instances": [
+     {
+      "instance": "ibex_alu$ibex_core.ex_block_i.alu_i",
+      "reset_assumed": false,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 22,
+   "operator": "commute_band",
+   "family": "equivalent",
+   "file": "rtl/ibex_wb_stage.sv",
+   "line": 83,
+   "module": "ibex_wb_stage",
+   "original": "(en_wb_i & ready_wb_o)",
+   "rewrite": "(ready_wb_o & en_wb_i)",
+   "verdict": "proven",
+   "gate_s": 10.01,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_wb_stage",
+    "wall_s": 2.77,
+    "instances": [
+     {
+      "instance": "ibex_wb_stage$ibex_core.wb_stage_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 23,
+   "operator": "commute_band",
+   "family": "equivalent",
+   "file": "rtl/ibex_multdiv_slow.sv",
+   "line": 198,
+   "module": "ibex_multdiv_slow",
+   "original": "(op_a_ext[32]   &     op_b_i[0])",
+   "rewrite": "(op_b_i[0] & op_a_ext[32])",
+   "verdict": "proven",
+   "gate_s": 10.48,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "UNDECIDED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_multdiv_slow",
+    "wall_s": 1.08,
+    "instances": []
+   }
+  },
+  {
+   "i": 24,
+   "operator": "commute_band",
+   "family": "equivalent",
+   "file": "rtl/ibex_multdiv_slow.sv",
+   "line": 148,
+   "module": "ibex_multdiv_slow",
+   "original": "(op_a_shift_q[32] & op_b_shift_q[0])",
+   "rewrite": "(op_b_shift_q[0] & op_a_shift_q[32])",
+   "verdict": "proven",
+   "gate_s": 10.24,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "UNDECIDED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_multdiv_slow",
+    "wall_s": 0.39,
+    "instances": []
+   }
+  },
+  {
+   "i": 25,
+   "operator": "commute_band",
+   "family": "equivalent",
+   "file": "rtl/ibex_fetch_fifo.sv",
+   "line": 93,
+   "module": "ibex_fetch_fifo",
+   "original": "(valid_q[0] & err_q[0])",
+   "rewrite": "(err_q[0] & valid_q[0])",
+   "verdict": "proven",
+   "gate_s": 10.35,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_fetch_fifo",
+    "wall_s": 1.76,
+    "instances": [
+     {
+      "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 26,
+   "operator": "commute_band",
+   "family": "equivalent",
+   "file": "rtl/ibex_fetch_fifo.sv",
+   "line": 207,
+   "module": "ibex_fetch_fifo",
+   "original": "(valid_pushed[i+1] & pop_fifo)",
+   "rewrite": "(pop_fifo & valid_pushed[i+1])",
+   "verdict": "proven",
+   "gate_s": 10.35,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_fetch_fifo",
+    "wall_s": 2.5,
+    "instances": [
+     {
+      "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 27,
+   "operator": "commute_band",
+   "family": "equivalent",
+   "file": "rtl/ibex_controller.sv",
+   "line": 405,
+   "module": "ibex_controller",
+   "original": "(irq_pending_i & csr_mstatus_mie_i)",
+   "rewrite": "(csr_mstatus_mie_i & irq_pending_i)",
+   "verdict": "proven",
+   "gate_s": 13.01,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_controller",
+    "wall_s": 4.2,
+    "instances": [
+     {
+      "instance": "ibex_controller$ibex_core.id_stage_i.controller_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 28,
+   "operator": "commute_band",
+   "family": "equivalent",
+   "file": "rtl/ibex_controller.sv",
+   "line": 574,
+   "module": "ibex_controller",
+   "original": "(instr_bp_taken_i & branch_not_set_i)",
+   "rewrite": "(branch_not_set_i & instr_bp_taken_i)",
+   "verdict": "proven",
+   "gate_s": 11.94,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_controller",
+    "wall_s": 2.07,
+    "instances": [
+     {
+      "instance": "ibex_controller$ibex_core.id_stage_i.controller_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 29,
+   "operator": "commute_band",
+   "family": "equivalent",
+   "file": "rtl/ibex_fetch_fifo.sv",
+   "line": 199,
+   "module": "ibex_fetch_fifo",
+   "original": "(in_valid_i & lowest_free_entry[i])",
+   "rewrite": "(lowest_free_entry[i] & in_valid_i)",
+   "verdict": "proven",
+   "gate_s": 10.47,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_fetch_fifo",
+    "wall_s": 1.79,
+    "instances": [
+     {
+      "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 30,
+   "operator": "commute_band",
+   "family": "equivalent",
+   "file": "rtl/ibex_fetch_fifo.sv",
+   "line": 139,
+   "module": "ibex_fetch_fifo",
+   "original": "(out_ready_i & out_valid_o)",
+   "rewrite": "(out_valid_o & out_ready_i)",
+   "verdict": "proven",
+   "gate_s": 11.0,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_fetch_fifo",
+    "wall_s": 2.64,
+    "instances": [
+     {
+      "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 31,
+   "operator": "commute_band",
+   "family": "equivalent",
+   "file": "rtl/ibex_multdiv_slow.sv",
+   "line": 149,
+   "module": "ibex_multdiv_slow",
+   "original": "(op_a_shift_q[32] & op_b_shift_q[0])",
+   "rewrite": "(op_b_shift_q[0] & op_a_shift_q[32])",
+   "verdict": "proven",
+   "gate_s": 10.66,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "UNDECIDED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_multdiv_slow",
+    "wall_s": 0.88,
+    "instances": []
+   }
+  },
+  {
+   "i": 32,
+   "operator": "commute_band",
+   "family": "equivalent",
+   "file": "rtl/ibex_multdiv_slow.sv",
+   "line": 149,
+   "module": "ibex_multdiv_slow",
+   "original": "(op_a_shift_q[31:0] & b_0)",
+   "rewrite": "(b_0 & op_a_shift_q[31:0])",
+   "verdict": "proven",
+   "gate_s": 10.53,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "UNDECIDED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_multdiv_slow",
+    "wall_s": 0.45,
+    "instances": []
+   }
+  },
+  {
+   "i": 33,
+   "operator": "commute_band",
+   "family": "equivalent",
+   "file": "rtl/ibex_multdiv_slow.sv",
+   "line": 148,
+   "module": "ibex_multdiv_slow",
+   "original": "(op_a_shift_q[31:0] & b_0)",
+   "rewrite": "(b_0 & op_a_shift_q[31:0])",
+   "verdict": "proven",
+   "gate_s": 10.59,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "UNDECIDED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_multdiv_slow",
+    "wall_s": 0.27,
+    "instances": []
+   }
+  },
+  {
+   "i": 34,
+   "operator": "commute_band",
+   "family": "equivalent",
+   "file": "rtl/ibex_wb_stage.sv",
+   "line": 175,
+   "module": "ibex_wb_stage",
+   "original": "(lsu_resp_valid_i & lsu_resp_err_i)",
+   "rewrite": "(lsu_resp_err_i & lsu_resp_valid_i)",
+   "verdict": "proven",
+   "gate_s": 11.53,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_wb_stage",
+    "wall_s": 2.12,
+    "instances": [
+     {
+      "instance": "ibex_wb_stage$ibex_core.wb_stage_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 35,
+   "operator": "commute_eq",
+   "family": "equivalent",
+   "file": "rtl/ibex_multdiv_fast.sv",
+   "line": 480,
+   "module": "ibex_multdiv_fast",
+   "original": "(operator_i == MD_OP_DIV)",
+   "rewrite": "(MD_OP_DIV == operator_i)",
+   "verdict": "proven",
+   "gate_s": 10.87,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_multdiv_fast",
+    "wall_s": 2.24,
+    "instances": [
+     {
+      "instance": "ibex_multdiv_fast$ibex_core.ex_block_i.gen_multdiv_fast.multdiv_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 36,
+   "operator": "commute_eq",
+   "family": "equivalent",
+   "file": "rtl/ibex_if_stage.sv",
+   "line": 220,
+   "module": "ibex_if_stage",
+   "original": "(pc_mux_i == PC_BOOT)",
+   "rewrite": "(PC_BOOT == pc_mux_i)",
+   "verdict": "proven",
+   "gate_s": 10.66,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_if_stage",
+    "wall_s": 3.59,
+    "instances": [
+     {
+      "instance": "ibex_if_stage$ibex_core.if_stage_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 37,
+   "operator": "commute_eq",
+   "family": "equivalent",
+   "file": "rtl/ibex_alu.sv",
+   "line": 456,
+   "module": "ibex_alu",
+   "original": "(operator_i == ALU_BDECOMPRESS)",
+   "rewrite": "(ALU_BDECOMPRESS == operator_i)",
+   "verdict": "proven",
+   "gate_s": 10.34,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_alu",
+    "wall_s": 2.56,
+    "instances": [
+     {
+      "instance": "ibex_alu$ibex_core.ex_block_i.alu_i",
+      "reset_assumed": false,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 38,
+   "operator": "commute_eq",
+   "family": "equivalent",
+   "file": "rtl/ibex_alu.sv",
+   "line": 918,
+   "module": "ibex_alu",
+   "original": "(operator_i == ALU_CRC32C_W)",
+   "rewrite": "(ALU_CRC32C_W == operator_i)",
+   "verdict": "proven",
+   "gate_s": 10.28,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_alu",
+    "wall_s": 2.53,
+    "instances": [
+     {
+      "instance": "ibex_alu$ibex_core.ex_block_i.alu_i",
+      "reset_assumed": false,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 39,
+   "operator": "commute_eq",
+   "family": "equivalent",
+   "file": "rtl/ibex_controller.sv",
+   "line": 894,
+   "module": "ibex_controller",
+   "original": "(ctrl_fsm_cs == SLEEP)",
+   "rewrite": "(SLEEP == ctrl_fsm_cs)",
+   "verdict": "proven",
+   "gate_s": 10.6,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_controller",
+    "wall_s": 2.86,
+    "instances": [
+     {
+      "instance": "ibex_controller$ibex_core.id_stage_i.controller_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 40,
+   "operator": "commute_eq",
+   "family": "equivalent",
+   "file": "rtl/ibex_alu.sv",
+   "line": 575,
+   "module": "ibex_alu",
+   "original": "(operator_i == ALU_SEXTB)",
+   "rewrite": "(ALU_SEXTB == operator_i)",
+   "verdict": "proven",
+   "gate_s": 10.37,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_alu",
+    "wall_s": 2.84,
+    "instances": [
+     {
+      "instance": "ibex_alu$ibex_core.ex_block_i.alu_i",
+      "reset_assumed": false,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 41,
+   "operator": "commute_eq",
+   "family": "equivalent",
+   "file": "rtl/ibex_alu.sv",
+   "line": 324,
+   "module": "ibex_alu",
+   "original": "(operator_i == ALU_SRO)",
+   "rewrite": "(ALU_SRO == operator_i)",
+   "verdict": "proven",
+   "gate_s": 10.26,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_alu",
+    "wall_s": 3.34,
+    "instances": [
+     {
+      "instance": "ibex_alu$ibex_core.ex_block_i.alu_i",
+      "reset_assumed": false,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 42,
+   "operator": "commute_eq",
+   "family": "equivalent",
+   "file": "rtl/ibex_alu.sv",
+   "line": 332,
+   "module": "ibex_alu",
+   "original": "(RV32B == RV32BNone)",
+   "rewrite": "(RV32BNone == RV32B)",
+   "verdict": "proven",
+   "gate_s": 10.44,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_alu",
+    "wall_s": 3.19,
+    "instances": [
+     {
+      "instance": "ibex_alu$ibex_core.ex_block_i.alu_i",
+      "reset_assumed": false,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 43,
+   "operator": "commute_eq",
+   "family": "equivalent",
+   "file": "rtl/ibex_id_stage.sv",
+   "line": 977,
+   "module": "ibex_id_stage",
+   "original": "(rf_waddr_wb_i == rf_raddr_b_o)",
+   "rewrite": "(rf_raddr_b_o == rf_waddr_wb_i)",
+   "verdict": "proven",
+   "gate_s": 10.5,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_id_stage",
+    "wall_s": 4.87,
+    "instances": [
+     {
+      "instance": "ibex_id_stage$ibex_core.id_stage_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 44,
+   "operator": "commute_eq",
+   "family": "equivalent",
+   "file": "rtl/ibex_controller.sv",
+   "line": 898,
+   "module": "ibex_controller",
+   "original": "(ctrl_fsm_ns == DBG_TAKEN_IF)",
+   "rewrite": "(DBG_TAKEN_IF == ctrl_fsm_ns)",
+   "verdict": "proven",
+   "gate_s": 10.21,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_controller",
+    "wall_s": 3.25,
+    "instances": [
+     {
+      "instance": "ibex_controller$ibex_core.id_stage_i.controller_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 45,
+   "operator": "commute_eq",
+   "family": "equivalent",
+   "file": "rtl/ibex_multdiv_slow.sv",
+   "line": 356,
+   "module": "ibex_multdiv_slow",
+   "original": "(md_state_q == MD_FINISH)",
+   "rewrite": "(MD_FINISH == md_state_q)",
+   "verdict": "proven",
+   "gate_s": 10.43,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "UNDECIDED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_multdiv_slow",
+    "wall_s": 0.61,
+    "instances": []
+   }
+  },
+  {
+   "i": 46,
+   "operator": "commute_eq",
+   "family": "equivalent",
+   "file": "rtl/ibex_decoder.sv",
+   "line": 1091,
+   "module": "ibex_decoder",
+   "original": "(RV32B == RV32BFull)",
+   "rewrite": "(RV32BFull == RV32B)",
+   "verdict": "proven",
+   "gate_s": 10.33,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_decoder",
+    "wall_s": 3.33,
+    "instances": [
+     {
+      "instance": "ibex_decoder$ibex_core.id_stage_i.decoder_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 47,
+   "operator": "commute_eq",
+   "family": "equivalent",
+   "file": "rtl/ibex_decoder.sv",
+   "line": 1104,
+   "module": "ibex_decoder",
+   "original": "(RV32M == RV32MNone)",
+   "rewrite": "(RV32MNone == RV32M)",
+   "verdict": "proven",
+   "gate_s": 10.18,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_decoder",
+    "wall_s": 3.1,
+    "instances": [
+     {
+      "instance": "ibex_decoder$ibex_core.id_stage_i.decoder_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 48,
+   "operator": "commute_eq",
+   "family": "equivalent",
+   "file": "rtl/ibex_wb_stage.sv",
+   "line": 88,
+   "module": "ibex_wb_stage",
+   "original": "(wb_instr_type_q == WB_INSTR_OTHER)",
+   "rewrite": "(WB_INSTR_OTHER == wb_instr_type_q)",
+   "verdict": "proven",
+   "gate_s": 10.06,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_wb_stage",
+    "wall_s": 2.3,
+    "instances": [
+     {
+      "instance": "ibex_wb_stage$ibex_core.wb_stage_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 49,
+   "operator": "commute_eq",
+   "family": "equivalent",
+   "file": "rtl/ibex_load_store_unit.sv",
+   "line": 595,
+   "module": "ibex_load_store_unit",
+   "original": "(ls_fsm_cs == IDLE)",
+   "rewrite": "(IDLE == ls_fsm_cs)",
+   "verdict": "proven",
+   "gate_s": 9.83,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_load_store_unit",
+    "wall_s": 3.14,
+    "instances": [
+     {
+      "instance": "ibex_load_store_unit$ibex_core.load_store_unit_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 50,
+   "operator": "commute_eq",
+   "family": "equivalent",
+   "file": "rtl/ibex_cs_registers.sv",
+   "line": 1407,
+   "module": "ibex_cs_registers",
+   "original": "(i[DbgHwNumLen-1:0] == tselect_q)",
+   "rewrite": "(tselect_q == i[DbgHwNumLen-1:0])",
+   "verdict": "proven",
+   "gate_s": 10.59,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_cs_registers",
+    "wall_s": 3.8,
+    "instances": [
+     {
+      "instance": "ibex_cs_registers$ibex_core.cs_registers_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 51,
+   "operator": "commute_eq",
+   "family": "equivalent",
+   "file": "rtl/ibex_controller.sv",
+   "line": 171,
+   "module": "ibex_controller",
+   "original": "(ctrl_fsm_cs == DECODE)",
+   "rewrite": "(DECODE == ctrl_fsm_cs)",
+   "verdict": "proven",
+   "gate_s": 9.75,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_controller",
+    "wall_s": 3.02,
+    "instances": [
+     {
+      "instance": "ibex_controller$ibex_core.id_stage_i.controller_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 52,
+   "operator": "commute_eq",
+   "family": "equivalent",
+   "file": "rtl/ibex_decoder.sv",
+   "line": 1124,
+   "module": "ibex_decoder",
+   "original": "(RV32M == RV32MNone)",
+   "rewrite": "(RV32MNone == RV32M)",
+   "verdict": "proven",
+   "gate_s": 9.95,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_decoder",
+    "wall_s": 2.46,
+    "instances": [
+     {
+      "instance": "ibex_decoder$ibex_core.id_stage_i.decoder_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 53,
+   "operator": "commute_eq",
+   "family": "equivalent",
+   "file": "rtl/ibex_controller.sv",
+   "line": 900,
+   "module": "ibex_controller",
+   "original": "(ctrl_fsm_ns == DBG_TAKEN_ID)",
+   "rewrite": "(DBG_TAKEN_ID == ctrl_fsm_ns)",
+   "verdict": "proven",
+   "gate_s": 10.07,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_controller",
+    "wall_s": 2.71,
+    "instances": [
+     {
+      "instance": "ibex_controller$ibex_core.id_stage_i.controller_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 54,
+   "operator": "commute_eq",
+   "family": "equivalent",
+   "file": "rtl/ibex_decoder.sv",
+   "line": 1120,
+   "module": "ibex_decoder",
+   "original": "(RV32M == RV32MNone)",
+   "rewrite": "(RV32MNone == RV32M)",
+   "verdict": "proven",
+   "gate_s": 9.96,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_decoder",
+    "wall_s": 2.93,
+    "instances": [
+     {
+      "instance": "ibex_decoder$ibex_core.id_stage_i.decoder_i",
+      "reset_assumed": true,
+      "register_cut": "PASS",
+      "reset": "PASS",
+      "any": "PASS",
+      "unmatched": [],
+      "reset_port": null
+     }
+    ]
+   }
+  },
+  {
+   "i": 55,
+   "operator": "drop_conjunct",
+   "family": "simplifying",
+   "file": "rtl/ibex_controller.sv",
+   "line": 806,
+   "module": "ibex_controller",
+   "original": "(csr_pipe_flush && handle_irq)",
+   "rewrite": "(csr_pipe_flush)",
+   "verdict": "refuted",
+   "gate_s": 10.16,
+   "failed": [
+    "ibex_core.id_stage_i.controller_i.ctrl_fsm_ns"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82351.4816,
+   "max_delay_ns": 24.1852,
+   "cells": 9544,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_controller",
+    "wall_s": 8.21,
+    "instances": [
+     {
+      "instance": "ibex_controller$ibex_core.id_stage_i.controller_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 56,
+   "operator": "drop_conjunct",
+   "family": "simplifying",
+   "file": "rtl/ibex_fetch_fifo.sv",
+   "line": 263,
+   "module": "ibex_fetch_fifo",
+   "original": "(in_valid_i && pop_fifo)",
+   "rewrite": "(in_valid_i)",
+   "verdict": "proven",
+   "gate_s": 10.2,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521
+  },
+  {
+   "i": 57,
+   "operator": "drop_conjunct",
+   "family": "simplifying",
+   "file": "rtl/ibex_controller.sv",
+   "line": 826,
+   "module": "ibex_controller",
+   "original": "(ebrk_insn_prio && ebreak_into_debug)",
+   "rewrite": "(ebrk_insn_prio)",
+   "verdict": "refuted",
+   "gate_s": 10.2,
+   "failed": [
+    "ibex_core.id_stage_i.controller_i.ctrl_fsm_ns"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82352.7328,
+   "max_delay_ns": 24.1851,
+   "cells": 9542,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_controller",
+    "wall_s": 8.12,
+    "instances": [
+     {
+      "instance": "ibex_controller$ibex_core.id_stage_i.controller_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 58,
+   "operator": "drop_disjunct",
+   "family": "simplifying",
+   "file": "rtl/ibex_controller.sv",
+   "line": 565,
+   "module": "ibex_controller",
+   "original": "(branch_set_i || jump_set_i)",
+   "rewrite": "(branch_set_i)",
+   "verdict": "refuted",
+   "gate_s": 10.14,
+   "failed": [
+    "ibex_core.id_stage_i.controller_i.pc_set_o",
+    "ibex_core.id_stage_i.controller_i.perf_jump_o"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82776.8896,
+   "max_delay_ns": 24.1085,
+   "cells": 9691,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_controller",
+    "wall_s": 7.09,
+    "instances": [
+     {
+      "instance": "ibex_controller$ibex_core.id_stage_i.controller_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 59,
+   "operator": "drop_disjunct",
+   "family": "simplifying",
+   "file": "rtl/ibex_core.sv",
+   "line": 1640,
+   "module": "ibex_core",
+   "original": "(csr_op_en || illegal_insn_id)",
+   "rewrite": "(csr_op_en)",
+   "verdict": "proven",
+   "gate_s": 10.12,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521
+  },
+  {
+   "i": 60,
+   "operator": "drop_disjunct",
+   "family": "simplifying",
+   "file": "rtl/ibex_load_store_unit.sv",
+   "line": 452,
+   "module": "ibex_load_store_unit",
+   "original": "(data_gnt_i || pmp_err_q)",
+   "rewrite": "(data_gnt_i)",
+   "verdict": "refuted",
+   "gate_s": 10.35,
+   "failed": [
+    "ibex_core.load_store_unit_i.addr_update",
+    "ibex_core.load_store_unit_i.ctrl_update",
+    "ibex_core.load_store_unit_i.handle_misaligned_d",
+    "ibex_core.load_store_unit_i.ls_fsm_ns"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82479.104,
+   "max_delay_ns": 25.7907,
+   "cells": 9577,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_load_store_unit",
+    "wall_s": 8.6,
+    "instances": [
+     {
+      "instance": "ibex_load_store_unit$ibex_core.load_store_unit_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 61,
+   "operator": "drop_disjunct",
+   "family": "simplifying",
+   "file": "rtl/ibex_id_stage.sv",
+   "line": 1114,
+   "module": "ibex_id_stage",
+   "original": "(illegal_csr_insn_i || instr_fetch_err_i)",
+   "rewrite": "(illegal_csr_insn_i)",
+   "verdict": "proven",
+   "gate_s": 9.94,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521
+  },
+  {
+   "i": 62,
+   "operator": "drop_disjunct",
+   "family": "simplifying",
+   "file": "rtl/ibex_load_store_unit.sv",
+   "line": 410,
+   "module": "ibex_load_store_unit",
+   "original": "(data_gnt_i || pmp_err_q)",
+   "rewrite": "(data_gnt_i)",
+   "verdict": "refuted",
+   "gate_s": 10.71,
+   "failed": [
+    "ibex_core.load_store_unit_i.addr_update",
+    "ibex_core.load_store_unit_i.ctrl_update",
+    "ibex_core.load_store_unit_i.handle_misaligned_d",
+    "ibex_core.load_store_unit_i.ls_fsm_ns"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82489.1136,
+   "max_delay_ns": 24.1877,
+   "cells": 9599,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_load_store_unit",
+    "wall_s": 7.02,
+    "instances": [
+     {
+      "instance": "ibex_load_store_unit$ibex_core.load_store_unit_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 63,
+   "operator": "drop_disjunct",
+   "family": "simplifying",
+   "file": "rtl/ibex_load_store_unit.sv",
+   "line": 425,
+   "module": "ibex_load_store_unit",
+   "original": "(data_rvalid_i || pmp_err_q)",
+   "rewrite": "(data_rvalid_i)",
+   "verdict": "refuted",
+   "gate_s": 10.7,
+   "failed": [
+    "ibex_core.load_store_unit_i.handle_misaligned_d",
+    "ibex_core.load_store_unit_i.ls_fsm_ns",
+    "ibex_core.load_store_unit_i.lsu_err_d",
+    "ibex_core.load_store_unit_i.pmp_err_d",
+    "ibex_core.load_store_unit_i.rdata_update"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82251.3856,
+   "max_delay_ns": 25.7907,
+   "cells": 9547,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_load_store_unit",
+    "wall_s": 5.44,
+    "instances": [
+     {
+      "instance": "ibex_load_store_unit$ibex_core.load_store_unit_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 64,
+   "operator": "drop_disjunct",
+   "family": "simplifying",
+   "file": "rtl/ibex_id_stage.sv",
+   "line": 1122,
+   "module": "ibex_id_stage",
+   "original": "(illegal_c_insn_i || instr_fetch_err_i)",
+   "rewrite": "(illegal_c_insn_i)",
+   "verdict": "proven",
+   "gate_s": 11.46,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521
+  },
+  {
+   "i": 65,
+   "operator": "drop_disjunct",
+   "family": "simplifying",
+   "file": "rtl/ibex_multdiv_slow.sv",
+   "line": 183,
+   "module": "ibex_multdiv_slow",
+   "original": "(mult_sel_i || div_sel_i)",
+   "rewrite": "(mult_sel_i)",
+   "verdict": "proven",
+   "gate_s": 10.36,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521
+  },
+  {
+   "i": 66,
+   "operator": "drop_disjunct",
+   "family": "simplifying",
+   "file": "rtl/ibex_id_stage.sv",
+   "line": 1118,
+   "module": "ibex_id_stage",
+   "original": "(illegal_c_insn_i || instr_fetch_err_i)",
+   "rewrite": "(illegal_c_insn_i)",
+   "verdict": "proven",
+   "gate_s": 10.58,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521
+  },
+  {
+   "i": 67,
+   "operator": "drop_disjunct",
+   "family": "simplifying",
+   "file": "rtl/ibex_core.sv",
+   "line": 1638,
+   "module": "ibex_core",
+   "original": "(csr_op_en || illegal_insn_id)",
+   "rewrite": "(csr_op_en)",
+   "verdict": "proven",
+   "gate_s": 11.59,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521
+  },
+  {
+   "i": 68,
+   "operator": "drop_disjunct",
+   "family": "simplifying",
+   "file": "rtl/ibex_controller.sv",
+   "line": 583,
+   "module": "ibex_controller",
+   "original": "(stall || id_wb_pending)",
+   "rewrite": "(stall)",
+   "verdict": "refuted",
+   "gate_s": 10.62,
+   "failed": [
+    "ibex_core.id_stage_i.controller_i.halt_if"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82804.416,
+   "max_delay_ns": 24.1338,
+   "cells": 9696,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_controller",
+    "wall_s": 6.42,
+    "instances": [
+     {
+      "instance": "ibex_controller$ibex_core.id_stage_i.controller_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 69,
+   "operator": "drop_disjunct",
+   "family": "simplifying",
+   "file": "rtl/ibex_controller.sv",
+   "line": 583,
+   "module": "ibex_controller",
+   "original": "(enter_debug_mode || handle_irq)",
+   "rewrite": "(enter_debug_mode)",
+   "verdict": "refuted",
+   "gate_s": 10.56,
+   "failed": [
+    "ibex_core.id_stage_i.controller_i.halt_if"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82786.8992,
+   "max_delay_ns": 24.1085,
+   "cells": 9694,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_controller",
+    "wall_s": 5.58,
+    "instances": [
+     {
+      "instance": "ibex_controller$ibex_core.id_stage_i.controller_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 70,
+   "operator": "remove_inversion",
+   "family": "simplifying",
+   "file": "rtl/ibex_load_store_unit.sv",
+   "line": 245,
+   "module": "ibex_load_store_unit",
+   "original": "!data_sign_ext_q",
+   "rewrite": "data_sign_ext_q",
+   "verdict": "refuted",
+   "gate_s": 10.6,
+   "failed": [
+    "ibex_core.load_store_unit_i.rdata_h_ext"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82485.36,
+   "max_delay_ns": 25.4727,
+   "cells": 9597,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_load_store_unit",
+    "wall_s": 5.94,
+    "instances": [
+     {
+      "instance": "ibex_load_store_unit$ibex_core.load_store_unit_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 71,
+   "operator": "remove_inversion",
+   "family": "simplifying",
+   "file": "rtl/ibex_controller.sv",
+   "line": 688,
+   "module": "ibex_controller",
+   "original": "!debug_mode_q",
+   "rewrite": "debug_mode_q",
+   "verdict": "refuted",
+   "gate_s": 10.73,
+   "failed": [
+    "ibex_core.id_stage_i.controller_i.csr_save_cause_o",
+    "ibex_core.id_stage_i.controller_i.csr_save_id_o",
+    "ibex_core.id_stage_i.controller_i.debug_csr_save_o"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82789.4016,
+   "max_delay_ns": 24.4264,
+   "cells": 9670,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_controller",
+    "wall_s": 7.06,
+    "instances": [
+     {
+      "instance": "ibex_controller$ibex_core.id_stage_i.controller_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 72,
+   "operator": "remove_inversion",
+   "family": "simplifying",
+   "file": "rtl/ibex_load_store_unit.sv",
+   "line": 261,
+   "module": "ibex_load_store_unit",
+   "original": "!data_sign_ext_q",
+   "rewrite": "data_sign_ext_q",
+   "verdict": "refuted",
+   "gate_s": 10.36,
+   "failed": [
+    "ibex_core.load_store_unit_i.rdata_h_ext"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82390.2688,
+   "max_delay_ns": 25.4727,
+   "cells": 9581,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_load_store_unit",
+    "wall_s": 7.4,
+    "instances": [
+     {
+      "instance": "ibex_load_store_unit$ibex_core.load_store_unit_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 73,
+   "operator": "remove_inversion",
+   "family": "simplifying",
+   "file": "rtl/ibex_controller.sv",
+   "line": 587,
+   "module": "ibex_controller",
+   "original": "!id_wb_pending",
+   "rewrite": "id_wb_pending",
+   "verdict": "refuted",
+   "gate_s": 10.34,
+   "failed": [
+    "ibex_core.id_stage_i.controller_i.ctrl_fsm_ns",
+    "ibex_core.id_stage_i.controller_i.halt_if"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82804.416,
+   "max_delay_ns": 24.143,
+   "cells": 9695,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_controller",
+    "wall_s": 7.15,
+    "instances": [
+     {
+      "instance": "ibex_controller$ibex_core.id_stage_i.controller_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 74,
+   "operator": "remove_inversion",
+   "family": "simplifying",
+   "file": "rtl/ibex_if_stage.sv",
+   "line": 202,
+   "module": "ibex_if_stage",
+   "original": "!pc_set_i",
+   "rewrite": "pc_set_i",
+   "verdict": "proven",
+   "gate_s": 10.28,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521
+  },
+  {
+   "i": 75,
+   "operator": "remove_inversion",
+   "family": "simplifying",
+   "file": "rtl/ibex_controller.sv",
+   "line": 324,
+   "module": "ibex_controller",
+   "original": "!irq_nm_ext_i",
+   "rewrite": "irq_nm_ext_i",
+   "verdict": "proven",
+   "gate_s": 10.87,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521
+  },
+  {
+   "i": 76,
+   "operator": "remove_inversion",
+   "family": "simplifying",
+   "file": "rtl/ibex_controller.sv",
+   "line": 619,
+   "module": "ibex_controller",
+   "original": "!nmi_mode_q",
+   "rewrite": "nmi_mode_q",
+   "verdict": "refuted",
+   "gate_s": 15.44,
+   "failed": [
+    "ibex_core.id_stage_i.controller_i.exc_cause_o",
+    "ibex_core.id_stage_i.controller_i.nmi_mode_d"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82766.88,
+   "max_delay_ns": 24.1085,
+   "cells": 9685,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_controller",
+    "wall_s": 6.07,
+    "instances": [
+     {
+      "instance": "ibex_controller$ibex_core.id_stage_i.controller_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 77,
+   "operator": "remove_inversion",
+   "family": "simplifying",
+   "file": "rtl/ibex_load_store_unit.sv",
+   "line": 308,
+   "module": "ibex_load_store_unit",
+   "original": "!data_sign_ext_q",
+   "rewrite": "data_sign_ext_q",
+   "verdict": "refuted",
+   "gate_s": 17.48,
+   "failed": [
+    "ibex_core.load_store_unit_i.rdata_b_ext"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82419.0464,
+   "max_delay_ns": 25.4727,
+   "cells": 9585,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_load_store_unit",
+    "wall_s": 6.96,
+    "instances": [
+     {
+      "instance": "ibex_load_store_unit$ibex_core.load_store_unit_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 78,
+   "operator": "remove_inversion",
+   "family": "simplifying",
+   "file": "rtl/ibex_controller.sv",
+   "line": 587,
+   "module": "ibex_controller",
+   "original": "!stall",
+   "rewrite": "stall",
+   "verdict": "refuted",
+   "gate_s": 11.4,
+   "failed": [
+    "ibex_core.id_stage_i.controller_i.ctrl_fsm_ns",
+    "ibex_core.id_stage_i.controller_i.halt_if"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82778.1408,
+   "max_delay_ns": 24.1085,
+   "cells": 9689,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_controller",
+    "wall_s": 8.16,
+    "instances": [
+     {
+      "instance": "ibex_controller$ibex_core.id_stage_i.controller_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 79,
+   "operator": "remove_inversion",
+   "family": "simplifying",
+   "file": "rtl/ibex_load_store_unit.sv",
+   "line": 300,
+   "module": "ibex_load_store_unit",
+   "original": "!data_sign_ext_q",
+   "rewrite": "data_sign_ext_q",
+   "verdict": "refuted",
+   "gate_s": 13.84,
+   "failed": [
+    "ibex_core.load_store_unit_i.rdata_b_ext"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82356.4864,
+   "max_delay_ns": 25.4727,
+   "cells": 9576,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_load_store_unit",
+    "wall_s": 6.76,
+    "instances": [
+     {
+      "instance": "ibex_load_store_unit$ibex_core.load_store_unit_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 80,
+   "operator": "remove_inversion",
+   "family": "simplifying",
+   "file": "rtl/ibex_multdiv_slow.sv",
+   "line": 194,
+   "module": "ibex_multdiv_slow",
+   "original": "!data_ind_timing_i",
+   "rewrite": "data_ind_timing_i",
+   "verdict": "proven",
+   "gate_s": 12.77,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521
+  },
+  {
+   "i": 81,
+   "operator": "remove_inversion",
+   "family": "simplifying",
+   "file": "rtl/ibex_load_store_unit.sv",
+   "line": 269,
+   "module": "ibex_load_store_unit",
+   "original": "!data_sign_ext_q",
+   "rewrite": "data_sign_ext_q",
+   "verdict": "refuted",
+   "gate_s": 11.7,
+   "failed": [
+    "ibex_core.load_store_unit_i.rdata_h_ext"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82361.4912,
+   "max_delay_ns": 25.4727,
+   "cells": 9577,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_load_store_unit",
+    "wall_s": 7.11,
+    "instances": [
+     {
+      "instance": "ibex_load_store_unit$ibex_core.load_store_unit_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 82,
+   "operator": "remove_inversion",
+   "family": "simplifying",
+   "file": "rtl/ibex_multdiv_slow.sv",
+   "line": 222,
+   "module": "ibex_multdiv_slow",
+   "original": "!data_ind_timing_i",
+   "rewrite": "data_ind_timing_i",
+   "verdict": "proven",
+   "gate_s": 10.59,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521
+  },
+  {
+   "i": 83,
+   "operator": "remove_inversion",
+   "family": "simplifying",
+   "file": "rtl/ibex_multdiv_fast.sv",
+   "line": 427,
+   "module": "ibex_multdiv_fast",
+   "original": "!data_ind_timing_i",
+   "rewrite": "data_ind_timing_i",
+   "verdict": "refuted",
+   "gate_s": 12.82,
+   "failed": [
+    "ibex_core.ex_block_i.gen_multdiv_fast.multdiv_i.md_state_d"
+   ],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82643.0112,
+   "max_delay_ns": 27.6182,
+   "cells": 9662,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_multdiv_fast",
+    "wall_s": 247.62,
+    "instances": [
+     {
+      "instance": "ibex_multdiv_fast$ibex_core.ex_block_i.gen_multdiv_fast.multdiv_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 84,
+   "operator": "remove_inversion",
+   "family": "simplifying",
+   "file": "rtl/ibex_multdiv_slow.sv",
+   "line": 210,
+   "module": "ibex_multdiv_slow",
+   "original": "!data_ind_timing_i",
+   "rewrite": "data_ind_timing_i",
+   "verdict": "proven",
+   "gate_s": 15.96,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521
+  },
+  {
+   "i": 85,
+   "operator": "remove_inversion",
+   "family": "simplifying",
+   "file": "rtl/ibex_multdiv_slow.sv",
+   "line": 255,
+   "module": "ibex_multdiv_slow",
+   "original": "!data_ind_timing_i",
+   "rewrite": "data_ind_timing_i",
+   "verdict": "proven",
+   "gate_s": 15.79,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521
+  },
+  {
+   "i": 86,
+   "operator": "remove_inversion",
+   "family": "simplifying",
+   "file": "rtl/ibex_cs_registers.sv",
+   "line": 691,
+   "module": "ibex_cs_registers",
+   "original": "!debug_mode_i",
+   "rewrite": "debug_mode_i",
+   "verdict": "refuted",
+   "gate_s": 11.35,
+   "failed": [
+    "ibex_core.cs_registers_i.cpuctrl_d",
+    "ibex_core.cs_registers_i.cpuctrl_we",
+    "ibex_core.cs_registers_i.double_fault_seen_o",
+    "ibex_core.cs_registers_i.mcause_d",
+    "ibex_core.cs_registers_i.mcause_en",
+    "ibex_core.cs_registers_i.mepc_d",
+    "ibex_core.cs_registers_i.mepc_en",
+    "ibex_core.cs_registers_i.mstack_en",
+    "ibex_core.cs_registers_i.mstatus_d",
+    "ibex_core.cs_registers_i.mstatus_en"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82365.2448,
+   "max_delay_ns": 24.5826,
+   "cells": 9552,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_cs_registers",
+    "wall_s": 32.5,
+    "instances": [
+     {
+      "instance": "ibex_cs_registers$ibex_core.cs_registers_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 87,
+   "operator": "remove_inversion",
+   "family": "simplifying",
+   "file": "rtl/ibex_id_stage.sv",
+   "line": 691,
+   "module": "ibex_id_stage",
+   "original": "!data_ind_timing_i",
+   "rewrite": "data_ind_timing_i",
+   "verdict": "proven",
+   "gate_s": 15.26,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521
+  },
+  {
+   "i": 88,
+   "operator": "remove_inversion",
+   "family": "simplifying",
+   "file": "rtl/ibex_decoder.sv",
+   "line": 783,
+   "module": "ibex_decoder",
+   "original": "!instr_alu[14]",
+   "rewrite": "instr_alu[14]",
+   "verdict": "refuted",
+   "gate_s": 11.1,
+   "failed": [
+    "ibex_core.id_stage_i.decoder_i.alu_op_b_mux_sel_o",
+    "ibex_core.id_stage_i.decoder_i.imm_b_mux_sel_o"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82384.0128,
+   "max_delay_ns": 24.5904,
+   "cells": 9589,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_decoder",
+    "wall_s": 6.3,
+    "instances": [
+     {
+      "instance": "ibex_decoder$ibex_core.id_stage_i.decoder_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 89,
+   "operator": "remove_inversion",
+   "family": "simplifying",
+   "file": "rtl/ibex_multdiv_fast.sv",
+   "line": 438,
+   "module": "ibex_multdiv_fast",
+   "original": "!data_ind_timing_i",
+   "rewrite": "data_ind_timing_i",
+   "verdict": "refuted",
+   "gate_s": 9.81,
+   "failed": [
+    "ibex_core.ex_block_i.gen_multdiv_fast.multdiv_i.md_state_d"
+   ],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82619.2384,
+   "max_delay_ns": 26.551,
+   "cells": 9659,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_multdiv_fast",
+    "wall_s": 248.02,
+    "instances": [
+     {
+      "instance": "ibex_multdiv_fast$ibex_core.ex_block_i.gen_multdiv_fast.multdiv_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 90,
+   "operator": "fold_guard",
+   "family": "simplifying",
+   "file": "rtl/ibex_controller.sv",
+   "line": 275,
+   "module": "ibex_controller",
+   "original": "if (illegal_insn_q)",
+   "rewrite": "if (1'b1)",
+   "verdict": "refuted",
+   "gate_s": 11.03,
+   "failed": [
+    "ibex_core.id_stage_i.controller_i.csr_mtval_o",
+    "ibex_core.id_stage_i.controller_i.csr_save_cause_o",
+    "ibex_core.id_stage_i.controller_i.ctrl_fsm_ns",
+    "ibex_core.id_stage_i.controller_i.ebrk_insn_prio",
+    "ibex_core.id_stage_i.controller_i.ecall_insn_prio",
+    "ibex_core.id_stage_i.controller_i.exc_cause_o",
+    "ibex_core.id_stage_i.controller_i.flush_id",
+    "ibex_core.id_stage_i.controller_i.illegal_insn_prio",
+    "ibex_core.id_stage_i.controller_i.load_err_prio",
+    "ibex_core.id_stage_i.controller_i.pc_set_o"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82067.4592,
+   "max_delay_ns": 26.5594,
+   "cells": 9597,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_controller",
+    "wall_s": 5.55,
+    "instances": [
+     {
+      "instance": "ibex_controller$ibex_core.id_stage_i.controller_i",
+      "reset_assumed": true,
+      "reset": "FAIL",
+      "unmatched": [
+       "$driver$illegal_insn_q"
+      ],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 91,
+   "operator": "fold_guard",
+   "family": "simplifying",
+   "file": "rtl/ibex_fetch_fifo.sv",
+   "line": 162,
+   "module": "ibex_fetch_fifo",
+   "original": "if (instr_addr_en)",
+   "rewrite": "if (1'b1)",
+   "verdict": "refuted",
+   "gate_s": 11.55,
+   "failed": [
+    "ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i.instr_addr_q"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 81926.0736,
+   "max_delay_ns": 25.6922,
+   "cells": 9550,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_fetch_fifo",
+    "wall_s": 4.63,
+    "instances": [
+     {
+      "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 92,
+   "operator": "fold_guard",
+   "family": "simplifying",
+   "file": "rtl/ibex_register_file_ff.sv",
+   "line": 94,
+   "module": "ibex_register_file_ff",
+   "original": "if (we_a_dec[i])",
+   "rewrite": "if (1'b1)",
+   "verdict": "proven",
+   "gate_s": 9.94,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521
+  },
+  {
+   "i": 93,
+   "operator": "fold_guard",
+   "family": "simplifying",
+   "file": "rtl/ibex_cs_registers.sv",
+   "line": 557,
+   "module": "ibex_cs_registers",
+   "original": "if (csr_we_int)",
+   "rewrite": "if (1'b1)",
+   "verdict": "refuted",
+   "gate_s": 11.49,
+   "failed": [
+    "ibex_core.cs_registers_i.cpuctrl_d",
+    "ibex_core.cs_registers_i.cpuctrl_we",
+    "ibex_core.cs_registers_i.dcsr_d",
+    "ibex_core.cs_registers_i.dcsr_en",
+    "ibex_core.cs_registers_i.depc_en",
+    "ibex_core.cs_registers_i.dscratch0_en",
+    "ibex_core.cs_registers_i.dscratch1_en",
+    "ibex_core.cs_registers_i.mcause_en",
+    "ibex_core.cs_registers_i.mcountinhibit_we",
+    "ibex_core.cs_registers_i.mepc_en"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82068.7104,
+   "max_delay_ns": 23.1972,
+   "cells": 9482,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_cs_registers",
+    "wall_s": 35.47,
+    "instances": [
+     {
+      "instance": "ibex_cs_registers$ibex_core.cs_registers_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 94,
+   "operator": "fold_guard",
+   "family": "simplifying",
+   "file": "rtl/ibex_fetch_fifo.sv",
+   "line": 249,
+   "module": "ibex_fetch_fifo",
+   "original": "if (entry_en[i])",
+   "rewrite": "if (1'b1)",
+   "verdict": "refuted",
+   "gate_s": 11.8,
+   "failed": [
+    "ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i.err_q.0",
+    "ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i.err_q.1",
+    "ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i.err_q.2",
+    "ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i.rdata_q.0",
+    "ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i.rdata_q.32",
+    "ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i.rdata_q.64"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 81386.8064,
+   "max_delay_ns": 23.9738,
+   "cells": 9576,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_fetch_fifo",
+    "wall_s": 5.17,
+    "instances": [
+     {
+      "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 95,
+   "operator": "fold_guard",
+   "family": "simplifying",
+   "file": "rtl/ibex_alu.sv",
+   "line": 283,
+   "module": "ibex_alu",
+   "original": "if (bfp_op)",
+   "rewrite": "if (1'b1)",
+   "verdict": "refuted",
+   "gate_s": 11.38,
+   "failed": [
+    "ibex_core.ex_block_i.alu_i.adder_in_b",
+    "ibex_core.ex_block_i.alu_i.bwlogic_and_result",
+    "ibex_core.ex_block_i.alu_i.bwlogic_or_result",
+    "ibex_core.ex_block_i.alu_i.bwlogic_xor_result",
+    "ibex_core.ex_block_i.alu_i.operand_b_neg",
+    "ibex_core.ex_block_i.alu_i.shift_amt"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82190.0768,
+   "max_delay_ns": 24.0727,
+   "cells": 9584,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_alu",
+    "wall_s": 5.0,
+    "instances": [
+     {
+      "instance": "ibex_alu$ibex_core.ex_block_i.alu_i",
+      "reset_assumed": false,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": null,
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 96,
+   "operator": "fold_guard",
+   "family": "simplifying",
+   "file": "rtl/ibex_controller.sv",
+   "line": 255,
+   "module": "ibex_controller",
+   "original": "if (ecall_insn)",
+   "rewrite": "if (1'b1)",
+   "verdict": "proven",
+   "gate_s": 10.15,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521
+  },
+  {
+   "i": 97,
+   "operator": "fold_guard",
+   "family": "simplifying",
+   "file": "rtl/ibex_prefetch_buffer.sv",
+   "line": 184,
+   "module": "ibex_prefetch_buffer",
+   "original": "if (fetch_addr_en)",
+   "rewrite": "if (1'b1)",
+   "verdict": "refuted",
+   "gate_s": 10.16,
+   "failed": [
+    "ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fetch_addr_q"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82041.184,
+   "max_delay_ns": 24.5604,
+   "cells": 9590,
+   "explicit": {
+    "from_reset": "PROVEN-SEQ",
+    "any_state": "ANY-STATE",
+    "scope": "ibex_prefetch_buffer",
+    "wall_s": 12.15,
+    "instances": [
+     {
+      "instance": "ibex_prefetch_buffer$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "PASS",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "PASS"
+     }
+    ]
+   }
+  },
+  {
+   "i": 98,
+   "operator": "fold_guard",
+   "family": "simplifying",
+   "file": "rtl/ibex_controller.sv",
+   "line": 594,
+   "module": "ibex_controller",
+   "original": "if (handle_irq)",
+   "rewrite": "if (1'b1)",
+   "verdict": "refuted",
+   "gate_s": 11.59,
+   "failed": [
+    "ibex_core.id_stage_i.controller_i.ctrl_fsm_ns",
+    "ibex_core.id_stage_i.controller_i.halt_if"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82371.5008,
+   "max_delay_ns": 24.2424,
+   "cells": 9618,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_controller",
+    "wall_s": 6.09,
+    "instances": [
+     {
+      "instance": "ibex_controller$ibex_core.id_stage_i.controller_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 99,
+   "operator": "fold_guard",
+   "family": "simplifying",
+   "file": "rtl/ibex_alu.sv",
+   "line": 942,
+   "module": "ibex_alu",
+   "original": "if (crc_op)",
+   "rewrite": "if (1'b1)",
+   "verdict": "proven",
+   "gate_s": 9.78,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521
+  },
+  {
+   "i": 100,
+   "operator": "fold_guard",
+   "family": "simplifying",
+   "file": "rtl/ibex_decoder.sv",
+   "line": 1175,
+   "module": "ibex_decoder",
+   "original": "if (instr_alu[14])",
+   "rewrite": "if (1'b1)",
+   "verdict": "refuted",
+   "gate_s": 11.01,
+   "failed": [
+    "ibex_core.id_stage_i.decoder_i.alu_op_a_mux_sel_o"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82510.384,
+   "max_delay_ns": 24.3459,
+   "cells": 9604,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_decoder",
+    "wall_s": 5.51,
+    "instances": [
+     {
+      "instance": "ibex_decoder$ibex_core.id_stage_i.decoder_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 101,
+   "operator": "fold_guard",
+   "family": "simplifying",
+   "file": "rtl/ibex_load_store_unit.sv",
+   "line": 386,
+   "module": "ibex_load_store_unit",
+   "original": "if (lsu_req_i)",
+   "rewrite": "if (1'b1)",
+   "verdict": "refuted",
+   "gate_s": 10.04,
+   "failed": [
+    "ibex_core.load_store_unit_i.addr_update",
+    "ibex_core.load_store_unit_i.ctrl_update",
+    "ibex_core.load_store_unit_i.data_req_o",
+    "ibex_core.load_store_unit_i.handle_misaligned_d",
+    "ibex_core.load_store_unit_i.ls_fsm_ns",
+    "ibex_core.load_store_unit_i.lsu_err_d",
+    "ibex_core.load_store_unit_i.perf_load_o",
+    "ibex_core.load_store_unit_i.perf_store_o",
+    "ibex_core.load_store_unit_i.pmp_err_d"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82390.2688,
+   "max_delay_ns": 26.5598,
+   "cells": 9641,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_load_store_unit",
+    "wall_s": 5.14,
+    "instances": [
+     {
+      "instance": "ibex_load_store_unit$ibex_core.load_store_unit_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 102,
+   "operator": "fold_guard",
+   "family": "simplifying",
+   "file": "rtl/ibex_load_store_unit.sv",
+   "line": 253,
+   "module": "ibex_load_store_unit",
+   "original": "if (!data_sign_ext_q)",
+   "rewrite": "if (1'b1)",
+   "verdict": "refuted",
+   "gate_s": 10.38,
+   "failed": [
+    "ibex_core.load_store_unit_i.rdata_h_ext"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82686.8032,
+   "max_delay_ns": 24.1085,
+   "cells": 9673,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_load_store_unit",
+    "wall_s": 7.26,
+    "instances": [
+     {
+      "instance": "ibex_load_store_unit$ibex_core.load_store_unit_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 103,
+   "operator": "fold_guard",
+   "family": "simplifying",
+   "file": "rtl/ibex_controller.sv",
+   "line": 799,
+   "module": "ibex_controller",
+   "original": "if (dret_insn)",
+   "rewrite": "if (1'b1)",
+   "verdict": "refuted",
+   "gate_s": 12.57,
+   "failed": [
+    "ibex_core.id_stage_i.controller_i.csr_restore_dret_id_o",
+    "ibex_core.id_stage_i.controller_i.ctrl_fsm_ns",
+    "ibex_core.id_stage_i.controller_i.debug_mode_d",
+    "ibex_core.id_stage_i.controller_i.pc_mux_o",
+    "ibex_core.id_stage_i.controller_i.pc_set_o"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82337.7184,
+   "max_delay_ns": 26.5236,
+   "cells": 9577,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_controller",
+    "wall_s": 6.91,
+    "instances": [
+     {
+      "instance": "ibex_controller$ibex_core.id_stage_i.controller_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 104,
+   "operator": "fold_guard",
+   "family": "simplifying",
+   "file": "rtl/ibex_id_stage.sv",
+   "line": 790,
+   "module": "ibex_id_stage",
+   "original": "if (instr_executing_spec)",
+   "rewrite": "if (1'b1)",
+   "verdict": "refuted",
+   "gate_s": 10.99,
+   "failed": [
+    "ibex_core.id_stage_i.branch_set_raw_d",
+    "ibex_core.id_stage_i.jump_set_raw",
+    "ibex_core.id_stage_i.perf_branch_o",
+    "ibex_core.id_stage_i.rf_we_raw",
+    "ibex_core.id_stage_i.stall_alu",
+    "ibex_core.id_stage_i.stall_branch",
+    "ibex_core.id_stage_i.stall_jump",
+    "ibex_core.id_stage_i.stall_multdiv"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82221.3568,
+   "max_delay_ns": 26.2565,
+   "cells": 9563,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_id_stage",
+    "wall_s": 13.06,
+    "instances": [
+     {
+      "instance": "ibex_id_stage$ibex_core.id_stage_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 105,
+   "operator": "fold_guard",
+   "family": "simplifying",
+   "file": "rtl/ibex_decoder.sv",
+   "line": 301,
+   "module": "ibex_decoder",
+   "original": "if (instr[14])",
+   "rewrite": "if (1'b1)",
+   "verdict": "refuted",
+   "gate_s": 11.83,
+   "failed": [
+    "ibex_core.id_stage_i.decoder_i.illegal_insn"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82771.8848,
+   "max_delay_ns": 23.0765,
+   "cells": 9696,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_decoder",
+    "wall_s": 4.51,
+    "instances": [
+     {
+      "instance": "ibex_decoder$ibex_core.id_stage_i.decoder_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 106,
+   "operator": "fold_guard",
+   "family": "simplifying",
+   "file": "rtl/ibex_controller.sv",
+   "line": 277,
+   "module": "ibex_controller",
+   "original": "if (ecall_insn)",
+   "rewrite": "if (1'b1)",
+   "verdict": "refuted",
+   "gate_s": 11.65,
+   "failed": [
+    "ibex_core.id_stage_i.controller_i.csr_mtval_o",
+    "ibex_core.id_stage_i.controller_i.csr_save_cause_o",
+    "ibex_core.id_stage_i.controller_i.ctrl_fsm_ns",
+    "ibex_core.id_stage_i.controller_i.ebrk_insn_prio",
+    "ibex_core.id_stage_i.controller_i.ecall_insn_prio",
+    "ibex_core.id_stage_i.controller_i.exc_cause_o",
+    "ibex_core.id_stage_i.controller_i.flush_id",
+    "ibex_core.id_stage_i.controller_i.load_err_prio",
+    "ibex_core.id_stage_i.controller_i.pc_set_o",
+    "ibex_core.id_stage_i.controller_i.store_err_prio"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82186.3232,
+   "max_delay_ns": 26.5599,
+   "cells": 9609,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_controller",
+    "wall_s": 7.82,
+    "instances": [
+     {
+      "instance": "ibex_controller$ibex_core.id_stage_i.controller_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 107,
+   "operator": "fold_guard",
+   "family": "simplifying",
+   "file": "rtl/ibex_alu.sv",
+   "line": 629,
+   "module": "ibex_alu",
+   "original": "if (zbp_shift_amt[3])",
+   "rewrite": "if (1'b1)",
+   "verdict": "proven",
+   "gate_s": 10.52,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521
+  },
+  {
+   "i": 108,
+   "operator": "fold_guard",
+   "family": "simplifying",
+   "file": "rtl/ibex_csr.sv",
+   "line": 31,
+   "module": "ibex_csr",
+   "original": "if (wr_en_i)",
+   "rewrite": "if (1'b1)",
+   "verdict": "refuted",
+   "gate_s": 13.31,
+   "failed": [
+    "ibex_core.cs_registers_i.u_cpuctrl_csr.rdata_q",
+    "ibex_core.cs_registers_i.u_dcsr_csr.rdata_q",
+    "ibex_core.cs_registers_i.u_depc_csr.rdata_q",
+    "ibex_core.cs_registers_i.u_dscratch0_csr.rdata_q",
+    "ibex_core.cs_registers_i.u_dscratch1_csr.rdata_q",
+    "ibex_core.cs_registers_i.u_mcause_csr.rdata_q",
+    "ibex_core.cs_registers_i.u_mepc_csr.rdata_q",
+    "ibex_core.cs_registers_i.u_mie_csr.rdata_q",
+    "ibex_core.cs_registers_i.u_mscratch_csr.rdata_q",
+    "ibex_core.cs_registers_i.u_mstack_cause_csr.rdata_q"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 78775.552,
+   "max_delay_ns": 25.599,
+   "cells": 9240,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_csr",
+    "wall_s": 46.8,
+    "instances": [
+     {
+      "instance": "ibex_csr$ibex_core.cs_registers_i.u_cpuctrl_csr",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     },
+     {
+      "instance": "ibex_csr$ibex_core.cs_registers_i.u_dcsr_csr",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     },
+     {
+      "instance": "ibex_csr$ibex_core.cs_registers_i.u_depc_csr",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     },
+     {
+      "instance": "ibex_csr$ibex_core.cs_registers_i.u_dscratch0_csr",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     },
+     {
+      "instance": "ibex_csr$ibex_core.cs_registers_i.u_dscratch1_csr",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     },
+     {
+      "instance": "ibex_csr$ibex_core.cs_registers_i.u_mcause_csr",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     },
+     {
+      "instance": "ibex_csr$ibex_core.cs_registers_i.u_mepc_csr",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     },
+     {
+      "instance": "ibex_csr$ibex_core.cs_registers_i.u_mie_csr",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     },
+     {
+      "instance": "ibex_csr$ibex_core.cs_registers_i.u_mscratch_csr",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     },
+     {
+      "instance": "ibex_csr$ibex_core.cs_registers_i.u_mstack_cause_csr",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     },
+     {
+      "instance": "ibex_csr$ibex_core.cs_registers_i.u_mstack_csr",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     },
+     {
+      "instance": "ibex_csr$ibex_core.cs_registers_i.u_mstack_epc_csr",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     },
+     {
+      "instance": "ibex_csr$ibex_core.cs_registers_i.u_mstatus_csr",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     },
+     {
+      "instance": "ibex_csr$ibex_core.cs_registers_i.u_mtval_csr",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     },
+     {
+      "instance": "ibex_csr$ibex_core.cs_registers_i.u_mtvec_csr",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 109,
+   "operator": "fold_guard",
+   "family": "simplifying",
+   "file": "rtl/ibex_decoder.sv",
+   "line": 647,
+   "module": "ibex_decoder",
+   "original": "if (illegal_c_insn_i)",
+   "rewrite": "if (1'b1)",
+   "verdict": "refuted",
+   "gate_s": 14.28,
+   "failed": [
+    "ibex_core.id_stage_i.decoder_i.branch_in_dec_o",
+    "ibex_core.id_stage_i.decoder_i.csr_access_o",
+    "ibex_core.id_stage_i.decoder_i.data_req_o",
+    "ibex_core.id_stage_i.decoder_i.data_we_o",
+    "ibex_core.id_stage_i.decoder_i.div_en_o",
+    "ibex_core.id_stage_i.decoder_i.illegal_insn",
+    "ibex_core.id_stage_i.decoder_i.illegal_insn_o",
+    "ibex_core.id_stage_i.decoder_i.jump_in_dec_o",
+    "ibex_core.id_stage_i.decoder_i.jump_set_o",
+    "ibex_core.id_stage_i.decoder_i.mult_en_o"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82228.864,
+   "max_delay_ns": 19.8549,
+   "cells": 9584,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_decoder",
+    "wall_s": 4.92,
+    "instances": [
+     {
+      "instance": "ibex_decoder$ibex_core.id_stage_i.decoder_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 110,
+   "operator": "swap_mux",
+   "family": "simplifying",
+   "file": "rtl/ibex_ex_block.sv",
+   "line": 85,
+   "module": "ibex_ex_block",
+   "original": "= multdiv_sel ? multdiv_imd_val_we : alu_imd_val_we;",
+   "rewrite": "= multdiv_sel ? alu_imd_val_we : multdiv_imd_val_we;",
+   "verdict": "refuted",
+   "gate_s": 12.69,
+   "failed": [
+    "ibex_core.ex_block_i.imd_val_we_o"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82323.9552,
+   "max_delay_ns": 24.5056,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_ex_block",
+    "wall_s": 10.51,
+    "instances": [
+     {
+      "instance": "ibex_ex_block$ibex_core.ex_block_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 111,
+   "operator": "swap_mux",
+   "family": "simplifying",
+   "file": "rtl/ibex_alu.sv",
+   "line": 552,
+   "module": "ibex_alu",
+   "original": "= cmp_result ? operand_a_i : operand_b_i;",
+   "rewrite": "= cmp_result ? operand_b_i : operand_a_i;",
+   "verdict": "proven",
+   "gate_s": 13.26,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521
+  },
+  {
+   "i": 112,
+   "operator": "swap_mux",
+   "family": "simplifying",
+   "file": "rtl/ibex_multdiv_slow.sv",
+   "line": 168,
+   "module": "ibex_multdiv_slow",
+   "original": "= is_greater_equal ? res_adder_h[31:0]        : accum_window_q[31:0];",
+   "rewrite": "= is_greater_equal ? accum_window_q[31:0] : res_adder_h[31:0];",
+   "verdict": "proven",
+   "gate_s": 12.73,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521
+  },
+  {
+   "i": 113,
+   "operator": "swap_mux",
+   "family": "simplifying",
+   "file": "rtl/ibex_if_stage.sv",
+   "line": 655,
+   "module": "ibex_if_stage",
+   "original": "= instr_skid_valid_q ? instr_skid_data_q : fetch_rdata;",
+   "rewrite": "= instr_skid_valid_q ? fetch_rdata : instr_skid_data_q;",
+   "verdict": "proven",
+   "gate_s": 12.49,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521
+  },
+  {
+   "i": 114,
+   "operator": "swap_mux",
+   "family": "simplifying",
+   "file": "rtl/ibex_multdiv_fast.sv",
+   "line": 450,
+   "module": "ibex_multdiv_fast",
+   "original": "= div_sign_a ? alu_adder_i : op_a_i;",
+   "rewrite": "= div_sign_a ? op_a_i : alu_adder_i;",
+   "verdict": "refuted",
+   "gate_s": 12.67,
+   "failed": [
+    "ibex_core.ex_block_i.gen_multdiv_fast.multdiv_i.op_numerator_d"
+   ],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 81916.064,
+   "max_delay_ns": 24.7322,
+   "cells": 9446,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_multdiv_fast",
+    "wall_s": 247.6,
+    "instances": [
+     {
+      "instance": "ibex_multdiv_fast$ibex_core.ex_block_i.gen_multdiv_fast.multdiv_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 115,
+   "operator": "swap_mux",
+   "family": "simplifying",
+   "file": "rtl/ibex_alu.sv",
+   "line": 333,
+   "module": "ibex_alu",
+   "original": "= shift_left ? operand_a_rev : operand_a_i;",
+   "rewrite": "= shift_left ? operand_a_i : operand_a_rev;",
+   "verdict": "refuted",
+   "gate_s": 12.72,
+   "failed": [
+    "ibex_core.ex_block_i.alu_i.shift_operand"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82252.6368,
+   "max_delay_ns": 24.1651,
+   "cells": 9536,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_alu",
+    "wall_s": 4.07,
+    "instances": [
+     {
+      "instance": "ibex_alu$ibex_core.ex_block_i.alu_i",
+      "reset_assumed": false,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": null,
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 116,
+   "operator": "swap_mux",
+   "family": "simplifying",
+   "file": "rtl/ibex_multdiv_slow.sv",
+   "line": 233,
+   "module": "ibex_multdiv_slow",
+   "original": "= sign_a ? alu_adder_i : op_a_i;",
+   "rewrite": "= sign_a ? op_a_i : alu_adder_i;",
+   "verdict": "proven",
+   "gate_s": 983.63,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521
+  },
+  {
+   "i": 117,
+   "operator": "swap_mux",
+   "family": "simplifying",
+   "file": "rtl/ibex_fetch_fifo.sv",
+   "line": 142,
+   "module": "ibex_fetch_fifo",
+   "original": "= instr_addr_q[1] ? unaligned_is_compressed :\n                                           aligned_is_compressed;",
+   "rewrite": "= instr_addr_q[1] ? aligned_is_compressed : unaligned_is_compressed;",
+   "verdict": "refuted",
+   "gate_s": 13.89,
+   "failed": [
+    "ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i.addr_incr_two"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82360.24,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_fetch_fifo",
+    "wall_s": 4.41,
+    "instances": [
+     {
+      "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 118,
+   "operator": "swap_mux",
+   "family": "simplifying",
+   "file": "rtl/ibex_ex_block.sv",
+   "line": 89,
+   "module": "ibex_ex_block",
+   "original": "= multdiv_sel ? multdiv_result : alu_result;",
+   "rewrite": "= multdiv_sel ? alu_result : multdiv_result;",
+   "verdict": "refuted",
+   "gate_s": 14.26,
+   "failed": [
+    "ibex_core.ex_block_i.result_ex_o"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_ex_block",
+    "wall_s": 11.36,
+    "instances": [
+     {
+      "instance": "ibex_ex_block$ibex_core.ex_block_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 119,
+   "operator": "swap_mux",
+   "family": "simplifying",
+   "file": "rtl/ibex_fetch_fifo.sv",
+   "line": 202,
+   "module": "ibex_fetch_fifo",
+   "original": "= pop_fifo ? valid_pushed[i+1] : valid_pushed[i];",
+   "rewrite": "= pop_fifo ? valid_pushed[i] : valid_pushed[i+1];",
+   "verdict": "refuted",
+   "gate_s": 13.84,
+   "failed": [
+    "ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i.valid_popped.0",
+    "ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i.valid_popped.1"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82316.448,
+   "max_delay_ns": 24.5031,
+   "cells": 9519,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_fetch_fifo",
+    "wall_s": 5.44,
+    "instances": [
+     {
+      "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 120,
+   "operator": "swap_mux",
+   "family": "simplifying",
+   "file": "rtl/ibex_load_store_unit.sv",
+   "line": 216,
+   "module": "ibex_load_store_unit",
+   "original": "= addr_incr_req_o ? data_addr_w_aligned : data_addr;",
+   "rewrite": "= addr_incr_req_o ? data_addr : data_addr_w_aligned;",
+   "verdict": "refuted",
+   "gate_s": 13.39,
+   "failed": [
+    "ibex_core.load_store_unit_i.addr_last_d.0"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_load_store_unit",
+    "wall_s": 5.87,
+    "instances": [
+     {
+      "instance": "ibex_load_store_unit$ibex_core.load_store_unit_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 121,
+   "operator": "swap_mux",
+   "family": "simplifying",
+   "file": "rtl/ibex_alu.sv",
+   "line": 1230,
+   "module": "ibex_alu",
+   "original": "= shift_amt[5] ? operand_a_i : imd_val_q_i[0];",
+   "rewrite": "= shift_amt[5] ? imd_val_q_i[0] : operand_a_i;",
+   "verdict": "proven",
+   "gate_s": 12.15,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521
+  },
+  {
+   "i": 122,
+   "operator": "swap_mux",
+   "family": "simplifying",
+   "file": "rtl/ibex_multdiv_fast.sv",
+   "line": 462,
+   "module": "ibex_multdiv_fast",
+   "original": "= div_sign_b ? alu_adder_i : op_b_i;",
+   "rewrite": "= div_sign_b ? op_b_i : alu_adder_i;",
+   "verdict": "refuted",
+   "gate_s": 12.52,
+   "failed": [
+    "ibex_core.ex_block_i.gen_multdiv_fast.multdiv_i.op_denominator_d"
+   ],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82609.2288,
+   "max_delay_ns": 26.2582,
+   "cells": 9581,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_multdiv_fast",
+    "wall_s": 247.92,
+    "instances": [
+     {
+      "instance": "ibex_multdiv_fast$ibex_core.ex_block_i.gen_multdiv_fast.multdiv_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 123,
+   "operator": "swap_mux",
+   "family": "simplifying",
+   "file": "rtl/ibex_id_stage.sv",
+   "line": 1008,
+   "module": "ibex_id_stage",
+   "original": "= lsu_req_dec ? lsu_resp_valid_i : ex_valid_i;",
+   "rewrite": "= lsu_req_dec ? ex_valid_i : lsu_resp_valid_i;",
+   "verdict": "refuted",
+   "gate_s": 12.95,
+   "failed": [
+    "ibex_core.id_stage_i.multicycle_done"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.509,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_id_stage",
+    "wall_s": 12.0,
+    "instances": [
+     {
+      "instance": "ibex_id_stage$ibex_core.id_stage_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 124,
+   "operator": "swap_mux",
+   "family": "simplifying",
+   "file": "rtl/ibex_fetch_fifo.sv",
+   "line": 68,
+   "module": "ibex_fetch_fifo",
+   "original": "= valid_q[0] ? rdata_q[0] : in_rdata_i;",
+   "rewrite": "= valid_q[0] ? in_rdata_i : rdata_q[0];",
+   "verdict": "refuted",
+   "gate_s": 12.84,
+   "failed": [
+    "ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i.rdata"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_fetch_fifo",
+    "wall_s": 4.15,
+    "instances": [
+     {
+      "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 125,
+   "operator": "swap_mux",
+   "family": "simplifying",
+   "file": "rtl/ibex_fetch_fifo.sv",
+   "line": 69,
+   "module": "ibex_fetch_fifo",
+   "original": "= valid_q[0] ? err_q[0]   : in_err_i;",
+   "rewrite": "= valid_q[0] ? in_err_i : err_q[0];",
+   "verdict": "refuted",
+   "gate_s": 13.74,
+   "failed": [
+    "ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i.err"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82323.9552,
+   "max_delay_ns": 24.5031,
+   "cells": 9517,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_fetch_fifo",
+    "wall_s": 3.7,
+    "instances": [
+     {
+      "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 126,
+   "operator": "swap_mux",
+   "family": "simplifying",
+   "file": "rtl/ibex_fetch_fifo.sv",
+   "line": 149,
+   "module": "ibex_fetch_fifo",
+   "original": "= clear_i ? in_addr_i[31:1] :\n                                  instr_addr_next;",
+   "rewrite": "= clear_i ? instr_addr_next : in_addr_i[31:1];",
+   "verdict": "refuted",
+   "gate_s": 12.87,
+   "failed": [
+    "ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i.instr_addr_d"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82330.2112,
+   "max_delay_ns": 24.5031,
+   "cells": 9521,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_fetch_fifo",
+    "wall_s": 4.5,
+    "instances": [
+     {
+      "instance": "ibex_fetch_fifo$ibex_core.if_stage_i.gen_prefetch_buffer.prefetch_buffer_i.fifo_i",
+      "reset_assumed": true,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": "in_rst_ni",
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 127,
+   "operator": "swap_mux",
+   "family": "simplifying",
+   "file": "rtl/ibex_if_stage.sv",
+   "line": 656,
+   "module": "ibex_if_stage",
+   "original": "= instr_skid_valid_q ? instr_skid_addr_q : fetch_addr;",
+   "rewrite": "= instr_skid_valid_q ? fetch_addr : instr_skid_addr_q;",
+   "verdict": "proven",
+   "gate_s": 12.29,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521
+  },
+  {
+   "i": 128,
+   "operator": "swap_mux",
+   "family": "simplifying",
+   "file": "rtl/ibex_alu.sv",
+   "line": 353,
+   "module": "ibex_alu",
+   "original": "= shift_left ? shift_result_rev : shift_result;",
+   "rewrite": "= shift_left ? shift_result : shift_result_rev;",
+   "verdict": "refuted",
+   "gate_s": 12.27,
+   "failed": [
+    "ibex_core.ex_block_i.alu_i.shift_result"
+   ],
+   "localised": true,
+   "synth_ok": true,
+   "area_um2": 82286.4192,
+   "max_delay_ns": 24.4635,
+   "cells": 9535,
+   "explicit": {
+    "from_reset": "CONFIRMED",
+    "any_state": "UNDECIDED",
+    "scope": "ibex_alu",
+    "wall_s": 3.89,
+    "instances": [
+     {
+      "instance": "ibex_alu$ibex_core.ex_block_i.alu_i",
+      "reset_assumed": false,
+      "register_cut": "FAIL",
+      "reset": "FAIL",
+      "unmatched": [],
+      "reset_port": null,
+      "any": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "i": 129,
+   "operator": "swap_mux",
+   "family": "simplifying",
+   "file": "rtl/ibex_if_stage.sv",
+   "line": 661,
+   "module": "ibex_if_stage",
+   "original": "= instr_skid_valid_q ? instr_skid_bp_taken_q : predict_branch_taken;",
+   "rewrite": "= instr_skid_valid_q ? predict_branch_taken : instr_skid_bp_taken_q;",
+   "verdict": "proven",
+   "gate_s": 10.73,
+   "failed": [],
+   "localised": null,
+   "synth_ok": true,
+   "area_um2": 82326.4576,
+   "max_delay_ns": 24.5031,
+   "cells": 9521
+  }
+ ]
+}

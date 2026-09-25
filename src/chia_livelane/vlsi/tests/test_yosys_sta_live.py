@@ -3,9 +3,8 @@
 Named ``*_live`` to match ``chia/vlsi/tests/test_hammer_live.py``: these need
 tools, and skip cleanly when they are absent instead of failing.
 
-The Liberty and design in ``smoke/`` are the same files
-``dockerfiles/YosysStaDockerfile`` maps and times at image-build time, so a
-green unit test and a green image build are making the same claim.
+The Liberty and design in ``smoke/`` are small fixtures, so the test runs in
+seconds wherever yosys and OpenSTA are installed.
 """
 
 from __future__ import annotations
@@ -24,8 +23,7 @@ TOP = "smoke_top"
 
 pytestmark = pytest.mark.skipif(
     shutil.which("yosys") is None or shutil.which("sta") is None,
-    reason="yosys and/or sta not on PATH; run inside "
-           "ghcr.io/ucb-bar/chia-yosys-sta")
+    reason="yosys and/or sta (OpenSTA) not on PATH")
 
 
 @pytest.fixture

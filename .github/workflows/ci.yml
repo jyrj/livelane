@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  chia:
+    name: CHIA nodes and tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install LiveLane and CHIA (chialoops)
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test,analysis]"
+      - name: Tests (tests that need EDA tools skip themselves)
+        run: python -m pytest -q
+
+  formal:
+    name: Equivalence and sequential checks, whole ibex_core
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      OSS_CAD_SUITE: "2026-09-25"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install LiveLane and CHIA (chialoops)
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test,analysis]"
+      - name: OSS CAD Suite (yosys, eqy, sby, yices), pinned release
+        run: |
+          curl -sSfL -o /tmp/oss.tgz \
+            "https://github.com/YosysHQ/oss-cad-suite-build/releases/download/${OSS_CAD_SUITE}/oss-cad-suite-linux-x64-${OSS_CAD_SUITE//-/}.tgz"
+          tar xzf /tmp/oss.tgz -C "$RUNNER_TEMP"
+          echo "$RUNNER_TEMP/oss-cad-suite/bin" >> "$GITHUB_PATH"
+          echo "LIVELANE_TOOLS=$RUNNER_TEMP/oss-cad-suite" >> "$GITHUB_ENV"
+      - name: ibex_core at the pinned commit
+        run: |
+          source configs/pins.env
+          git clone --filter=blob:none "$IBEX_URL" thirdparty/ibex
+          git -C thirdparty/ibex checkout "$IBEX_REF"
+      - name: Tests with the solvers (equivalence check, sequential check, whole-core proofs)
+        run: |
+          yosys -V
+          python -m pytest -q

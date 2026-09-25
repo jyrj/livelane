@@ -2,7 +2,7 @@
 
 Everything this module reports is a measurement, so these tests check that the
 measurements are real (a burned CPU second shows up as a CPU second) and that
-the failure paths -- non-zero exit, missing binary, a tool that ignores SIGTERM
+the failure paths, non-zero exit, missing binary, a tool that ignores SIGTERM
 -- are all distinguishable rather than collapsing into one "it didn't work".
 """
 

@@ -1,0 +1,873 @@
+{
+  "repo": "lowRISC__ibex",
+  "jobs": 12,
+  "ladder": "sat-first",
+  "rows": [
+    {
+      "load_at_start": {
+        "load1": 4.01,
+        "load5": 11.17,
+        "load15": 13.64,
+        "cpus": 24
+      },
+      "ladder": "sat-first",
+      "front_end_flags": [],
+      "repo": "lowRISC__ibex",
+      "number": 48,
+      "sha": "145269fdc88e1d545fca692fd3e3a43c99e1ac12",
+      "file": "rtl/ibex_compressed_decoder.sv",
+      "title": "Compressed hints",
+      "lines_added": 18,
+      "lines_removed": 14,
+      "top": "ibex_core",
+      "scope": "whole-design",
+      "resolution": [
+        "module prim_clock_gating -> syn/rtl/prim_clock_gating.v @fallback (declared nowhere in this checkout)",
+        "-D SYNTHESIS (to exclude unsynthesisable SVA)",
+        "-D VERILATOR (to exclude unsynthesisable SVA)",
+        "[fixed side] -D SYNTHESIS (to exclude unsynthesisable SVA)",
+        "[fixed side] -D VERILATOR (to exclude unsynthesisable SVA)"
+      ],
+      "include_dirs": [],
+      "defines": [
+        "SYNTHESIS",
+        "VERILATOR"
+      ],
+      "n_sources": 19,
+      "warm": {
+        "verdict": "proven",
+        "partitions": 5261,
+        "reuse_pct": 0.0,
+        "prove_s": 9.633,
+        "setup_s": 3.871,
+        "wall_s": 15.72
+      },
+      "measure": {
+        "verdict": "refuted",
+        "partitions": 5261,
+        "reuse_pct": 98.33,
+        "hits": 5173,
+        "misses": 88,
+        "prove_s": 0.481,
+        "setup_s": 6.117,
+        "wall_s": 8.41,
+        "failed": [
+          "ibex_core.if_stage_i.illegal_c_insn",
+          "ibex_core.if_stage_i.instr_decompressed"
+        ],
+        "n_failed": 2
+      },
+      "prove_time_saved_pct": 95.0,
+      "status": "ok",
+      "cache_entries": 5347,
+      "load_at_end": {
+        "load1": 4.63,
+        "load5": 10.75,
+        "load15": 13.44,
+        "cpus": 24
+      }
+    },
+    {
+      "load_at_start": {
+        "load1": 4.63,
+        "load5": 10.75,
+        "load15": 13.44,
+        "cpus": 24
+      },
+      "ladder": "sat-first",
+      "front_end_flags": [],
+      "repo": "lowRISC__ibex",
+      "number": 54,
+      "sha": "cd15ce88beba8ed8496f414af361f664764f47e2",
+      "file": "rtl/ibex_compressed_decoder.sv",
+      "title": "Fix decoding of C.LI, C.LUI, C.SRLI, C.SRAI, C.SSLI",
+      "lines_added": 5,
+      "lines_removed": 6,
+      "top": "ibex_core",
+      "scope": "whole-design",
+      "resolution": [
+        "module prim_clock_gating -> syn/rtl/prim_clock_gating.v @fallback (declared nowhere in this checkout)",
+        "-D SYNTHESIS (to exclude unsynthesisable SVA)",
+        "-D VERILATOR (to exclude unsynthesisable SVA)",
+        "[fixed side] -D SYNTHESIS (to exclude unsynthesisable SVA)",
+        "[fixed side] -D VERILATOR (to exclude unsynthesisable SVA)"
+      ],
+      "include_dirs": [],
+      "defines": [
+        "SYNTHESIS",
+        "VERILATOR"
+      ],
+      "n_sources": 19,
+      "warm": {
+        "verdict": "proven",
+        "partitions": 5261,
+        "reuse_pct": 0.0,
+        "prove_s": 10.297,
+        "setup_s": 4.067,
+        "wall_s": 16.52
+      },
+      "measure": {
+        "verdict": "refuted",
+        "partitions": 5261,
+        "reuse_pct": 94.18,
+        "hits": 4955,
+        "misses": 306,
+        "prove_s": 1.607,
+        "setup_s": 6.057,
+        "wall_s": 9.49,
+        "failed": [
+          "ibex_core.if_stage_i.illegal_c_insn"
+        ],
+        "n_failed": 1
+      },
+      "prove_time_saved_pct": 84.4,
+      "status": "ok",
+      "cache_entries": 5566,
+      "load_at_end": {
+        "load1": 5.03,
+        "load5": 10.36,
+        "load15": 13.24,
+        "cpus": 24
+      }
+    },
+    {
+      "load_at_start": {
+        "load1": 5.03,
+        "load5": 10.36,
+        "load15": 13.24,
+        "cpus": 24
+      },
+      "ladder": "sat-first",
+      "front_end_flags": [],
+      "repo": "lowRISC__ibex",
+      "number": 157,
+      "sha": "c4370083106042cc0398de615e69d661032c04ba",
+      "file": "rtl/ibex_controller.sv",
+      "title": "Fix dpc CSR not updated",
+      "lines_added": 38,
+      "lines_removed": 36,
+      "top": "ibex_core",
+      "scope": "whole-design",
+      "resolution": [
+        "module prim_clock_gating -> examples/sim/rtl/prim_clock_gating.sv [3 candidates]",
+        "-D SYNTHESIS (to exclude unsynthesisable SVA)",
+        "-D VERILATOR (to exclude unsynthesisable SVA)",
+        "[fixed side] -D SYNTHESIS (to exclude unsynthesisable SVA)",
+        "[fixed side] -D VERILATOR (to exclude unsynthesisable SVA)"
+      ],
+      "include_dirs": [],
+      "defines": [
+        "SYNTHESIS",
+        "VERILATOR"
+      ],
+      "n_sources": 19,
+      "warm": {
+        "verdict": "proven",
+        "partitions": 9110,
+        "reuse_pct": 0.0,
+        "prove_s": 18.487,
+        "setup_s": 8.893,
+        "wall_s": 32.56
+      },
+      "measure": {
+        "verdict": "refuted",
+        "partitions": 9110,
+        "reuse_pct": 96.93,
+        "hits": 8830,
+        "misses": 280,
+        "prove_s": 2.79,
+        "setup_s": 12.159,
+        "wall_s": 19.61,
+        "failed": [
+          "ibex_core.cs_registers_i.csr_save_cause_i",
+          "ibex_core.cs_registers_i.csr_save_if_i",
+          "ibex_core.cs_registers_i.debug_csr_save_i",
+          "ibex_core.cs_registers_i.pc_set_i",
+          "ibex_core.id_stage_i.controller_i.debug_mode_d",
+          "ibex_core.if_stage_i.exc_pc_mux_i",
+          "ibex_core.if_stage_i.pc_mux_i"
+        ],
+        "n_failed": 7
+      },
+      "prove_time_saved_pct": 84.9,
+      "status": "ok",
+      "cache_entries": 9383,
+      "load_at_end": {
+        "load1": 4.53,
+        "load5": 9.36,
+        "load15": 12.73,
+        "cpus": 24
+      }
+    },
+    {
+      "load_at_start": {
+        "load1": 4.53,
+        "load5": 9.36,
+        "load15": 12.73,
+        "cpus": 24
+      },
+      "ladder": "sat-first",
+      "front_end_flags": [],
+      "repo": "lowRISC__ibex",
+      "number": 166,
+      "sha": "c96ece04296c3c69df578d760aa8a66f9b886fef",
+      "file": "rtl/ibex_decoder.sv",
+      "title": "Decoder: fix signaling and detection of illegal instructions",
+      "lines_added": 11,
+      "lines_removed": 10,
+      "top": "ibex_core",
+      "scope": "whole-design",
+      "resolution": [
+        "module prim_clock_gating -> examples/sim/rtl/prim_clock_gating.sv [3 candidates]",
+        "-D SYNTHESIS (to exclude unsynthesisable SVA)",
+        "-D VERILATOR (to exclude unsynthesisable SVA)",
+        "[fixed side] -D SYNTHESIS (to exclude unsynthesisable SVA)",
+        "[fixed side] -D VERILATOR (to exclude unsynthesisable SVA)"
+      ],
+      "include_dirs": [],
+      "defines": [
+        "SYNTHESIS",
+        "VERILATOR"
+      ],
+      "n_sources": 19,
+      "warm": {
+        "verdict": "proven",
+        "partitions": 9110,
+        "reuse_pct": 0.0,
+        "prove_s": 18.194,
+        "setup_s": 8.793,
+        "wall_s": 32.22
+      },
+      "measure": {
+        "verdict": "refuted",
+        "partitions": 9110,
+        "reuse_pct": 96.89,
+        "hits": 8827,
+        "misses": 283,
+        "prove_s": 2.759,
+        "setup_s": 11.71,
+        "wall_s": 19.15,
+        "failed": [
+          "ibex_core.id_stage_i.decoder_i.illegal_insn"
+        ],
+        "n_failed": 1
+      },
+      "prove_time_saved_pct": 84.8,
+      "status": "ok",
+      "cache_entries": 9392,
+      "load_at_end": {
+        "load1": 5.9,
+        "load5": 9.0,
+        "load15": 12.43,
+        "cpus": 24
+      }
+    },
+    {
+      "load_at_start": {
+        "load1": 5.9,
+        "load5": 9.0,
+        "load15": 12.43,
+        "cpus": 24
+      },
+      "ladder": "sat-first",
+      "front_end_flags": [],
+      "repo": "lowRISC__ibex",
+      "number": 167,
+      "sha": "59254498489d441f64c24e6b344fce73d0d8bbce",
+      "file": "rtl/ibex_controller.sv",
+      "title": "Controller: save next PC to dpc CSR upon a halt request",
+      "lines_added": 5,
+      "lines_removed": 11,
+      "top": "ibex_core",
+      "scope": "whole-design",
+      "resolution": [
+        "module prim_clock_gating -> examples/sim/rtl/prim_clock_gating.sv [3 candidates]",
+        "-D SYNTHESIS (to exclude unsynthesisable SVA)",
+        "-D VERILATOR (to exclude unsynthesisable SVA)",
+        "[fixed side] -D SYNTHESIS (to exclude unsynthesisable SVA)",
+        "[fixed side] -D VERILATOR (to exclude unsynthesisable SVA)"
+      ],
+      "include_dirs": [],
+      "defines": [
+        "SYNTHESIS",
+        "VERILATOR"
+      ],
+      "n_sources": 19,
+      "warm": {
+        "verdict": "proven",
+        "partitions": 9110,
+        "reuse_pct": 0.0,
+        "prove_s": 18.794,
+        "setup_s": 8.667,
+        "wall_s": 32.7
+      },
+      "measure": {
+        "verdict": "refuted",
+        "partitions": 9110,
+        "reuse_pct": 96.93,
+        "hits": 8830,
+        "misses": 280,
+        "prove_s": 2.9,
+        "setup_s": 12.663,
+        "wall_s": 20.34,
+        "failed": [
+          "ibex_core.cs_registers_i.csr_save_cause_i",
+          "ibex_core.cs_registers_i.debug_cause_i",
+          "ibex_core.cs_registers_i.debug_csr_save_i",
+          "ibex_core.cs_registers_i.pc_set_i",
+          "ibex_core.id_stage_i.controller_i.ctrl_fsm_ns",
+          "ibex_core.id_stage_i.controller_i.debug_mode_d",
+          "ibex_core.if_stage_i.exc_pc_mux_i",
+          "ibex_core.if_stage_i.pc_mux_i"
+        ],
+        "n_failed": 8
+      },
+      "prove_time_saved_pct": 84.6,
+      "status": "ok",
+      "cache_entries": 9382,
+      "load_at_end": {
+        "load1": 5.08,
+        "load5": 8.3,
+        "load15": 11.99,
+        "cpus": 24
+      }
+    },
+    {
+      "load_at_start": {
+        "load1": 5.08,
+        "load5": 8.3,
+        "load15": 11.99,
+        "cpus": 24
+      },
+      "ladder": "sat-first",
+      "front_end_flags": [],
+      "repo": "lowRISC__ibex",
+      "number": 176,
+      "sha": "04f4cd44f6b62a48af65f11143278be00d54132b",
+      "file": "rtl/ibex_decoder.sv",
+      "title": "Decoder: remove reg-reg load, make LWU illegal",
+      "lines_added": 15,
+      "lines_removed": 36,
+      "top": "ibex_core",
+      "scope": "whole-design",
+      "resolution": [
+        "module prim_clock_gating -> examples/sim/rtl/prim_clock_gating.sv [3 candidates]",
+        "-D SYNTHESIS (to exclude unsynthesisable SVA)",
+        "-D VERILATOR (to exclude unsynthesisable SVA)",
+        "[fixed side] -D SYNTHESIS (to exclude unsynthesisable SVA)",
+        "[fixed side] -D VERILATOR (to exclude unsynthesisable SVA)"
+      ],
+      "include_dirs": [],
+      "defines": [
+        "SYNTHESIS",
+        "VERILATOR"
+      ],
+      "n_sources": 19,
+      "warm": {
+        "verdict": "proven",
+        "partitions": 9110,
+        "reuse_pct": 0.0,
+        "prove_s": 18.887,
+        "setup_s": 8.942,
+        "wall_s": 33.13
+      },
+      "measure": {
+        "verdict": "refuted",
+        "partitions": 9110,
+        "reuse_pct": 96.87,
+        "hits": 8825,
+        "misses": 285,
+        "prove_s": 2.773,
+        "setup_s": 12.845,
+        "wall_s": 20.33,
+        "failed": [
+          "ibex_core.id_stage_i.alu_op_b_mux_sel_dec",
+          "ibex_core.id_stage_i.controller_i.exc_ack_o",
+          "ibex_core.id_stage_i.decoder_i.illegal_insn",
+          "ibex_core.id_stage_i.int_controller_i.exc_ctrl_ns",
+          "ibex_core.irq_ack_o",
+          "ibex_core.load_store_unit_i.data_sign_ext_ex_i",
+          "ibex_core.load_store_unit_i.data_type_ex_i"
+        ],
+        "n_failed": 7
+      },
+      "prove_time_saved_pct": 85.3,
+      "status": "ok",
+      "cache_entries": 9388,
+      "load_at_end": {
+        "load1": 5.44,
+        "load5": 7.99,
+        "load15": 11.7,
+        "cpus": 24
+      }
+    },
+    {
+      "load_at_start": {
+        "load1": 5.44,
+        "load5": 7.99,
+        "load15": 11.7,
+        "cpus": 24
+      },
+      "ladder": "sat-first",
+      "front_end_flags": [],
+      "repo": "lowRISC__ibex",
+      "number": 222,
+      "sha": "e5bdf1ea9fd522bb345db6f7310b2c0f9253c706",
+      "file": "rtl/ibex_id_stage.sv",
+      "title": "Fix IF stalls preventing deassertion of regfile write enable",
+      "lines_added": 7,
+      "lines_removed": 3,
+      "top": "ibex_core",
+      "scope": "whole-design",
+      "resolution": [
+        "module prim_clock_gating -> examples/sim/rtl/prim_clock_gating.sv [4 candidates]",
+        "-D SYNTHESIS (to exclude unsynthesisable SVA)",
+        "-D VERILATOR (to exclude unsynthesisable SVA)",
+        "[fixed side] -D SYNTHESIS (to exclude unsynthesisable SVA)",
+        "[fixed side] -D VERILATOR (to exclude unsynthesisable SVA)"
+      ],
+      "include_dirs": [],
+      "defines": [
+        "SYNTHESIS",
+        "VERILATOR"
+      ],
+      "n_sources": 17,
+      "warm": {
+        "verdict": "proven",
+        "partitions": 9160,
+        "reuse_pct": 0.0,
+        "prove_s": 18.754,
+        "setup_s": 8.991,
+        "wall_s": 33.21
+      },
+      "measure": {
+        "verdict": "refuted",
+        "partitions": 9160,
+        "reuse_pct": 96.9,
+        "hits": 8876,
+        "misses": 284,
+        "prove_s": 2.811,
+        "setup_s": 13.224,
+        "wall_s": 20.79,
+        "failed": [
+          "ibex_core.id_stage_i.instr_executing",
+          "ibex_core.id_stage_i.instr_multicycle_done_n"
+        ],
+        "n_failed": 2
+      },
+      "prove_time_saved_pct": 85.0,
+      "status": "ok",
+      "cache_entries": 9442,
+      "load_at_end": {
+        "load1": 5.98,
+        "load5": 7.73,
+        "load15": 11.39,
+        "cpus": 24
+      }
+    },
+    {
+      "load_at_start": {
+        "load1": 5.98,
+        "load5": 7.73,
+        "load15": 11.39,
+        "cpus": 24
+      },
+      "ladder": "sat-first",
+      "front_end_flags": [],
+      "repo": "lowRISC__ibex",
+      "number": 276,
+      "sha": "892ad8a6213057e20e43f44a2eb70b02d90cce35",
+      "file": "rtl/ibex_load_store_unit.sv",
+      "title": "[RTL] - Remove timing loop in LSU",
+      "lines_added": 71,
+      "lines_removed": 19,
+      "top": "ibex_core",
+      "scope": "whole-design",
+      "resolution": [
+        "module prim_clock_gating -> examples/sim/rtl/prim_clock_gating.sv [4 candidates]",
+        "-D SYNTHESIS (to exclude unsynthesisable SVA)",
+        "-D VERILATOR (to exclude unsynthesisable SVA)",
+        "[fixed side] -D SYNTHESIS (to exclude unsynthesisable SVA)",
+        "[fixed side] -D VERILATOR (to exclude unsynthesisable SVA)"
+      ],
+      "include_dirs": [],
+      "defines": [
+        "SYNTHESIS",
+        "VERILATOR"
+      ],
+      "n_sources": 17,
+      "warm": {
+        "verdict": "proven",
+        "partitions": 10229,
+        "reuse_pct": 0.0,
+        "prove_s": 21.278,
+        "setup_s": 9.396,
+        "wall_s": 36.36
+      },
+      "measure": {
+        "verdict": "refuted",
+        "partitions": 10229,
+        "reuse_pct": 97.02,
+        "hits": 9924,
+        "misses": 305,
+        "prove_s": 3.065,
+        "setup_s": 13.775,
+        "wall_s": 21.95,
+        "failed": [
+          "ibex_core.data_req_out",
+          "ibex_core.id_stage_i.lsu_addr_incr_req_i",
+          "ibex_core.id_stage_i.lsu_valid_i",
+          "ibex_core.load_store_unit_i.data_or_pmp_err",
+          "ibex_core.load_store_unit_i.handle_misaligned_d",
+          "ibex_core.load_store_unit_i.ls_fsm_ns",
+          "ibex_core.lsu_busy"
+        ],
+        "n_failed": 7
+      },
+      "prove_time_saved_pct": 85.6,
+      "status": "ok",
+      "cache_entries": 10527,
+      "load_at_end": {
+        "load1": 6.63,
+        "load5": 7.6,
+        "load15": 11.12,
+        "cpus": 24
+      }
+    },
+    {
+      "load_at_start": {
+        "load1": 6.63,
+        "load5": 7.6,
+        "load15": 11.12,
+        "cpus": 24
+      },
+      "ladder": "sat-first",
+      "front_end_flags": [],
+      "repo": "lowRISC__ibex",
+      "number": 377,
+      "sha": "4a1806f16ffd87bded3201bc923da5317aec8210",
+      "file": "rtl/ibex_load_store_unit.sv",
+      "title": "[RTL LSU] Change unaligned error behaviour",
+      "lines_added": 71,
+      "lines_removed": 92,
+      "top": "ibex_core",
+      "scope": "whole-design",
+      "resolution": [
+        "module prim_clock_gating -> dv/riscv_compliance/rtl/prim_clock_gating.sv [3 candidates]",
+        "-D SYNTHESIS (to exclude unsynthesisable SVA)",
+        "-D VERILATOR (to exclude unsynthesisable SVA)",
+        "[fixed side] -D SYNTHESIS (to exclude unsynthesisable SVA)",
+        "[fixed side] -D VERILATOR (to exclude unsynthesisable SVA)"
+      ],
+      "include_dirs": [],
+      "defines": [
+        "SYNTHESIS",
+        "VERILATOR"
+      ],
+      "n_sources": 17,
+      "warm": {
+        "verdict": "proven",
+        "partitions": 10343,
+        "reuse_pct": 0.0,
+        "prove_s": 20.627,
+        "setup_s": 9.465,
+        "wall_s": 35.9
+      },
+      "measure": {
+        "verdict": "refuted",
+        "partitions": 10334,
+        "reuse_pct": 97.16,
+        "hits": 10041,
+        "misses": 293,
+        "prove_s": 2.863,
+        "setup_s": 14.142,
+        "wall_s": 22.08,
+        "failed": [
+          "ibex_core.data_req_out",
+          "ibex_core.id_stage_i.lsu_valid_i",
+          "ibex_core.load_store_unit_i.addr_last_q",
+          "ibex_core.load_store_unit_i.data_or_pmp_err",
+          "ibex_core.load_store_unit_i.data_sign_ext_q",
+          "ibex_core.load_store_unit_i.data_type_q",
+          "ibex_core.load_store_unit_i.data_we_q",
+          "ibex_core.load_store_unit_i.handle_misaligned_d",
+          "ibex_core.load_store_unit_i.ls_fsm_ns",
+          "ibex_core.load_store_unit_i.pmp_err_d"
+        ],
+        "n_failed": 10
+      },
+      "prove_time_saved_pct": 86.1,
+      "status": "ok",
+      "cache_entries": 10624,
+      "load_at_end": {
+        "load1": 5.53,
+        "load5": 7.17,
+        "load15": 10.75,
+        "cpus": 24
+      }
+    },
+    {
+      "load_at_start": {
+        "load1": 5.53,
+        "load5": 7.17,
+        "load15": 10.75,
+        "cpus": 24
+      },
+      "ladder": "sat-first",
+      "front_end_flags": [],
+      "repo": "lowRISC__ibex",
+      "number": 475,
+      "sha": "aefbcdceb327a7af47e8c9af710a5110aab5a0eb",
+      "file": "rtl/ibex_cs_registers.sv",
+      "title": "Fix behavior of exceptions in debug mode, document debug CSRs",
+      "lines_added": 95,
+      "lines_removed": 20,
+      "top": "ibex_core",
+      "scope": "whole-design",
+      "resolution": [
+        "module prim_clock_gating -> shared/rtl/prim_clock_gating.sv [3 candidates]",
+        "-D SYNTHESIS (to exclude unsynthesisable SVA)",
+        "-D VERILATOR (to exclude unsynthesisable SVA)",
+        "[fixed side] -D SYNTHESIS (to exclude unsynthesisable SVA)",
+        "[fixed side] -D VERILATOR (to exclude unsynthesisable SVA)"
+      ],
+      "include_dirs": [],
+      "defines": [
+        "SYNTHESIS",
+        "VERILATOR"
+      ],
+      "n_sources": 17,
+      "warm": {
+        "verdict": "proven",
+        "partitions": 10509,
+        "reuse_pct": 0.0,
+        "prove_s": 20.508,
+        "setup_s": 9.396,
+        "wall_s": 35.58
+      },
+      "measure": {
+        "verdict": "refuted",
+        "partitions": 10509,
+        "reuse_pct": 98.66,
+        "hits": 10368,
+        "misses": 141,
+        "prove_s": 1.963,
+        "setup_s": 13.78,
+        "wall_s": 20.77,
+        "failed": [
+          "ibex_core.cs_registers_i.mcause_d",
+          "ibex_core.cs_registers_i.mepc_d",
+          "ibex_core.cs_registers_i.mstack_cause_d",
+          "ibex_core.cs_registers_i.mstack_d",
+          "ibex_core.cs_registers_i.mstack_epc_d",
+          "ibex_core.cs_registers_i.mstatus_d",
+          "ibex_core.cs_registers_i.mtval_d"
+        ],
+        "n_failed": 7
+      },
+      "prove_time_saved_pct": 90.4,
+      "status": "ok",
+      "cache_entries": 10643,
+      "load_at_end": {
+        "load1": 5.71,
+        "load5": 6.96,
+        "load15": 10.48,
+        "cpus": 24
+      }
+    },
+    {
+      "load_at_start": {
+        "load1": 5.71,
+        "load5": 6.96,
+        "load15": 10.48,
+        "cpus": 24
+      },
+      "ladder": "sat-first",
+      "front_end_flags": [],
+      "repo": "lowRISC__ibex",
+      "number": 882,
+      "sha": "d5ee96fff670cfaf15b9d77a629f9ed450cd8ef3",
+      "file": "rtl/ibex_icache.sv",
+      "title": "[rtl] Various small icache bugfixes",
+      "lines_added": 42,
+      "lines_removed": 30,
+      "top": "ibex_core",
+      "scope": "whole-design",
+      "resolution": [
+        "include prim_assert.sv -> shared/rtl",
+        "module ibex_counters -> rtl/ibex_counters.sv",
+        "module prim_clock_gating -> shared/rtl/prim_clock_gating.sv [3 candidates]",
+        "module ibex_wb_stage -> rtl/ibex_wb_stage.sv"
+      ],
+      "include_dirs": [
+        "shared/rtl"
+      ],
+      "defines": [],
+      "n_sources": 19,
+      "status": "file-outside-cone"
+    },
+    {
+      "load_at_start": {
+        "load1": 5.71,
+        "load5": 6.96,
+        "load15": 10.48,
+        "cpus": 24
+      },
+      "ladder": "sat-first",
+      "front_end_flags": [],
+      "repo": "lowRISC__ibex",
+      "number": 1735,
+      "sha": "23806e2ad7d0d6fab429ae227d9a45cbd42f0fb3",
+      "file": "rtl/ibex_id_stage.sv",
+      "title": "[rtl] Do not register instruction fetch errors",
+      "lines_added": 7,
+      "lines_removed": 3,
+      "top": "ibex_core",
+      "scope": "whole-design",
+      "resolution": [
+        "include prim_assert.sv -> vendor/lowrisc_ip/ip/prim/rtl",
+        "include dv_fcov_macros.svh -> vendor/lowrisc_ip/dv/sv/dv_utils",
+        "module ibex_csr -> rtl/ibex_csr.sv",
+        "module ibex_wb_stage -> rtl/ibex_wb_stage.sv",
+        "[fixed side] include prim_assert.sv -> vendor/lowrisc_ip/ip/prim/rtl",
+        "[fixed side] include dv_fcov_macros.svh -> vendor/lowrisc_ip/dv/sv/dv_utils"
+      ],
+      "include_dirs": [
+        "vendor/lowrisc_ip/ip/prim/rtl",
+        "vendor/lowrisc_ip/dv/sv/dv_utils"
+      ],
+      "defines": [],
+      "n_sources": 19,
+      "warm": {
+        "verdict": "proven",
+        "partitions": 15247,
+        "reuse_pct": 0.0,
+        "prove_s": 26.302,
+        "setup_s": 9.696,
+        "wall_s": 41.93
+      },
+      "measure": {
+        "verdict": "refuted",
+        "partitions": 15247,
+        "reuse_pct": 98.37,
+        "hits": 14999,
+        "misses": 248,
+        "prove_s": 1.46,
+        "setup_s": 15.887,
+        "wall_s": 22.41,
+        "failed": [
+          "ibex_core.id_stage_i.controller_i.csr_pipe_flush_i"
+        ],
+        "n_failed": 1
+      },
+      "prove_time_saved_pct": 94.4,
+      "status": "ok",
+      "cache_entries": 15494,
+      "load_at_end": {
+        "load1": 5.35,
+        "load5": 6.7,
+        "load15": 10.15,
+        "cpus": 24
+      }
+    },
+    {
+      "load_at_start": {
+        "load1": 5.35,
+        "load5": 6.7,
+        "load15": 10.15,
+        "cpus": 24
+      },
+      "ladder": "sat-first",
+      "front_end_flags": [],
+      "repo": "lowRISC__ibex",
+      "number": 1780,
+      "sha": "1affeff5278d5b2d84984cd3bf173f72d9f024da",
+      "file": "rtl/ibex_cs_registers.sv",
+      "title": "[rtl] Cannot add M mode executable PMP regions when MML = 1",
+      "lines_added": 26,
+      "lines_removed": 1,
+      "top": "ibex_core",
+      "scope": "whole-design",
+      "resolution": [
+        "include prim_assert.sv -> vendor/lowrisc_ip/ip/prim/rtl",
+        "include dv_fcov_macros.svh -> vendor/lowrisc_ip/dv/sv/dv_utils",
+        "module ibex_csr -> rtl/ibex_csr.sv",
+        "module ibex_wb_stage -> rtl/ibex_wb_stage.sv",
+        "[fixed side] include prim_assert.sv -> vendor/lowrisc_ip/ip/prim/rtl",
+        "[fixed side] include dv_fcov_macros.svh -> vendor/lowrisc_ip/dv/sv/dv_utils",
+        "[fixed side] include ibex_pmp_reset_default.svh -> rtl"
+      ],
+      "include_dirs": [
+        "vendor/lowrisc_ip/ip/prim/rtl",
+        "vendor/lowrisc_ip/dv/sv/dv_utils",
+        "rtl"
+      ],
+      "defines": [],
+      "n_sources": 19,
+      "warm": {
+        "verdict": "proven",
+        "partitions": 15243,
+        "reuse_pct": 0.0,
+        "prove_s": 26.279,
+        "setup_s": 9.923,
+        "wall_s": 42.21
+      },
+      "measure": {
+        "verdict": "proven",
+        "partitions": 15243,
+        "reuse_pct": 100.0,
+        "hits": 15243,
+        "misses": 0,
+        "prove_s": 0.0,
+        "setup_s": 16.066,
+        "wall_s": 21.2,
+        "failed": [],
+        "n_failed": 0
+      },
+      "prove_time_saved_pct": 100.0,
+      "elaborated_identical": false,
+      "needs_explanation": "PROVEN on a real bug fix: either the fix is unobservable in this parameterisation, or the check missed it. Netlists DIFFER, so the fix adds logic that changes no output.",
+      "status": "ok",
+      "cache_entries": 15243,
+      "load_at_end": {
+        "load1": 5.21,
+        "load5": 6.47,
+        "load15": 9.84,
+        "cpus": 24
+      }
+    },
+    {
+      "load_at_start": {
+        "load1": 5.21,
+        "load5": 6.47,
+        "load15": 9.84,
+        "cpus": 24
+      },
+      "ladder": "sat-first",
+      "front_end_flags": [],
+      "repo": "lowRISC__ibex",
+      "number": 1816,
+      "sha": "7b1be3354d650bc5b23dff6f439459c353288e4f",
+      "file": "rtl/ibex_controller.sv",
+      "title": "[rtl] Change how we record debug causes",
+      "lines_added": 21,
+      "lines_removed": 9,
+      "top": "ibex_core",
+      "scope": "whole-design",
+      "resolution": [
+        "include prim_assert.sv -> vendor/lowrisc_ip/ip/prim/rtl",
+        "include dv_fcov_macros.svh -> vendor/lowrisc_ip/dv/sv/dv_utils",
+        "module ibex_csr -> rtl/ibex_csr.sv",
+        "module ibex_wb_stage -> rtl/ibex_wb_stage.sv"
+      ],
+      "include_dirs": [
+        "vendor/lowrisc_ip/ip/prim/rtl",
+        "vendor/lowrisc_ip/dv/sv/dv_utils"
+      ],
+      "defines": [],
+      "n_sources": 19,
+      "status": "patch-failed",
+      "detail": "error: patch failed: rtl/ibex_controller.sv:453\nerror: rtl/ibex_controller.sv: patch does not apply\n"
+    }
+  ]
+}

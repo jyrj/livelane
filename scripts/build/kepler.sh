@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build kepler-formal -- LiveLane's SECOND, independent equivalence backend --
+# Build kepler-formal, LiveLane's SECOND, independent equivalence backend,
 # FROM SOURCE into tools/. No system packages, no root, same prefix as
 # scripts/build/toolchain.sh.
 #
@@ -11,21 +11,21 @@
 # The eqy gate does gate-level, partition-based LEC and REQUIRES unchanged
 # sequential boundaries (eqy README; confirmed by its "partitions not
 # equivalent" methodology). An agent that retimes a pipeline, merges registers,
-# or moves a stage boundary produces an edit eqy CANNOT prove -- not because the
+# or moves a stage boundary produces an edit eqy CANNOT prove, not because the
 # edit is wrong but because the partitioning premise no longer holds. Kepler
 # additionally does RTL-level Sequential Equivalence Checking, comparing
 # sequential behaviour through extracted transition systems, which is exactly
 # that class of edit. And two independent checkers let the gate cross-check:
 # a disagreement is a reportable result, never an average.
 #
-# Dependency order (why each is here -- all four are ABSENT on this host):
+# Dependency order (why each is here, all four are ABSENT on this host):
 #   fmt          -> slang's external/CMakeLists.txt FetchContent's fmt 12.2.0.
 #                   Building the SAME version into the prefix makes slang's
 #                   FIND_PACKAGE_ARGS intercept it, so nothing is downloaded at
 #                   configure time and the build is offline-reproducible.
 #   tomlplusplus -> same story: slang FetchContent's v3.4.0.
 #   onetbb       -> naja's find_package(TBB REQUIRED) (cmake/FindTBB.cmake looks
-#                   for tbb/tbb.h, libtbb AND libtbbmalloc -- all three).
+#                   for tbb/tbb.h, libtbb AND libtbbmalloc, all three).
 #   capnproto    -> naja-if's find_package(CapnProto REQUIRED); the Naja
 #                   interchange format is Cap'n Proto serialised.
 #   kepler       -> the checker itself.
@@ -84,7 +84,7 @@ build_onetbb() {
   clone_pin onetbb "$ONETBB_URL" "$ONETBB_REF"
   local B="$BUILD/onetbb"; rm -rf "$B"; mkdir -p "$B"
   # TBB_STRICT=OFF: -Werror against GCC 16 is a build failure waiting to happen
-  # and buys us nothing -- we are a consumer, not a TBB developer.
+  # and buys us nothing, we are a consumer, not a TBB developer.
   ( cd "$B" && cmake "$SRCDIR/onetbb" \
       -DCMAKE_INSTALL_PREFIX="$PREFIX" -DCMAKE_INSTALL_LIBDIR=lib \
       -DCMAKE_BUILD_TYPE=Release \
@@ -140,11 +140,11 @@ build_kepler() {
   # produces carries an rpath into $BUILD. That is a live landmine: `rm -rf var/`
   # silently breaks tools/bin/kepler-formal. Baking the prefix rpath in at build
   # time lets us copy the binary and its libraries into tools/ and have them
-  # resolve there -- verified below with ldd.
+  # resolve there, verified below with ldd.
   #
   # Python3_EXECUTABLE: naja embeds Python (SNLPyLoader). Left to itself CMake
   # picks whatever is first on PATH, which under env.sh is the uv-managed venv
-  # interpreter under ~/.local/share/uv -- a cache directory that uv may prune.
+  # interpreter under ~/.local/share/uv, a cache directory that uv may prune.
   # Pin the SYSTEM python so the linked libpython lives in /usr/lib64.
   local pyexe="${KEPLER_PYTHON:-/usr/bin/python3}"
   [[ -x "$pyexe" ]] || die "python interpreter not found: $pyexe"

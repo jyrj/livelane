@@ -15,7 +15,7 @@ against any Liberty file.
 Two things shape the code
 -------------------------
 * **The synthesis script is data, not a hardcoded string.**  A reviewer will
-  reasonably ask whether a slow or bad baseline was left unoptimised -- and they
+  reasonably ask whether a slow or bad baseline was left unoptimised, and they
   would be right to: we measured 52% of one block's 24-minute synthesis going to
   ``opt_dff``, not to ABC.  So the recipe is a named, recordable object
   (:class:`SynthScript`), reported with every measurement, and more than one is
@@ -37,9 +37,9 @@ in ``message`` instead of quietly returning the small number.
 
 Container
 ---------
-Needs ``yosys`` (with ABC) and OpenSTA's ``sta`` on PATH plus a Liberty file;
-see ``dockerfiles/YosysStaDockerfile`` and bind it with a cluster node type
-whose ``resources: {"yosys_sta": 1}`` matches :func:`yosys_sta_qor`'s token.
+Needs ``yosys`` (with ABC) and OpenSTA's ``sta`` on PATH plus a Liberty file,
+on a worker declared by a cluster node type whose ``resources: {"yosys_sta": 1}``
+matches :func:`yosys_sta_qor`'s token.
 """
 
 from __future__ import annotations
@@ -61,7 +61,7 @@ except Exception:  # pragma: no cover - exercised only outside a CHIA install
 
 try:  # Installed form: a sibling module in chia.vlsi.
     from chia.vlsi.tool_run import ToolNotFound, ToolRun, run_tool
-except Exception:  # pragma: no cover - staging form, before upstreaming
+except Exception:  # pragma: no cover - running from this checkout
     from chia_livelane.vlsi.tool_run import ToolNotFound, ToolRun, run_tool
 
 
@@ -116,6 +116,16 @@ BASELINE = SynthScript(
         "dfflibmap -liberty {lib}\n"
         "abc -D 10000 -liberty {lib}\n"
         "opt_clean\n"
+        # Align the two writers' namespaces. `write_verilog` cannot emit a
+        # yosys-internal name like `$auto$ff.cc:337:slice$19885`, `$` is not a
+        # legal Verilog identifier, so it silently renames every cell to
+        # `_NNNNN_`, while `write_json` keeps the original. The netlist OpenSTA
+        # times and the JSON that carries `src` provenance therefore share NO
+        # cell names, and a critical path cannot be mapped back to RTL at all:
+        # measured, 0 of 12 path nodes resolved. Renaming BOTH first makes the
+        # join possible, the same measurement then resolves the path's
+        # endpoint to `picorv32.v:1402`.
+        "rename -enumerate\n"
         "tee -o {stat} stat -liberty {lib}\n"
         "write_verilog -noattr {netlist}\n"
         "write_json {celljson}\n"
@@ -145,6 +155,16 @@ TUNED = SynthScript(
         "dfflibmap -liberty {lib}\n"
         "abc -fast -D 10000 -liberty {lib}\n"
         "opt_clean\n"
+        # Align the two writers' namespaces. `write_verilog` cannot emit a
+        # yosys-internal name like `$auto$ff.cc:337:slice$19885`, `$` is not a
+        # legal Verilog identifier, so it silently renames every cell to
+        # `_NNNNN_`, while `write_json` keeps the original. The netlist OpenSTA
+        # times and the JSON that carries `src` provenance therefore share NO
+        # cell names, and a critical path cannot be mapped back to RTL at all:
+        # measured, 0 of 12 path nodes resolved. Renaming BOTH first makes the
+        # join possible, the same measurement then resolves the path's
+        # endpoint to `picorv32.v:1402`.
+        "rename -enumerate\n"
         "tee -o {stat} stat -liberty {lib}\n"
         "write_verilog -noattr {netlist}\n"
         "write_json {celljson}\n"
@@ -163,8 +183,8 @@ SCRIPTS: dict[str, SynthScript] = {s.name: s for s in (BASELINE, TUNED)}
 #   without -liberty:  "   Number of cells:               6691"
 #   with    -liberty:  "     7692 4.32E+04 cells"
 # This node always passes -liberty (it must, to get area), so the second form is
-# the one that matters. Matching only the first -- which an earlier version of
-# this parser did -- silently returns cells=None on every real run.
+# the one that matters. Matching only the first, which an earlier version of
+# this parser did, silently returns cells=None on every real run.
 _CELLS_PLAIN_RE = re.compile(r"^\s*Number of cells:\s+(\d+)\s*$", re.M)
 _CELLS_LIB_RE = re.compile(r"^\s*(\d+)\s+([0-9.eE+-]+)\s+cells\s*$", re.M)
 _AREA_RE = re.compile(r"^\s*Chip area for (?:top )?module '?\\?([^':]+)'?:\s*"
@@ -375,6 +395,10 @@ class QorReport:
     clock_period_ns: float | None = None
     startpoint: str | None = None
     endpoint: str | None = None
+    #: ``file:line.col`` of the path's ends, when the cell could be placed back
+    #: in the RTL. See :meth:`YosysStaNode.timing` for why this is often None.
+    startpoint_rtl: str | None = None
+    endpoint_rtl: str | None = None
     path_summary: str = ""
     script: str = ""
     message: str = ""
@@ -441,7 +465,7 @@ class YosysStaNode:
         # ABSOLUTE for the same reason as workdir: the Liberty path is written
         # into a script that yosys and sta run with cwd=workdir, so a relative
         # one resolves against the wrong directory. yosys then exits 1 with an
-        # empty stat file and the node reports cells=None -- which reads as
+        # empty stat file and the node reports cells=None, which reads as
         # "this design has no cells", not as "you gave me a bad path".
         self.liberty = str(Path(self.liberty).resolve())
 
@@ -450,7 +474,7 @@ class YosysStaNode:
         """True when a clock will actually be created before timing."""
         return bool(self.clock_period_ns) and bool(self.clock_port)
 
-    # -- synthesis ------------------------------------------------------------
+    #, synthesis ------------------------------------------------------------
     def synthesize(self, sources: Sequence[str | os.PathLike[str]], top: str, *,
                    timeout_s: float | None = 3600.0,
                    label: str = "yosys-synth") -> tuple[QorReport, Path | None]:
@@ -480,8 +504,35 @@ class YosysStaNode:
                 f"than as a synthesis failure, because yosys would exit 1 with "
                 f"an empty stat file and the node would report cells=None.")
         # ABSOLUTE: the script is run with cwd=workdir (see __post_init__).
-        reads = "\n".join(f"{self.read_cmd} {Path(s).resolve().as_posix()}"
-                           for s in sources)
+        #
+        # `read_slang` is a front-end DRIVER, not a yosys reader: it elaborates
+        # and picks a top by its own inference, so a file declaring several
+        # top-level candidates leaves it free to choose the wrong one. picorv32
+        # declares eight modules, `picorv32`, `picorv32_axi`, `picorv32_wb`
+        # and friends, and without an explicit `--top` the following
+        # `hierarchy -top picorv32` fails with "Module `picorv32\' not found!".
+        # yosys then exits 1 with an empty stat file, which this node reports as
+        # cells=None: a front-end misconfiguration wearing the costume of a
+        # design that would not synthesise. `read_verilog` has no such flag and
+        # is elaborated by the following `hierarchy`, so the injection is
+        # conditional on the front end actually being slang.
+        read_cmd = self.read_cmd
+        if "read_slang" in read_cmd and "--top" not in read_cmd:
+            read_cmd = f"{read_cmd} --top {top}"
+        # ONE read command for the whole source list when the front end is
+        # slang. `read_slang` elaborates everything it is given as a single
+        # compilation unit; issuing it once per file compiles each file alone,
+        # so a module in file B cannot see a package in file A and elaboration
+        # fails outright ("unknown package"). A single-file design never shows
+        # this, which is why it survived until a multi-file design was tried.
+        # `read_verilog` is the opposite: it is a per-file reader and the
+        # following `hierarchy` links them, so it keeps one command per file.
+        files = " ".join(Path(s).resolve().as_posix() for s in sources)
+        if "read_slang" in read_cmd:
+            reads = f"{read_cmd} {files}"
+        else:
+            reads = "\n".join(f"{read_cmd} {Path(s).resolve().as_posix()}"
+                              for s in sources)
         script = reads + "\n" + self.script.render(
             top=top, lib=Path(self.liberty).as_posix(),
             netlist=netlist.as_posix(), stat=statfile.as_posix(),
@@ -519,7 +570,7 @@ class YosysStaNode:
             netlist if netlist.exists() else None,
         )
 
-    # -- timing ---------------------------------------------------------------
+    #, timing ---------------------------------------------------------------
     def _sta_script(self, netlist: Path, top: str) -> str:
         lines = [
             f"read_liberty {Path(self.liberty).as_posix()}",
@@ -534,7 +585,7 @@ class YosysStaNode:
             # No clock: report the longest combinational path so a number still
             # exists, but the caller is told it is NOT the constrained critical
             # path. Measured on picorv32/sky130: 12.7612 ns constrained at a
-            # 10 ns clock vs 0.1959 ns unconstrained -- different quantities.
+            # 10 ns clock vs 0.1959 ns unconstrained, different quantities.
             lines.append("set_max_delay 0 -from [all_inputs] -to [all_outputs]")
         lines += [
             "report_checks -path_delay max -format full_clock_expanded -digits 4",
@@ -574,6 +625,30 @@ class YosysStaNode:
         if cell_src and parsed.get("path_summary"):
             parsed["path_summary"] = annotate_path_with_sources(
                 str(parsed["path_summary"]), cell_src)
+        # Surface the endpoints' RTL location as FIELDS, not only as an
+        # annotation buried in a 33-line path dump. A caller editing RTL needs
+        # "the worst path ends at picorv32.v:1402", and asking it to grep a
+        # timing report for that is the same unactionability the annotation
+        # exists to fix.
+        #
+        # Coverage is partial and that is a property of the toolchain, not a
+        # bug here: ABC discards `src` on every combinational cell it maps
+        # (measured: 0 of 4,998), and only 553 of 1,565 flip-flops keep theirs.
+        # So an endpoint resolves about a third of the time and the cone
+        # between never does. None means "could not be placed", never "not on
+        # the path".
+        for role in ("startpoint", "endpoint"):
+            cell = parsed.get(role)
+            loc = cell_src.get(cell) if cell else None
+            if not loc:
+                continue
+            fname, _, pos = str(loc).rpartition(":")
+            parsed[f"{role}_rtl"] = str(loc)
+            parsed[f"{role}_rtl_file"] = Path(fname).name if fname else None
+            try:
+                parsed[f"{role}_rtl_line"] = int(pos.split(".")[0])
+            except (ValueError, IndexError):
+                pass
         parsed["success"] = run.ok and bool(parsed.get("max_delay_ns") is not None)
         parsed["constrained"] = self.constrained
         return parsed
@@ -600,6 +675,8 @@ class YosysStaNode:
         qor.startpoint = t.get("startpoint")              # type: ignore[assignment]
         qor.endpoint = t.get("endpoint")                  # type: ignore[assignment]
         qor.path_summary = str(t.get("path_summary", ""))
+        qor.endpoint_rtl = t.get("endpoint_rtl")          # type: ignore[assignment]
+        qor.startpoint_rtl = t.get("startpoint_rtl")      # type: ignore[assignment]
         qor.success = bool(qor.success and t.get("success"))
         qor.wall_s = self.total_wall_s
         qor.cpu_s = self.total_cpu_s
@@ -629,11 +706,9 @@ class YosysStaNode:
         return max((r.peak_rss_kb for r in self.tool_runs), default=0)
 
 
-# The resource token is the ONLY binding between this function and the worker
-# image carrying yosys/abc/OpenSTA: a cluster node type declaring
-# `resources: {"yosys_sta": 1}` with
-# `docker.image: ghcr.io/ucb-bar/chia-yosys-sta:latest` is what puts this call
-# in a container that can run the tools.
+# The resource token is the only binding between this function and a worker
+# that has yosys, abc and OpenSTA installed: a cluster node type declaring
+# `resources: {"yosys_sta": 1}` is what places this call where the tools run.
 @ChiaFunction(resources={"yosys_sta": 1})
 def yosys_sta_qor(sources: list[str], top: str, liberty: str,
                   workdir: str = ".", script: str = "baseline-flat",
@@ -674,7 +749,7 @@ def yosys_sta_qor(sources: list[str], top: str, liberty: str,
             tool tree is killed and ``success`` is false.
 
     Returns:
-        dict: ``success`` (bool -- false means no field below is usable),
+        dict: ``success`` (bool, false means no field below is usable),
         ``cells`` (int | None), ``area_um2`` (float | None),
         ``max_delay_ns`` (float | None), ``slack_ns`` (float | None),
         ``constrained`` (bool), ``clock_period_ns`` (float | None),
@@ -686,7 +761,7 @@ def yosys_sta_qor(sources: list[str], top: str, liberty: str,
     Raises:
         ValueError: If ``script`` is not a known recipe, or ``sources`` is empty.
         FileNotFoundError: If ``liberty`` does not exist.
-        ToolNotFound: If ``yosys`` or ``sta`` is missing -- which means the
+        ToolNotFound: If ``yosys`` or ``sta`` is missing, which means the
             worker is not running the chia-yosys-sta image.
     """
     if script not in SCRIPTS:

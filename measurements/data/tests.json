@@ -1,0 +1,6 @@
+{
+ "passed": 448,
+ "command": "python -m pytest -q",
+ "scope": "the released artifact, with thirdparty/ cloned",
+ "date": "2026-09-25"
+}

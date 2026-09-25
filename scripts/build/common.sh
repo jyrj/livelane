@@ -34,7 +34,7 @@ say()  { printf '\n\033[1m==> %s\033[0m\n' "$*"; }
 info() { printf '    %s\n' "$*"; }
 die()  { printf '\n!!! FATAL: %s\n' "$*" >&2; exit 1; }
 
-# clone_pin <name> <url> <ref> -- idempotent clone+checkout into thirdparty/
+# clone_pin <name> <url> <ref>, idempotent clone+checkout into thirdparty/
 clone_pin() {
   local name="$1" url="$2" ref="$3" dir="$SRCDIR/$1"
   if [[ -d "$dir/.git" ]]; then
@@ -49,10 +49,10 @@ clone_pin() {
   info "$name: at $(git -C "$dir" rev-parse --short HEAD) ($ref)"
 }
 
-# have <binary> -- is it already built in our prefix?
+# have <binary>, is it already built in our prefix?
 have() { [[ -x "$PREFIX/bin/$1" ]]; }
 
-# verify <description> <command...> -- run a smoke test, fail loudly.
+# verify <description> <command...>, run a smoke test, fail loudly.
 verify() {
   local what="$1"; shift
   info "verify: $what"
@@ -76,7 +76,7 @@ report_bin() {
   done
 }
 
-# fetch_tarball <name> <url> <sha256> -- download, VERIFY, unpack into thirdparty/.
+# fetch_tarball <name> <url> <sha256>, download, VERIFY, unpack into thirdparty/.
 # A dependency that is not a git project still gets a pin; the pin is its hash.
 fetch_tarball() {
   local name="$1" url="$2" want="$3"

@@ -4,22 +4,22 @@ Why this exists
 ---------------
 CHIA has no equivalence-checking node.  Searched the whole tree: ``eqy``,
 ``sby``, ``symbiyosys``, ``smtbmc`` and ``equivalence`` all return zero hits.
-So every RTL-editing loop in the framework -- including its own ``timing_opt``
-example -- accepts an agent's edit on *simulation* evidence alone.
+So every RTL-editing loop in the framework, including its own ``timing_opt``
+example, accepts an agent's edit on *simulation* evidence alone.
 
 That is exactly the failure mode the published critiques of LLM-driven RTL
 optimisation describe (arXiv:2601.01765, arXiv:2507.16808): reported gains that
 vanish once the edit is checked for equivalence.  We measured a concrete
 instance.  Inverting the ``BGE`` comparison in picorv32
 (``alu_out_0 = !alu_lts`` -> ``alu_out_0 = alu_lts``) synthesises cleanly and
-scores **better** than its parent -- 75,074.50 um2 against 75,663.82 um2, with
+scores **better** than its parent, 75,074.50 um2 against 75,663.82 um2, with
 235 fewer cells.  A loop scoring on QoR alone takes that as an improvement and
 builds on it.  This gate refutes it, and names the failing partition.
 
 Design rules, which are the whole point of the node
 ---------------------------------------------------
-* **Fail closed.**  Anything that is not a positive proof of equivalence -- an
-  error, a timeout, an unparsable log, a crashed solver -- is NOT a pass.  The
+* **Fail closed.**  Anything that is not a positive proof of equivalence, an
+  error, a timeout, an unparsable log, a crashed solver, is NOT a pass.  The
   only verdict that admits an edit is :data:`PROVEN`.
 * **Refuted and undecided are different answers.**  ``eqy`` emits the SAME
   summary line and the SAME exit code (2) whether it found a counterexample or
@@ -38,9 +38,9 @@ Design rules, which are the whole point of the node
 Container
 ---------
 The node shells out to ``eqy``, which in turn drives ``yosys``, ``sby``,
-``yosys-smtbmc`` and an SMT solver.  It therefore needs a worker image carrying
-that stack; see ``dockerfiles/EqyDockerfile`` and bind it with a cluster node
-type whose ``resources: {"eqy": 1}`` matches :func:`lec_gate`'s token.
+``yosys-smtbmc`` and an SMT solver (all in the OSS CAD Suite).  Run it on a
+worker that has that stack, declared by a cluster node type whose
+``resources: {"eqy": 1}`` matches :func:`lec_gate`'s token.
 """
 
 from __future__ import annotations
@@ -213,8 +213,8 @@ def parse_eqy_log(text: str) -> dict[str, object]:
     Returns:
         dict: Any of ``proved`` (bool), ``partitions_failed`` (int),
         ``partitions_total`` (int), ``failed_partitions`` (list of str),
-        ``not_equivalent_partitions`` (list of str -- real counterexamples),
-        ``unknown_partitions`` (list of str -- undecided), ``done_status``
+        ``not_equivalent_partitions`` (list of str, real counterexamples),
+        ``unknown_partitions`` (list of str, undecided), ``done_status``
         (str) and ``done_rc`` (int). Keys are absent rather than ``None`` when
         the log did not carry them, so a caller can tell "not stated" from
         "stated as zero".
@@ -271,8 +271,8 @@ def parse_eqy_log(text: str) -> dict[str, object]:
 #:
 #: ``sby`` in ``mode prove`` (k-induction driven by a real SMT solver) decided
 #: every fixture here correctly, so it leads. ``induct`` is kept as a fallback
-#: for partitions ``sby`` leaves undecided -- it still contributes refutations
-#: and it skips memory partitions cheaply -- but it can no longer be the
+#: for partitions ``sby`` leaves undecided, it still contributes refutations
+#: and it skips memory partitions cheaply, but it can no longer be the
 #: strategy that admits an edit unless ``sby`` failed to decide first.
 #:
 #: RESIDUAL RISK, stated rather than hidden: a partition that ``sby`` leaves
@@ -282,6 +282,41 @@ def parse_eqy_log(text: str) -> dict[str, object]:
 #:
 #: The SAME ladder must run in every arm of a comparison, so whatever it cannot
 #: decide is a constant across arms and cannot bias the result.
+#:
+#: RE-MEASURED, and the conclusion above is now STALE in one respect.
+#:
+#: ``setundef -zero -init`` was added later, for an unrelated reason: without it
+#: a design was refuted against ITSELF, because uninitialised flops became
+#: independent free variables. That fix also closes the hazard described above,
+#: by the same mechanism the analysis names, the vacuity escape needs gold
+#: flops sitting at X, and initialised flops never do.
+#:
+#: On ``smoke/refuted_const.v``, the fixture that exposed the false accept::
+#:
+#:     setundef   ladder        verdict
+#:     on         sat first     refuted      <- safe
+#:     on         smt first     refuted      <- safe
+#:     off        sat first     PROVEN       <- the documented false accept
+#:     off        smt first     refuted      <- ordering alone also closes it
+#:
+#: So there are TWO independent mitigations, and the config currently has both:
+#: lead with a strategy that does not rely on induction, OR initialise the flops
+#: so the induction is not vacuous. Only the ``sat``-first + no-``setundef``
+#: combination breaks.
+#:
+#: The cost of not re-testing the ordering after ``setundef`` landed: leading
+#: with ``sby`` rather than ``sat`` is roughly **9x slower** on proving
+#: (picorv32, 590 partitions: 74.61s vs 7.94s to prove equivalence, 83.10s vs
+#: 9.00s to refute a planted bug, same verdicts and the same failing partition).
+#:
+#: This ladder is NOT reordered here on the strength of one fixture, that is
+#: exactly how the original bug hid, and the note above says so. Reordering
+#: needs a real corpus: the HWE-Bench instances are independently authored bugs
+#: and the harness can run them under either ladder. Until then the safe
+#: ordering stands and the cost is known rather than invisible.
+#:
+#: Pinned by ``test/test_strategy_soundness_live.py``, including the test that
+#: fails if ``setundef -zero -init`` is ever removed while ``sat`` leads.
 #: Values ``undef_init`` accepts, matching yosys ``setundef``'s own flags.
 UNDEF_INIT_VALUES: frozenset[str] = frozenset({"zero", "one"})
 
@@ -312,9 +347,23 @@ def auto_jobs(default: int = 1) -> int:
     return max(1, os.cpu_count() or default)
 
 
-DEFAULT_STRATEGIES: tuple[tuple[str, tuple[str, ...]], ...] = (
+#: 2026-09-18: the corpus run the note above asked for now exists, twice
+#: (09-17 on the unpatched eqy_partition, 09-18 on the patched one). On 12
+#: independently authored ibex bug-fix PRs, ``sat``-first and ``smt``-first
+#: agree on every verdict with identical reuse, and ``sat``-first proves 16.5x
+#: faster, which is the difference between a gate that fits inside an agent's
+#: iteration on a whole core and one that does not. ``sat`` leads ONLY because
+#: ``undef_init`` resolves initial values on both sides; the live test pins
+#: that pairing. The conservative ordering is kept as SMT_FIRST_STRATEGIES for
+#: anyone who opts out of ``undef_init``.
+SMT_FIRST_STRATEGIES: tuple[tuple[str, tuple[str, ...]], ...] = (
     ("smt", ("use sby", "engine smtbmc yices", "depth 10")),
     ("induct", ("use sat", "depth 10")),
+)
+
+DEFAULT_STRATEGIES: tuple[tuple[str, tuple[str, ...]], ...] = (
+    ("simple", ("use sat", "depth 3")),
+    ("smt", ("use sby", "engine smtbmc yices", "depth 10")),
 )
 
 
@@ -348,6 +397,18 @@ class LecGateNode:
             ``None`` leaves them undefined. See :data:`UNDEF_INIT_VALUES` and
             the note below; a proof obtained this way is labelled in
             :attr:`LecResult.abstraction`, never reported as unqualified.
+        cache_dir (str | PathLike | None): Enable INCREMENTAL proving, reusing
+            per-partition results across checks from this content-addressed
+            store. ``eqy`` itself has no reuse path, given an existing workdir
+            it exits with "Directory already exists", so every check is
+            otherwise cold, re-proving all 590 partitions of picorv32 or all
+            13,572 of a XiangShan Alu whatever the edit touched. With a store,
+            only the partitions whose proof obligation actually changed are
+            re-proven. Measured on XiangShan Alu, a live one-line datapath edit:
+            98.0% of partitions reused, prove time 516 s -> 24 s, end to end
+            578 s -> 85 s, and the edit still REFUTED. ``None`` keeps the cold
+            path. See :mod:`chia_livelane.formal.proof_cache` for why a cache
+            hit cannot admit what a cold proof would refuse.
         jobs (int | None): Passed to ``eqy`` as ``-j <N>``, which forwards it to
             ``make``. ``eqy`` emits one make target chain per partition, so this
             is the difference between proving partitions one at a time and
@@ -365,18 +426,18 @@ class LecGateNode:
         each x becomes an arbitrary unconstrained value (eqy ``docs/xprop.rst``).
         For a design whose flip-flops have no initial value, the two sides'
         registers are therefore independent unconstrained variables and the
-        solver is free to start them at different values -- so a design is not
+        solver is free to start them at different values, so a design is not
         provably equivalent even **to itself**. Measured on picorv32, whose
         ``count_cycle``/``count_instr`` are free-running 64-bit registers with
         no init (``picorv32.v:1433``): checked against an identical copy, the
         gate returned REFUTED on those two partitions, naming a counterexample
         in which gold's bit 63 was 1 and gate's was 0. That is a *false*
-        refutation -- the worst failure mode this node has, because it rejects
+        refutation, the worst failure mode this node has, because it rejects
         valid edits while looking like a careful gate.
 
         ``setundef -<v> -init``, applied identically to both sides, closes it:
         the same design proves 590/590 partitions. The cost is a real and
-        stated narrowing of the claim -- equivalence is proved *from the
+        stated narrowing of the claim, equivalence is proved *from the
         resolved initial state*, so an edit that differs only in behaviour
         reachable from some other undefined start is not covered. That caveat
         travels with the verdict in :attr:`LecResult.abstraction` and surfaces
@@ -398,14 +459,15 @@ class LecGateNode:
     collect: Sequence[str] = field(default_factory=tuple)
     undef_init: str | None = "zero"
     jobs: int | None = None
+    cache_dir: str | os.PathLike[str] | None = None
     timeout_s: float = 1800.0
     verbose: bool = True
 
     def __post_init__(self) -> None:
         # ABSOLUTE, always. eqy is launched with cwd=workdir, so a RELATIVE
         # workdir makes the generated config path relative to itself and eqy
-        # dies with "can't open 'wd/lec.eqy'". Its exit code is 2 -- the same
-        # code it uses for a failed proof -- and its log is unparsable, so the
+        # dies with "can't open 'wd/lec.eqy'". Its exit code is 2, the same
+        # code it uses for a failed proof, and its log is unparsable, so the
         # gate returns ERROR: a misconfiguration wearing the costume of a
         # cautious gate. The same trap already cost this project a 178-minute
         # sweep in the synthesis node, so it is closed here by construction
@@ -413,7 +475,7 @@ class LecGateNode:
         self.workdir = Path(self.workdir).resolve()
         # Fail on construction, not inside a solver an hour later. A typo here
         # would otherwise render an unrecognised yosys command, which eqy
-        # reports as rc=2 with an unparsable log -- i.e. as ERROR, which fails
+        # reports as rc=2 with an unparsable log, i.e. as ERROR, which fails
         # closed and is indistinguishable from a cautious gate.
         if self.undef_init is not None and self.undef_init not in UNDEF_INIT_VALUES:
             raise ValueError(
@@ -443,7 +505,7 @@ class LecGateNode:
             # driver: each invocation elaborates independently, so emitting one
             # line per file makes every module invisible to the others and the
             # whole read fails with "Compilation failed". That silently turned
-            # every multi-file equivalence check into an ERROR verdict -- which
+            # every multi-file equivalence check into an ERROR verdict, which
             # fails closed, so it looked like a cautious gate rather than a
             # broken one. `read_verilog -sv a.v b.v` is equally happy with one
             # line, so this is correct for both front ends.
@@ -451,7 +513,7 @@ class LecGateNode:
             # relative source path is resolved against the workdir rather than
             # against the caller's cwd and yosys simply does not find the file.
             # That failure surfaces as rc=2 with an unrecognisable log, i.e. as
-            # an ERROR verdict -- which fails closed and therefore looks like a
+            # an ERROR verdict, which fails closed and therefore looks like a
             # cautious gate rather than a misconfigured one. Resolve here so the
             # caller may pass either form.
             paths = " ".join(Path(x).resolve().as_posix() for x in srcs)
@@ -468,7 +530,7 @@ class LecGateNode:
             # AFTER prep (the flip-flops must exist to have init values) and
             # BEFORE memory_map, which is the order validated against picorv32.
             # Emitted into BOTH blocks from one field, so the two sides can
-            # never be resolved differently -- an asymmetric resolution would
+            # never be resolved differently, an asymmetric resolution would
             # manufacture exactly the false refutation this defends against.
             if self.undef_init is not None:
                 lines.append(f"setundef -{self.undef_init} -init")
@@ -542,6 +604,41 @@ class LecGateNode:
                 out = ""
             return None, out or "", True
 
+    def _check_incremental(self, cfg: Path, outdir: Path, exe: str) -> LecResult:
+        """Prove via the partition cache, and report in the gate's vocabulary.
+
+        The verdict vocabulary is shared deliberately: :mod:`proof_cache`
+        aggregates sby's own PASS/FAIL/UNKNOWN/ERROR/TIMEOUT markers worst-first
+        into exactly the strings this gate uses, so REFUTED and UNDECIDED stay
+        distinct on the incremental path too. Collapsing them here would undo
+        the distinction the cold path is careful to preserve.
+        """
+        from chia_livelane.formal.proof_cache import (PartitionProofCache,
+                                                      incremental_check)
+        t0 = time.monotonic()
+        try:
+            cache = PartitionProofCache(self.cache_dir)
+            st = incremental_check(cfg, outdir, cache, eqy=exe, jobs=self.jobs,
+                                   timeout_s=self.timeout_s,
+                                   verbose=self.verbose)
+        except Exception as e:  # never raise; a gate returns verdicts
+            return LecResult(ERROR, "eqy+cache", time.monotonic() - t0,
+                             message=f"incremental check failed: "
+                                     f"{type(e).__name__}: {e}")
+        verdict = st.verdict if st.verdict in VALID_VERDICTS else ERROR
+        return LecResult(
+            verdict=verdict, backend="eqy+cache", wall_s=st.wall_s,
+            bounded=self.depth > 0, depth=self.depth or None,
+            partitions_total=st.partitions_total,
+            partitions_failed=len(st.failed_partitions) or None,
+            message=(f"reuse {st.reuse_pct}% ({st.hits}/{st.partitions_total}) "
+                     f"setup={st.setup_s}s prove={st.prove_s}s"
+                     + (f" failed={st.failed_partitions[:3]}"
+                        if st.failed_partitions else ""))[:400],
+            abstraction=(f"undef-init={self.undef_init}"
+                         if self.undef_init is not None else ""),
+        )
+
     def check(self, gold_srcs: Sequence[str], gate_srcs: Sequence[str],
               top: str, *, name: str = "lec") -> LecResult:
         """Run one equivalence check and return an auditable verdict.
@@ -581,6 +678,9 @@ class LecGateNode:
             shutil.rmtree(outdir, ignore_errors=True)
 
         exe = shutil.which(self.eqy) or self.eqy
+        if self.cache_dir is not None:
+            return self._check_incremental(cfg, outdir, exe)
+
         if self.verbose:
             print(f"[LecGateNode] {' '.join(self._argv(exe, cfg))}", flush=True)
 
@@ -619,7 +719,7 @@ class LecGateNode:
             verdict = PROVEN
         elif proved is False:
             # Only a real counterexample is a refutation. A partition eqy could
-            # not decide is UNDECIDED -- it still fails closed, but it is not
+            # not decide is UNDECIDED, it still fails closed, but it is not
             # evidence that the designs differ and must not be counted as one.
             if p.get("not_equivalent_partitions"):
                 verdict = REFUTED
@@ -670,7 +770,7 @@ class LecGateNode:
 # ``eqy`` partitions at sequential elements, so it requires the two designs to
 # share a sequential boundary. An agent that retimes a pipeline, merges or
 # duplicates registers, or moves a stage boundary produces an edit eqy cannot
-# admit -- and eqy does not fail gracefully on it. MEASURED, on a pair that is
+# admit, and eqy does not fail gracefully on it. MEASURED, on a pair that is
 # equivalent and confirmed so by 2000 cycles of Verilator simulation:
 #
 #     gold:  always @(posedge clk) r <= d;        assign q = r + 1;
@@ -709,7 +809,7 @@ class LecGateNode:
 # "partially proved: 8/132 outputs" after 831s.
 #
 # Hence the rule this class enforces: kepler is a CROSS-CHECK, never the primary
-# gate, and a partial proof is :data:`UNDECIDED` -- not a pass, and not a
+# gate, and a partial proof is :data:`UNDECIDED`, not a pass, and not a
 # refutation either.
 
 #: Documented SEC exit codes (docs/sec-flags-spec.md, "Bounds And Results").
@@ -749,7 +849,7 @@ def parse_kepler_log(text: str) -> dict[str, object]:
         text (str): Combined stdout and stderr of a ``kepler-formal`` run.
 
     Returns:
-        dict: Any of ``proved`` (bool -- a full proof), ``differs`` (bool -- a
+        dict: Any of ``proved`` (bool, a full proof), ``differs`` (bool, a
         real counterexample), ``partial`` (bool), ``outputs_proved`` (int),
         ``outputs_total`` (int), ``outputs_checked`` (int), ``coverage_pct``
         (float), ``k`` (int), ``abstraction`` (str) and ``load_error`` (str).
@@ -807,9 +907,9 @@ class KeplerBackend:
 
     Same verdict vocabulary and the same fail-closed contract as
     :class:`LecGateNode`: only :data:`PROVEN` admits an edit, only a real
-    counterexample is :data:`REFUTED`, and everything else -- a partial proof,
+    counterexample is :data:`REFUTED`, and everything else, a partial proof,
     an inconclusive run, a netlist that would not load, a timeout, an
-    unparsable log -- is :data:`UNDECIDED`, :data:`TIMEOUT` or :data:`ERROR`.
+    unparsable log, is :data:`UNDECIDED`, :data:`TIMEOUT` or :data:`ERROR`.
 
     Attributes:
         kepler (str): The ``kepler-formal`` executable, by name or path.
@@ -820,7 +920,7 @@ class KeplerBackend:
             ``"lec"`` (combinational, gate-level netlists only).
         fmt (str): ``"sv"`` for RTL SystemVerilog through slang, or
             ``"verilog"`` for structural netlists through naja-verilog. RTL
-            Verilog does NOT work in ``"verilog"`` mode -- that front end is a
+            Verilog does NOT work in ``"verilog"`` mode, that front end is a
             netlist parser and rejects compiler directives.
         engine (str): ``pdr`` | ``imc`` | ``k_induction``.
         encoding (str): ``dual_rail_steady`` | ``binary``.
@@ -929,7 +1029,7 @@ class KeplerBackend:
             gate_srcs (Sequence[str]): Source files of the candidate design.
             top (str): Top module name, identical on both sides. kepler aligns
                 the two designs by top-level terminal NAME, never by internal
-                names -- which is precisely why it can cross a moved sequential
+                names, which is precisely why it can cross a moved sequential
                 boundary that ``eqy`` cannot.
             name (str): Basename for this check's file lists and log.
 
@@ -937,7 +1037,7 @@ class KeplerBackend:
             LecResult: Never raises for a tool failure. ``backend`` is
             ``"kepler-formal"``; ``abstraction`` records the encoding a proof
             was obtained under; ``depth`` carries kepler's ``k``, which is the
-            induction depth at which the proof CLOSED, not a bound on it --
+            induction depth at which the proof CLOSED, not a bound on it,
             ``bounded`` stays False because all three SEC engines are inductive
             and ``max_k`` limits the search, not the proof.
         """
@@ -977,8 +1077,8 @@ class KeplerBackend:
                              message=f"kepler-formal not found at {self.kepler!r}; "
                                      f"build it with scripts/build/kepler.sh")
         except OSError as e:
-            # A path that EXISTS but cannot be exec'd -- not +x, a directory, a
-            # half-written binary -- raises PermissionError/OSError, NOT
+            # A path that EXISTS but cannot be exec'd, not +x, a directory, a
+            # half-written binary, raises PermissionError/OSError, NOT
             # FileNotFoundError. Letting it escape would break this method's
             # never-raises contract and, in the sweep, kill a whole arm on what
             # is really just a broken install.
@@ -1006,7 +1106,7 @@ class KeplerBackend:
 
         if p.get("load_error"):
             # A design kepler cannot ingest is an ERROR, not a cautious pass and
-            # not a refutation. rc is 1 here -- the SAME code as a partial proof.
+            # not a refutation. rc is 1 here, the SAME code as a partial proof.
             return LecResult(ERROR, message=f"netlist loading failed: "
                                             f"{p['load_error']}"[:400], **common)
 
@@ -1080,10 +1180,9 @@ def cross_check(primary: LecResult, secondary: LecResult) -> dict[str, object]:
     }
 
 
-# The resource token is the ONLY binding between this function and the worker
-# image that carries eqy: a cluster node type declaring
-# `resources: {"eqy": 1}` with `docker.image: ghcr.io/ucb-bar/chia-eqy:latest`
-# is what puts this call in a container that can actually run the tool.
+# The resource token is the only binding between this function and a worker
+# that has eqy installed: a cluster node type declaring `resources: {"eqy": 1}`
+# is what places this call where the tool can run.
 @ChiaFunction(resources={"eqy": 1})
 def lec_gate(gold_srcs: list[str], gate_srcs: list[str], top: str,
              eqy: str = "eqy", workdir: str = ".", depth: int = 0,
@@ -1093,7 +1192,8 @@ def lec_gate(gold_srcs: list[str], gate_srcs: list[str], top: str,
              gold_read_cmd: str | None = None,
              gate_read_cmd: str | None = None,
              undef_init: str | None = "zero",
-             jobs: int | None = None) -> dict:
+             jobs: int | None = None,
+             cache_dir: str | None = None) -> dict:
     """Prove that a candidate RTL edit is equivalent to its parent.
 
     Run this before accepting any edit an agent proposes. Simulation and QoR
@@ -1126,15 +1226,15 @@ def lec_gate(gold_srcs: list[str], gate_srcs: list[str], top: str,
             The validated ladder is :data:`DEFAULT_STRATEGIES`, which decides
             strictly more partitions than either strategy alone. Its ORDER is
             load-bearing and ``smt`` must lead: ``use sat``'s induction reports
-            "Induction step proven: SUCCESS!" -- which eqy turns into PASS --
+            "Induction step proven: SUCCESS!", which eqy turns into PASS,
             for ``y <= 4'b0`` against ``y <= a + b``, so an ``induct``-first
             ladder admits a design that is not equivalent by any reading, while
             ``sby``/smtbmc refutes the same pair in 0.2 s with a counterexample.
         read_cmd (str): Yosys front-end command for both sides. SystemVerilog
             designs need ``"read_slang"``; ``read_verilog -sv`` cannot elaborate
             them. Every recorded LiveLane run uses ``read_slang``, and the front
-            end is not cosmetic -- on picorv32 it moves the critical path from
-            12.7612 ns to 14.7771 ns -- so it must match the front end the QoR
+            end is not cosmetic, on picorv32 it moves the critical path from
+            12.7612 ns to 14.7771 ns, so it must match the front end the QoR
             lane used.
         gold_read_cmd (str | None): Override the front end for the gold side
             only (e.g. a ``-D`` define selecting the parent variant).
@@ -1143,24 +1243,32 @@ def lec_gate(gold_srcs: list[str], gate_srcs: list[str], top: str,
             ``"zero"`` or ``"one"`` on both sides before comparing. Designs with
             free-running or otherwise uninitialised registers are not provably
             equivalent even to themselves without this, because each side's
-            undefined state is an independent unconstrained variable -- measured
+            undefined state is an independent unconstrained variable, measured
             on picorv32, whose two 64-bit counters made an identical pair come
             back ``refuted``. A proof obtained this way is reported as
             ``evidence_strength="proof[undef-init=zero]"``, never as a bare
             proof. Pass ``None`` to disable and take the unqualified claim.
+        cache_dir (str | None): Directory for a content-addressed store of
+            per-partition proofs. With it, a check re-proves only the partitions
+            whose obligation actually changed; ``eqy`` alone has no reuse path
+            and re-proves everything every time. Measured on picorv32: an
+            unchanged pair 20.0 s -> 1.5 s (13.2x, 100% of 590 partitions
+            reused), and a real functional bug still REFUTED at 73.7% reuse.
+            Point every check in a loop at ONE directory; the key is a hash of
+            each partition's own obligation, so reuse crosses runs and designs.
         jobs (int | None): Prove partitions concurrently, via ``eqy -j <N>``.
-            ``eqy`` emits one make target chain per partition -- 590 of them on
-            picorv32 -- and runs them serially unless this is set. ``None``
+            ``eqy`` emits one make target chain per partition, 590 of them on
+            picorv32, and runs them serially unless this is set. ``None``
             keeps the serial default. :func:`auto_jobs` derives a value from the
             runtime's own CPU allocation.
 
     Returns:
-        dict: ``equivalent`` (bool -- the only bit that may admit an edit),
-        ``refuted`` (bool -- a counterexample was found), ``verdict`` (str: one
+        dict: ``equivalent`` (bool, the only bit that may admit an edit),
+        ``refuted`` (bool, a counterexample was found), ``verdict`` (str: one
         of proven/refuted/undecided/error/timeout/skipped), ``backend`` (str),
         ``wall_s`` (float), ``bounded`` (bool), ``depth`` (int | None),
         ``is_unbounded_proof`` (bool), ``evidence_strength`` (str),
-        ``abstraction`` (str -- empty when the claim is unqualified),
+        ``abstraction`` (str, empty when the claim is unqualified),
         ``partitions_total`` (int | None), ``partitions_failed`` (int | None),
         ``message`` (str), ``log_path`` (str | None) and
         ``counterexample_path`` (str | None).
@@ -1169,7 +1277,7 @@ def lec_gate(gold_srcs: list[str], gate_srcs: list[str], top: str,
                        engine=engine, timeout_s=timeout_s,
                        read_cmd=read_cmd, gold_read_cmd=gold_read_cmd,
                        gate_read_cmd=gate_read_cmd,
-                       undef_init=undef_init, jobs=jobs,
+                       undef_init=undef_init, jobs=jobs, cache_dir=cache_dir,
                        strategies=tuple((n, tuple(v)) for n, v in (strategies or ())))
     r = node.check(gold_srcs, gate_srcs, top)
     return {
@@ -1201,7 +1309,7 @@ if __name__ == "__main__":
     print("=== chia.formal.lec_gate self-test ===")
 
     # Verbatim from real eqy runs. These two logs are byte-for-byte the same
-    # shape -- same summary line, same rc -- and mean opposite things.
+    # shape, same summary line, same rc, and mean opposite things.
     undecided_log = (
         "EQY run: Could not prove equivalence of partition 'picorv32.count_cycle' "
         "using strategy 'sby': equivalence unknown\n"
@@ -1378,7 +1486,7 @@ if __name__ == "__main__":
 
         # kepler exits 1 for BOTH "partially proved" and every load failure, and
         # exits 0 in LEC mode whether the designs match or not, so the exit code
-        # can only ever CHECK the parsed verdict -- never produce it.
+        # can only ever CHECK the parsed verdict, never produce it.
         assert _kep("Netlist loading failed: Unsupported SystemVerilog elements "
                     "encountered (3):", 1).verdict == ERROR
         assert _kep("kepler said nothing useful", 0).verdict == ERROR

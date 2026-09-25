@@ -4,8 +4,8 @@ Why this exists
 ---------------
 A CHIA node that shells out to an EDA tool is usually measured on what it
 *produced*, and the cost of producing it is thrown away.  For any flow that
-reasons about evaluator cost -- scheduling, cluster sizing, or an experiment
-whose result is a claim about time -- that cost IS the measurement, so the thing
+reasons about evaluator cost, scheduling, cluster sizing, or an experiment
+whose result is a claim about time, that cost IS the measurement, so the thing
 that measures it has to be trustworthy first.
 
 :func:`run_tool` records, for every invocation:
@@ -21,7 +21,7 @@ that measures it has to be trustworthy first.
 The rusage numbers come from :func:`os.wait4`, which attributes them to *this*
 child. ``resource.getrusage(RUSAGE_CHILDREN)`` is cumulative over every child
 the process has ever reaped, so it would be wrong the moment two evaluations run
-concurrently in one worker -- which is the normal case under Ray.
+concurrently in one worker, which is the normal case under Ray.
 
 The child is started in its own session so a timeout can kill the whole tool
 tree: ``yosys`` spawns ``abc``, ``eqy`` spawns ``sby`` and an SMT solver.
@@ -162,7 +162,7 @@ def run_tool(
         verbose (bool): Print the command and the result line.
 
     Returns:
-        ToolRun: Always, even when the tool fails or times out -- a failed
+        ToolRun: Always, even when the tool fails or times out, a failed
         evaluation still costs wall-clock and that cost belongs in the ledger.
 
     Raises:

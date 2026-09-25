@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build the EDA tools these nodes shell out to FROM SOURCE into tools/.
+# Build LiveLane's lane-S evaluator stack FROM SOURCE into tools/.
 #
 # No system packages are installed and root is never required. Each stage is
 # idempotent and independently invocable:
@@ -12,8 +12,8 @@
 #   eigen    -> OpenSTA's find_package(Eigen3 REQUIRED); header-only
 #   pcre2    -> swig
 #   swig     -> OpenSTA's find_package(SWIG 3.0 REQUIRED), generates TCL bindings
-#   yosys    -> synthesis, plus the headers Fedora's package omits
-#   opensta  -> static timing
+#   yosys    -> lane-S synthesis + the headers Fedora's package omits
+#   opensta  -> lane-S timing
 #   yices    -> the SMT engine sby/eqy drive
 #   sby      -> eqy's engine driver
 #   eqy      -> the equivalence gate itself
@@ -42,7 +42,7 @@ build_libffi() {
 
 # --------------------------------------------------------------------------
 build_eigen() {
-  # OpenSTA calls find_package(Eigen3 REQUIRED), which needs Eigen3Config.cmake --
+  # OpenSTA calls find_package(Eigen3 REQUIRED), which needs Eigen3Config.cmake,
   # copying the headers alone is NOT enough (that was the first attempt and it
   # failed configure). Run Eigen's own CMake install, which generates the config
   # package, then the headers come along with it.
@@ -97,11 +97,11 @@ build_yosys() {
     say "yosys: already built with headers"; return 0; fi
   say "yosys $YOSYS_DESCRIBE ($YOSYS_REF)"
   info "this is the EXACT commit Fedora's yosys-0.67+post was built from,"
-  info "so QoR results are reproducible against a pinned toolchain"
+  info "so lane-S QoR reproduces the 2026-09-02 baseline bit-for-bit"
   clone_pin yosys "$YOSYS_URL" "$YOSYS_REF"
   local S="$SRCDIR/yosys"
   # This yosys generation is CMake-based; the old `make config-gcc` is gone.
-  # abc, fmt, cxxopts and frontends/slang/lib are submodules -- without them the
+  # abc, fmt, cxxopts and frontends/slang/lib are submodules, without them the
   # build either fails or silently produces a yosys with no abc and no read_slang.
   ( cd "$S" && git submodule update --init --recursive --depth 1 ) \
       >"$LOGS/yosys-submodule.log" 2>&1 || info "submodule update reported issues (see log)"
@@ -118,12 +118,12 @@ build_yosys() {
     cmake --build . -j"$JOBS" && cmake --install . ) >"$LOGS/yosys.log" 2>&1 \
     || { tail -40 "$LOGS/yosys.log"; die "yosys failed (see $LOGS/yosys.log)"; }
   verify "yosys runs" "$PREFIX/bin/yosys" -V
-  # NOTE: `yosys-abc -h` prints usage and exits non-zero -- do not use it as a
+  # NOTE: `yosys-abc -h` prints usage and exits non-zero, do not use it as a
   # smoke test. Run a real command instead.
   verify "yosys-abc runs a command" "$PREFIX/bin/yosys-abc" -q "version"
-  # Report the two capabilities that decide how a design must be read:
+  # Report the two capabilities that decide lane-S design:
   #  - plugin headers: eqy ships a yosys plugin and cannot build without them
-  #  - read_slang: if present, SystemVerilog is read directly WITHOUT sv2v, which
+  #  - read_slang: if present, lane S can read XiangShan .sv WITHOUT sv2v, which
   #    removes the sv2v flattening that inflated the medium block to 807k cells
   if [[ -f "$PREFIX/share/yosys/include/kernel/yosys.h" ]]; then
     info "plugin headers: PRESENT ($PREFIX/share/yosys/include)"
@@ -131,9 +131,9 @@ build_yosys() {
     info "plugin headers: ABSENT -- eqy's plugin build will need -DYOSYS_INSTALL_LIBRARY"
   fi
   if "$PREFIX/bin/yosys" -p "help read_slang" >/dev/null 2>&1; then
-    info "read_slang: AVAILABLE (SystemVerilog is read natively)"
+    info "read_slang: AVAILABLE (lane S can read SystemVerilog natively)"
   else
-    info "read_slang: not available (SystemVerilog needs sv2v first)"
+    info "read_slang: not available (lane S needs sv2v for XiangShan)"
   fi
   report_bin yosys yosys-abc yosys-config
 }
@@ -163,7 +163,7 @@ build_cudd() {
 # --------------------------------------------------------------------------
 build_opensta() {
   if have sta; then say "OpenSTA: already built"; return 0; fi
-  say "OpenSTA $OPENSTA_REF (static timing)"
+  say "OpenSTA $OPENSTA_REF (lane-S timing)"
   local B="$BUILD/opensta"; rm -rf "$B"; mkdir -p "$B"
   ( cd "$B" && cmake "$SRCDIR/OpenSTA" \
       -DCMAKE_INSTALL_PREFIX="$PREFIX" -DCMAKE_BUILD_TYPE=Release \
@@ -215,6 +215,20 @@ build_sby() {
 build_eqy() {
   if have eqy; then say "eqy: already built"; return 0; fi
   say "eqy $EQY_REF (THE equivalence gate -- runs in every arm)"
+  # Recorded patches (patches/eqy-*.patch), applied idempotently.
+  # Headers are src/..., so -p0.
+  local P
+  for P in "$ROOT"/patches/eqy-*.patch; do
+    [[ -e "$P" ]] || continue
+    if git -C "$SRCDIR/eqy" apply -p0 --reverse --check "$P" >/dev/null 2>&1; then
+      info "patch already applied: $(basename "$P")"
+    elif git -C "$SRCDIR/eqy" apply -p0 --check "$P" >/dev/null 2>&1; then
+      git -C "$SRCDIR/eqy" apply -p0 "$P" || die "patch failed: $P"
+      info "applied patch: $(basename "$P")"
+    else
+      die "patch does not apply cleanly: $P"
+    fi
+  done
   # eqy builds a yosys plugin, so it needs OUR yosys's yosys-config on PATH.
   ( cd "$SRCDIR/eqy" && \
     make -j"$JOBS" PREFIX="$PREFIX" YOSYS_CONFIG="$PREFIX/bin/yosys-config" && \
