@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/jyrj/livelane/actions/workflows/ci.yml/badge.svg)](https://github.com/jyrj/livelane/actions/workflows/ci.yml)
 
-**Formal equivalence checking inside an agentic RTL loop, on a whole RISC-V core.**
+**Formally verifying every edit of an RTL agent on a whole RISC-V core.**
 
 A³ CHIA Hackathon · Track: *Demonstration of agentic formal verification on a
 large RTL IP block* · Jayaraj Jayakumar · `jj8@ucsc.edu` · UC Santa Cruz
