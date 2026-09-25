@@ -36,7 +36,7 @@ class AgentContext:
     """Everything the agent is allowed to see about the current state.
 
     Deliberately narrow. It carries no wall-clock, no tool name, no injected
-    delay and no lane identifier, see the leak test in ``tests/``.
+    delay and no lane identifier; see ``tests/unit/test_blinding.py``.
     """
 
     design: str
