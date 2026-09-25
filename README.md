@@ -312,4 +312,4 @@ python scripts/chia/compare_frontend.py \
 
 ## Acknowledgement of AI assistance
 
-Claude, Gemini was used for writing and refactoring code, running and analysing the measurement campaign. All experimental design decisions, all measurements, and the final content are by human.
+Claude, Gemini was used for writing and refactoring code, running and analysing the measurement campaign, and drafting the paper. All experimental design decisions, all measurements, and the final content are by human.
